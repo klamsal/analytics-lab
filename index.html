@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Analytics Lab — Decision Modeling Tools</title>
+    <style>
+      :root{
+        --bg:#f7f4ee; --bg2:#efe9dd; --surface:#fffdf8; --surface2:#f3eee2;
+        --ink:#1d2733; --ink2:#46536a; --ink3:#6b7790;
+        --line:#ddd3bf; --line2:#c9bda1;
+        --accent:#0e6b5c; --accent-ink:#0a5547; --accent-soft:#dcefe9;
+        --amber:#b45309; --amber-soft:#fbeed3;
+        --red:#b3261e; --red-soft:#fbe3e1;
+        --good:#0e6b5c; --good-soft:#dcefe9;
+        --chart-grid:#d8d0bd; --chart-axis:#8a8268;
+        --shadow:0 1px 2px rgba(40,32,10,.06),0 6px 18px rgba(40,32,10,.07);
+        --radius:10px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#12161d; --bg2:#171c26; --surface:#1b212d; --surface2:#222a38;
+          --ink:#e8e6df; --ink2:#b6bdc9; --ink3:#8d97a8;
+          --line:#333d4f; --line2:#46536a;
+          --accent:#3ec9ae; --accent-ink:#7fe0cb; --accent-soft:#173b34;
+          --amber:#f0b45a; --amber-soft:#3d2f14;
+          --red:#ff9d94; --red-soft:#42201d;
+          --good:#3ec9ae; --good-soft:#173b34;
+          --chart-grid:#2c3547; --chart-axis:#6d7889;
+          --shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3);
+        }
+      }
+      *{box-sizing:border-box}
+      html{-webkit-text-size-adjust:100%}
+      body{margin:0;background:var(--bg);color:var(--ink);
+        font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        font-size:16px;line-height:1.5}
+      .serif{font-family:"Iowan Old",Palatino,"Palatino Linotype",Georgia,serif}
+      .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+      a{color:var(--accent-ink)}
+      :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+      button{font:inherit;cursor:pointer}
+      input,select{font:inherit;color:var(--ink)}
+      .wrap{max-width:1180px;margin:0 auto;padding:0 18px 64px}
+
+      /* ---------- top bar ---------- */
+      .topbar{border-bottom:1px solid var(--line);background:var(--bg2)}
+      .topbar-in{max-width:1180px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+      .brand{font-family:"Iowan Old",Palatino,Georgia,serif;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none;letter-spacing:.01em}
+      .brand span{color:var(--accent-ink)}
+      .topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+      .topnav a{color:var(--ink2);text-decoration:none;font-size:14px;padding:6px 10px;border-radius:8px}
+      .topnav a:hover{background:var(--surface2);color:var(--ink)}
+      .topnav a[aria-current="page"]{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+
+      /* ---------- hub ---------- */
+      .hero{padding:38px 0 8px}
+      .hero h1{font-family:"Iowan Old",Palatino,Georgia,serif;font-size:clamp(28px,4.6vw,42px);line-height:1.12;margin:0 0 10px;font-weight:700;max-width:20em}
+      .hero p{color:var(--ink2);max-width:44em;margin:0;font-size:17px}
+      .hub-tools{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 6px;align-items:center}
+      .searchbox{flex:1 1 240px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line2);border-radius:10px;padding:0 12px}
+      .searchbox input{border:0;background:transparent;padding:11px 0;width:100%;outline:none}
+      .chip{border:1px solid var(--line2);background:var(--surface);color:var(--ink2);border-radius:999px;padding:8px 14px;font-size:14px}
+      .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+      @media (prefers-color-scheme: dark){.chip[aria-pressed="true"]{color:#0c1714}}
+      .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:16px;margin-top:18px}
+      .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink)}
+      .card:hover{border-color:var(--accent)}
+      .card .cat{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+      .card h2{font-family:"Iowan Old",Palatino,Georgia,serif;font-size:21px;margin:0;line-height:1.25}
+      .card p{margin:0;color:var(--ink2);font-size:14.5px}
+      .card .meta{margin-top:auto;padding-top:8px;border-top:1px solid var(--line);font-size:13px;color:var(--ink3);display:flex;justify-content:space-between;gap:8px}
+      .card .go{color:var(--accent-ink);font-weight:600;white-space:nowrap}
+      .roadmap{margin-top:36px;background:var(--surface2);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+      .roadmap h2{font-family:"Iowan Old",Palatino,Georgia,serif;font-size:19px;margin:0 0 6px}
+      .roadmap p{margin:0 0 8px;color:var(--ink2);font-size:14.5px}
+      .roadmap ul{margin:0;padding-left:20px;color:var(--ink2);font-size:14.5px;columns:2;column-gap:32px}
+      @media (max-width:640px){.roadmap ul{columns:1}}
+      .noresults{color:var(--ink2);padding:24px 0}
+
+      /* ---------- tool shell ---------- */
+      .backlink{display:inline-block;margin:20px 0 4px;font-size:14px;text-decoration:none}
+      .toolhead h1{font-family:"Iowan Old",Palatino,Georgia,serif;font-size:clamp(26px,4vw,36px);margin:2px 0 6px;line-height:1.15}
+      .toolhead .cat{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+      .toolhead p.sub{color:var(--ink2);margin:0 0 12px;max-width:46em}
+      .objbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0 20px}
+      .objbox>div{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+      .objbox h3{margin:0 0 4px;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3)}
+      .objbox p{margin:0;font-size:14.5px;color:var(--ink2)}
+      .layout{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+      @media (max-width:900px){.layout{grid-template-columns:1fr}}
+      .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+      .panel h2{font-family:"Iowan Old",Palatino,Georgia,serif;font-size:19px;margin:0 0 10px}
+      .panel h3{font-size:15px;margin:16px 0 6px}
+      .panel h3:first-of-type{margin-top:4px}
+      .stack{display:flex;flex-direction:column;gap:20px;min-width:0}
+      fieldset{border:1px solid var(--line);border-radius:8px;margin:0 0 14px;padding:10px 12px 12px}
+      legend{font-size:13px;font-weight:700;color:var(--ink2);padding:0 4px}
+      label.fl{display:block;font-size:13.5px;font-weight:600;margin:10px 0 4px}
+      label.fl:first-child{margin-top:0}
+      .hint{font-size:12.5px;color:var(--ink3);font-weight:400}
+      input[type="number"],input[type="text"],select{width:100%;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surface)}
+      input[type="range"]{width:100%;accent-color:var(--accent);padding:6px 0}
+      .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+      .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+      .btn{display:inline-block;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:9px 16px;font-weight:600;font-size:15px;text-decoration:none}
+      @media (prefers-color-scheme: dark){.btn{color:#0c1714}}
+      .btn.secondary{background:transparent;color:var(--accent-ink)}
+      .btn.small{padding:6px 11px;font-size:13.5px}
+      .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+      canvas.chart{width:100%;height:auto;display:block;background:var(--surface)}
+      .readout{font-size:14.5px;color:var(--ink2)}
+      .readout strong{color:var(--ink)}
+      .bigstat{display:flex;gap:18px;flex-wrap:wrap;margin:6px 0 2px}
+      .bigstat div{min-width:110px}
+      .bigstat .v{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:22px;font-weight:700;color:var(--ink)}
+      .bigstat .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+      table.data{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+      table.data th,table.data td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right}
+      table.data th:first-child,table.data td:first-child{text-align:left}
+      table.data th{color:var(--ink2);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+      table.data td.num,table.data th.num{font-family:ui-monospace,Menlo,Consolas,monospace}
+      tr.hl td{background:var(--accent-soft);font-weight:600}
+      tr.out td{background:var(--red-soft)}
+      .tag{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 8px;vertical-align:1px}
+      .tag.bind{background:var(--amber-soft);color:var(--amber)}
+      .tag.ok{background:var(--good-soft);color:var(--good)}
+      .tag.bad{background:var(--red-soft);color:var(--red)}
+      .banner{border-radius:8px;padding:11px 14px;font-size:14.5px;margin:12px 0;border:1px solid}
+      .banner.warn{background:var(--amber-soft);border-color:var(--amber);color:var(--ink)}
+      .banner.bad{background:var(--red-soft);border-color:var(--red);color:var(--ink)}
+      .banner.good{background:var(--good-soft);border-color:var(--good);color:var(--ink)}
+
+      /* predict / check */
+      .teach{border:1px solid var(--line2);border-radius:var(--radius);padding:16px;background:var(--surface)}
+      .teach .step{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+      .teach h2{font-family:"Iowan Old",Palatino,Georgia,serif;font-size:19px;margin:2px 0 8px}
+      .teach p.q{margin:0 0 10px;font-size:15px}
+      .opts{display:flex;flex-direction:column;gap:8px}
+      .opts label{display:flex;gap:9px;align-items:flex-start;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:14.5px;cursor:pointer}
+      .opts input{margin-top:3px;accent-color:var(--accent)}
+      .feedback{margin-top:10px;font-size:14.5px;border-radius:8px;padding:10px 12px;display:none}
+      .feedback.show{display:block}
+      .feedback.right{background:var(--good-soft);border:1px solid var(--good)}
+      .feedback.wrong{background:var(--red-soft);border:1px solid var(--red)}
+
+      /* sensitivity sliders */
+      .sensctl{border-bottom:1px solid var(--line);padding:10px 0}
+      .sensctl:last-child{border-bottom:0}
+      .sensctl .lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+      .sensctl .lab b{font-size:14.5px}
+      .sensctl .pair{display:grid;grid-template-columns:1fr 92px;gap:10px;align-items:center}
+      .rangebar{position:relative;height:10px;background:var(--surface2);border:1px solid var(--line);border-radius:6px;margin-top:7px}
+      .rangebar .zone{position:absolute;top:0;bottom:0;background:var(--accent);opacity:.45;border-radius:6px}
+      .rangebar .mark{position:absolute;top:-3px;width:3px;height:14px;background:var(--ink);border-radius:2px}
+      .rangebar .mark.out{background:var(--red)}
+      .rangebar-cap{font-size:12px;color:var(--ink3);margin-top:3px}
+      /* tornado */
+      .tornado{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+      .trow{display:grid;grid-template-columns:150px 1fr 86px;gap:10px;align-items:center;font-size:13.5px}
+      @media (max-width:560px){.trow{grid-template-columns:104px 1fr 70px}}
+      .tbar{position:relative;height:16px;background:var(--surface2);border-radius:4px}
+      .tbar i{position:absolute;top:0;bottom:0;background:var(--accent);border-radius:4px;opacity:.8}
+      .trow .tv{font-family:ui-monospace,Menlo,Consolas,monospace;text-align:right}
+      footer.note{margin-top:44px;border-top:1px solid var(--line);padding-top:14px;color:var(--ink3);font-size:13.5px;max-width:52em}
+      .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+      @media print{.topbar,.btnrow,.hub-tools{display:none}}
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="topbar-in">
+        <a class="brand" href="#/">Analytics<span>Lab</span></a>
+        <nav class="topnav" aria-label="Tools">
+          <a href="#/lp" data-nav="lp">LP Explorer</a>
+          <a href="#/sensitivity" data-nav="sensitivity">LP Sensitivity</a>
+          <a href="#/clt" data-nav="clt">CLT &amp; CI Lab</a>
+          <a href="#/decision" data-nav="decision">Decision Lab</a>
+        </nav>
+      </div>
+    </div>
+    <main class="wrap" id="app" tabindex="-1"></main>
+    <script>
+    "use strict";
+    /* ================= utilities ================= */
+    var $=function(s,r){return (r||document).querySelector(s)};
+    var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+    function el(html){var d=document.createElement("div");d.innerHTML=html;return d.firstElementChild}
+    function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+    function fmt(x,d){if(x===null||x===undefined||!isFinite(x))return "—";d=(d===undefined?2:d);return Number(x).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d})}
+    function fmt0(x){return fmt(x,0)}
+    function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+    function encState(o){try{return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}catch(e){return ""}}
+    function decState(s){try{return JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/")))))}catch(e){return null}}
+    function setHash(route,state){var h="#/"+route+(state?"?s="+encState(state):"");if(location.hash!==h)history.replaceState(null,"",h)}
+    function dl(name,text){var b=new Blob([text],{type:"text/plain"});var u=URL.createObjectURL(b);var a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},400)}
+    function fitCanvas(cv){var r=cv.getBoundingClientRect();var d=window.devicePixelRatio||1;var w=Math.max(300,Math.round(r.width));var h=Math.round(w*(cv.dataset.ratio?parseFloat(cv.dataset.ratio):0.68));cv.width=w*d;cv.height=h*d;cv.style.height=h+"px";var ctx=cv.getContext("2d");ctx.setTransform(d,0,0,d,0,0);return{ctx:ctx,W:w,H:h}}
+    function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+
+    /* ================= shared LP core (2 variables) =================
+       problem: {cx, cy, sense:'max'|'min', cons:[{a,b,op,rhs,name}]} plus x,y >= 0 */
+    var OKTO={
+      cx:4, cy:3, sense:"max",
+      xname:"OktoValve masks (Xv)", yname:"OktoPrint masks (Xp)",
+      cons:[
+        {a:2,   b:0, op:"<=", rhs:1000, name:"C1 · Valves"},
+        {a:2.5, b:1, op:"<=", rhs:1600, name:"C2 · Labor"},
+        {a:2.7, b:3, op:"<=", rhs:2688, name:"C3 · Fabric"},
+        {a:-1,  b:1, op:"<=", rhs:200,  name:"C4 · Print − Valve difference"},
+        {a:1,   b:1, op:">=", rhs:100,  name:"C5 · Minimum commitment"}
+      ]
+    };
+    function oktoCopy(){return JSON.parse(JSON.stringify(OKTO))}
+    function satisfies(c,x,y,tol){var v=c.a*x+c.b*y;tol=tol||1e-7;if(c.op==="<=")return v<=c.rhs+tol;if(c.op===">=")return v>=c.rhs-tol;return Math.abs(v-c.rhs)<=tol}
+    function feasible(P,x,y){for(var i=0;i<P.cons.length;i++)if(!satisfies(P.cons[i],x,y,1e-6))return false;return x>=-1e-9&&y>=-1e-9}
+    function objAt(P,x,y){return P.cx*x+P.cy*y}
+    function allLines(P){var L=P.cons.map(function(c){return{a:c.a,b:c.b,r:c.rhs,idx:-1}});L.push({a:1,b:0,r:0,idx:-2});L.push({a:0,b:1,r:0,idx:-3});return L}
+    function solveLP(P){
+      var L=allLines(P),pts=[],i,j;
+      for(i=0;i<L.length;i++)for(j=i+1;j<L.length;j++){
+        var d=L[i].a*L[j].b-L[j].a*L[i].b;if(Math.abs(d)<1e-12)continue;
+        var x=(L[i].r*L[j].b-L[j].r*L[i].b)/d, y=(L[i].a*L[j].r-L[j].a*L[i].r)/d;
+        if(x<-1e-9||y<-1e-9)continue;x=Math.max(0,x);y=Math.max(0,y);
+        if(!feasible(P,x,y))continue;
+        var dup=false;for(var k=0;k<pts.length;k++)if(Math.hypot(pts[k].x-x,pts[k].y-y)<1e-6){dup=true;break}
+        if(!dup)pts.push({x:x,y:y,z:objAt(P,x,y)});
+      }
+      if(!pts.length)return{status:"infeasible",vertices:[]};
+      /* unbounded? look for a feasible ray direction improving the objective */
+      var dirs=[];for(i=0;i<L.length;i++){dirs.push({x:-L[i].b,y:L[i].a});dirs.push({x:L[i].b,y:-L[i].a})}
+      var sgn=(P.sense==="max")?1:-1,unb=false;
+      for(i=0;i<dirs.length;i++){var dd=dirs[i];if(Math.abs(dd.x)<1e-12&&Math.abs(dd.y)<1e-12)continue;
+        var ok=true;for(j=0;j<P.cons.length;j++){var c=P.cons[j],v=c.a*dd.x+c.b*dd.y;if(c.op==="<="&&v>1e-9)ok=false;if(c.op===">="&&v<-1e-9)ok=false;if(c.op==="="&&Math.abs(v)>1e-9)ok=false}
+        if(dd.x<-1e-9||dd.y<-1e-9)ok=false;
+        if(ok&&sgn*(P.cx*dd.x+P.cy*dd.y)>1e-9)unb=true;
+      }
+      if(unb)return{status:"unbounded",vertices:pts};
+      var best=pts[0];for(i=1;i<pts.length;i++)if(sgn*(pts[i].z-best.z)>1e-9)best=pts[i];
+      /* binding constraints at best (incl. nonnegativity) */
+      var bind=[];for(i=0;i<P.cons.length;i++){var c2=P.cons[i];if(Math.abs(c2.a*best.x+c2.b*best.y-c2.rhs)<1e-6)bind.push(i)}
+      var bindX=best.x<1e-9, bindY=best.y<1e-9;
+      return{status:"optimal",vertices:pts,opt:{x:best.x,y:best.y,z:best.z},binding:bind,bindX:bindX,bindY:bindY};
+    }
+    /* lines (as {a,b,r}) that are tight at point p: constraints + axes */
+    function tightLines(P,p){
+      var out=[];
+      P.cons.forEach(function(c,i){if(Math.abs(c.a*p.x+c.b*p.y-c.rhs)<1e-6)out.push({a:c.a,b:c.b,r:c.rhs,ci:i,axis:null})});
+      if(Math.abs(p.x)<1e-9)out.push({a:1,b:0,r:0,ci:-1,axis:"x"});
+      if(Math.abs(p.y)<1e-9)out.push({a:0,b:1,r:0,ci:-1,axis:"y"});
+      return out;
+    }
+    /* shadow prices: solve for duals on the (first) pair of tight lines.
+       For max problem: c = sum lam_i * a_i with lam>=0 for <=, lam<=0 for >=, lam free-ish>=0 for axis lines handled by sign of axis dual. */
+    function shadowPrices(P,p){
+      var T=tightLines(P,p),res={};P.cons.forEach(function(c,i){res[i]=0});
+      if(T.length<2)return{prices:res,pair:null};
+      var A=T[0],B=T[1],det=A.a*B.b-B.a*A.b;if(Math.abs(det)<1e-12)return{prices:res,pair:null};
+      var lA=(P.cx*B.b-P.cy*B.a)/det, lB=(A.a*P.cy-A.b*P.cx)/det;
+      var pair=[A,B],lams=[lA,lB];
+      for(var k=0;k<2;k++){var t=pair[k];if(t.ci>=0)res[t.ci]=lams[k]}
+      return{prices:res,pair:pair,lams:lams};
+    }
+    function dualSignOK(P,c,lam){ /* lam is dObj/dRhs for constraint c */
+      if(P.sense==="max"){if(c.op==="<=")return lam>=-1e-9;if(c.op===">=")return lam<=1e-9;return true}
+      else{if(c.op==="<=")return lam<=1e-9;if(c.op===">=")return lam>=-1e-9;return true}
+    }
+    /* Allowable range for objective coefficient j (0=x,1=y) keeping vertex p optimal:
+       vary c_j; duals on the tight pair vary linearly; p stays optimal while all tight-line
+       duals keep their required signs and p stays at least as good as every other vertex. */
+    function allowableObj(P,p,j){
+      var sol=solveLP(P);if(sol.status!=="optimal")return null;
+      var lo=-Infinity,hi=Infinity,base=(j===0?P.cx:P.cy);
+      /* vertex-dominance bounds */
+      sol.vertices.forEach(function(v){if(Math.hypot(v.x-p.x,v.y-p.y)<1e-7)return;
+        var d=(j===0)?(p.x-v.x):(p.y-v.y); /* coefficient of delta in z(p)-z(v); constant part uses base c */
+        var rest=objAt(P,p.x,p.y)-objAt(P,v.x,v.y)-d*0; /* = base difference */
+        var baseDiff=(P.cx*(p.x-v.x)+P.cy*(p.y-v.y));
+        if(Math.abs(d)<1e-12)return;
+        var bound=base-baseDiff/d;
+        if(d>0)lo=Math.max(lo,bound);else hi=Math.min(hi,bound);
+      });
+      return{lo:lo,hi:hi,base:base,dec:(lo===-Infinity?Infinity:base-lo),inc:(hi===Infinity?Infinity:hi-base)};
+    }
+    /* Allowable range for RHS of constraint i keeping the same tight pair optimal:
+       vertex moves linearly with b_i; range = where it stays feasible (primal) — duals don't depend on b. */
+    function allowableRHS(P,p,i){
+      var T=tightLines(P,p);if(T.length<2)return null;
+      var A=T[0],B=T[1],det=A.a*B.b-B.a*A.b;if(Math.abs(det)<1e-12)return null;
+      /* vertex as function of t = rhs of constraint i (only moves if i is one of the tight pair) */
+      function vertexAt(t){
+        var ra=(A.ci===i)?t:A.r, rb=(B.ci===i)?t:B.r;
+        return{x:(ra*B.b-rb*A.b)/det, y:(A.a*rb-B.a*ra)/det};
+      }
+      var base=P.cons[i].rhs;
+      if(A.ci!==i&&B.ci!==i){
+        /* non-binding: range until this constraint becomes tight at p (or p leaves via others — p fixed) */
+        var c=P.cons[i],v=c.a*p.x+c.b*p.y;
+        if(c.op==="<=")return{lo:v,hi:Infinity,base:base,dec:(c.rhs-v),inc:Infinity,note:"non-binding"};
+        if(c.op===">=")return{lo:-Infinity,hi:v,base:base,dec:Infinity,inc:(v-c.rhs),note:"non-binding"};
+        return null;
+      }
+      var v0=vertexAt(base);
+      /* direction of motion per unit t */
+      var v1=vertexAt(base+1),dx=v1.x-v0.x,dy=v1.y-v0.y;
+      var lo=-Infinity,hi=Infinity;
+      function applyBound(val,coef,isMin){ /* require val + coef*(t-base) >= 0 style handled by caller */ }
+      /* x>=0, y>=0 */
+      if(dx>1e-12)lo=Math.max(lo,base-v0.x/dx);else if(dx<-1e-12)hi=Math.min(hi,base-v0.x/dx);
+      if(dy>1e-12)lo=Math.max(lo,base-v0.y/dy);else if(dy<-1e-12)hi=Math.min(hi,base-v0.y/dy);
+      P.cons.forEach(function(c,k){
+        if(k===i)return;
+        var lhs=c.a*v0.x+c.b*v0.y, dl=c.a*dx+c.b*dy, slack;
+        if(c.op==="<="){slack=c.rhs-lhs;if(dl>1e-12)hi=Math.min(hi,base+slack/dl);else if(dl<-1e-12)lo=Math.max(lo,base+slack/dl)}
+        else if(c.op===">="){slack=lhs-c.rhs;if(dl>1e-12)lo=Math.max(lo,base-slack/dl);else if(dl<-1e-12)hi=Math.min(hi,base-slack/dl)}
+      });
+      /* the varied constraint itself: if i is not in the tight pair this branch isn't hit;
+         if it is, its own slack stays 0 by construction. Also require the OTHER tight
+         constraint's dual feasibility is b-independent. Also vertex must remain optimal:
+         guaranteed while feasible + same duals (complementary slackness). */
+      return{lo:lo,hi:hi,base:base,dec:(lo===-Infinity?Infinity:base-lo),inc:(hi===Infinity?Infinity:hi-base)};
+    }
+    function feasiblePolygon(P,xmax,ymax){
+      var poly=[{x:0,y:0},{x:xmax,y:0},{x:xmax,y:ymax},{x:0,y:ymax}];
+      function clip(poly,f){var out=[];for(var i=0;i<poly.length;i++){var cur=poly[i],prv=poly[(i+poly.length-1)%poly.length];var fc=f(cur),fp=f(prv);
+        if(fc>=0&&fp<0){var t=fp/(fp-fc);out.push({x:prv.x+t*(cur.x-prv.x),y:prv.y+t*(cur.y-prv.y)});out.push(cur)}
+        else if(fc>=0)out.push(cur);else if(fp>=0){var t2=fp/(fp-fc);out.push({x:prv.x+t2*(cur.x-prv.x),y:prv.y+t2*(cur.y-prv.y)})}}
+        return out}
+      P.cons.forEach(function(c){
+        if(c.op==="<=")poly=clip(poly,function(p){return c.rhs-(c.a*p.x+c.b*p.y)});
+        else if(c.op===">=")poly=clip(poly,function(p){return (c.a*p.x+c.b*p.y)-c.rhs});
+        else poly=clip(poly,function(p){return -Math.abs(c.a*p.x+c.b*p.y-c.rhs)+1e-9});
+        if(!poly.length)return poly;
+      });
+      poly=clip(poly,function(p){return p.x});poly=clip(poly,function(p){return p.y});
+      return poly;
+    }
+    /* ---- LP plot ---- */
+    function drawLP(cv,P,sol,opts){
+      opts=opts||{};var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+      var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),ink=cssVar("--ink"),acc=cssVar("--accent"),amb=cssVar("--amber"),red=cssVar("--red");
+      var xmax=10,ymax=10,i;
+      sol.vertices.forEach(function(v){xmax=Math.max(xmax,v.x*1.25);ymax=Math.max(ymax,v.y*1.25)});
+      P.cons.forEach(function(c){if(c.a>0)xmax=Math.max(xmax,c.rhs/c.a*1.05);if(c.b>0)ymax=Math.max(ymax,c.rhs/c.b*1.05)});
+      if(sol.opt){xmax=Math.max(xmax,sol.opt.x*1.3);ymax=Math.max(ymax,sol.opt.y*1.3)}
+      xmax=Math.min(xmax,1e6);ymax=Math.min(ymax,1e6);
+      var padL=54,padR=14,padT=12,padB=34,pw=W-padL-padR,ph=H-padT-padB;
+      function X(x){return padL+pw*x/xmax}function Y(y){return padT+ph-ph*y/ymax}
+      ctx.clearRect(0,0,W,H);
+      ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;ctx.lineWidth=1;
+      function niceStep(m){var p=Math.pow(10,Math.floor(Math.log10(m)));var s=m/p;return (s<=1?1:s<=2?2:s<=2.5?2.5:s<=5?5:10)*p}
+      var sx=niceStep(xmax/5),sy=niceStep(ymax/5),v;
+      ctx.textAlign="center";
+      for(v=0;v<=xmax;v+=sx){ctx.beginPath();ctx.moveTo(X(v),padT);ctx.lineTo(X(v),padT+ph);ctx.stroke();ctx.fillText(fmt(v,v<10&&v%1?1:0),X(v),H-18)}
+      ctx.textAlign="right";
+      for(v=0;v<=ymax;v+=sy){ctx.beginPath();ctx.moveTo(padL,Y(v));ctx.lineTo(padL+pw,Y(v));ctx.stroke();ctx.fillText(fmt(v,v<10&&v%1?1:0),padL-6,Y(v)+4)}
+      ctx.fillText("x →",W-16,H-18);ctx.save();ctx.translate(12,padT+10);ctx.fillText("y",0,0);ctx.restore();
+      var poly=feasiblePolygon(P,xmax,ymax);
+      if(poly.length>2){ctx.beginPath();poly.forEach(function(p,i2){if(i2===0)ctx.moveTo(X(p.x),Y(p.y));else ctx.lineTo(X(p.x),Y(p.y))});ctx.closePath();
+        ctx.fillStyle=acc;ctx.globalAlpha=.18;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=acc;ctx.lineWidth=1.6;ctx.stroke()}
+      /* constraint lines */
+      var cols=["#c2410c","#0369a1","#7c3aed","#be185d","#15803d","#a16207"];
+      ctx.lineWidth=1.4;
+      P.cons.forEach(function(c,i2){ctx.strokeStyle=cols[i2%cols.length];ctx.setLineDash(c.op===">="?[6,4]:[]);
+        ctx.beginPath();var p1,p2;
+        if(Math.abs(c.b)>1e-12){p1={x:0,y:c.rhs/c.b};p2={x:xmax,y:(c.rhs-c.a*xmax)/c.b}}
+        else{p1={x:c.rhs/c.a,y:0};p2={x:c.rhs/c.a,y:ymax}}
+        ctx.moveTo(X(p1.x),Y(p1.y));ctx.lineTo(X(p2.x),Y(p2.y));ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=cols[i2%cols.length];ctx.textAlign="left";ctx.font="bold 11px system-ui";
+        var lx=Math.min(p2.x,xmax*.98),ly=(Math.abs(c.b)>1e-12)?(c.rhs-c.a*lx)/c.b:ymax*.9;
+        if(ly>=0&&ly<=ymax)ctx.fillText("C"+(i2+1),X(lx)+4,Y(ly)-4);
+      });
+      /* objective level lines through optimum */
+      if(sol.opt){ctx.strokeStyle=amb;ctx.lineWidth=1.2;ctx.setLineDash([3,4]);
+        [0.5,0.75,1].forEach(function(fr){var z=sol.opt.z*fr;ctx.beginPath();
+          if(Math.abs(P.cy)>1e-12){ctx.moveTo(X(0),Y(z/P.cy));ctx.lineTo(X(xmax),Y((z-P.cx*xmax)/P.cy))}
+          else{ctx.moveTo(X(z/P.cx),Y(0));ctx.lineTo(X(z/P.cx),Y(ymax))}
+          ctx.stroke()});ctx.setLineDash([])}
+      /* vertices */
+      sol.vertices.forEach(function(v2){ctx.beginPath();ctx.arc(X(v2.x),Y(v2.y),4,0,7);ctx.fillStyle=ink;ctx.fill()});
+      if(sol.opt){ctx.beginPath();ctx.arc(X(sol.opt.x),Y(sol.opt.y),8,0,7);ctx.strokeStyle=red;ctx.lineWidth=2.4;ctx.stroke();
+        ctx.beginPath();ctx.arc(X(sol.opt.x),Y(sol.opt.y),4.5,0,7);ctx.fillStyle=red;ctx.fill();
+        ctx.fillStyle=red;ctx.font="bold 12px system-ui";ctx.textAlign="left";
+        ctx.fillText("optimum ("+fmt(sol.opt.x,sol.opt.x%1?1:0)+", "+fmt(sol.opt.y,sol.opt.y%1?1:0)+")",X(sol.opt.x)+11,Y(sol.opt.y)-8)}
+      if(opts.ghostOpt){ctx.beginPath();ctx.arc(X(opts.ghostOpt.x),Y(opts.ghostOpt.y),7,0,7);ctx.strokeStyle=axis;ctx.lineWidth=1.6;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=axis;ctx.font="11px system-ui";ctx.textAlign="left";ctx.fillText("base optimum",X(opts.ghostOpt.x)+9,Y(opts.ghostOpt.y)+14)}
+    }
+    function lpState(P){return{cx:P.cx,cy:P.cy,sense:P.sense,cons:P.cons.map(function(c){return[a0(c.a),a0(c.b),c.op,c.rhs,c.name]}),xn:P.xname,yn:P.yname};function a0(v){return v}}
+    function lpFromState(s){if(!s||!s.cons)return oktoCopy();return{cx:+s.cx,cy:+s.cy,sense:s.sense==="min"?"min":"max",xname:s.xn||"x",yname:s.yn||"y",cons:s.cons.map(function(c){return{a:+c[0],b:+c[1],op:c[2],rhs:+c[3],name:c[4]||""}})}}
+
+    /* ================= teaching-layer helper ================= */
+    function teachBox(kind,title,q,options,correct,why){
+      var id="tb"+Math.random().toString(36).slice(2,8);
+      var h='<section class="teach" aria-label="'+esc(kind)+'"><div class="step">'+esc(kind)+'</div><h2>'+esc(title)+'</h2><p class="q">'+q+'</p><div class="opts" role="radiogroup" aria-label="'+esc(title)+'">';
+      options.forEach(function(o,i){h+='<label><input type="radio" name="'+id+'" value="'+i+'"><span>'+o+'</span></label>'});
+      h+='</div><div class="btnrow"><button type="button" class="btn small" data-check="'+id+'">Check my answer</button></div><div class="feedback" id="fb-'+id+'" role="status"></div></section>';
+      setTimeout(function(){
+        var btn=document.querySelector('[data-check="'+id+'"]');if(!btn)return;
+        btn.addEventListener("click",function(){
+          var sel=document.querySelector('input[name="'+id+'"]:checked'),fb=document.getElementById("fb-"+id);
+          fb.classList.add("show");
+          if(!sel){fb.className="feedback show wrong";fb.textContent="Pick an option first, then check.";return}
+          if(+sel.value===correct){fb.className="feedback show right";fb.innerHTML="<strong>Correct.</strong> "+why}
+          else{fb.className="feedback show wrong";fb.innerHTML="<strong>Not quite.</strong> "+why}
+        });
+      },0);
+      return h;
+    }
+    function toolHead(cat,title,sub,obj,prereq,time){
+      return '<a class="backlink" href="#/">← All tools</a><div class="toolhead"><div class="cat">'+esc(cat)+'</div><h1>'+esc(title)+'</h1><p class="sub">'+sub+'</p>'+
+      '<div class="objbox"><div><h3>Learning objective</h3><p>'+obj+'</p></div><div><h3>Before you start</h3><p>'+prereq+'</p></div><div><h3>Time</h3><p>'+time+'</p></div></div></div>';
+    }
+
+    /* ================= HUB ================= */
+    var TOOLS=[
+      {id:"lp",cat:"Optimization",title:"LP Explorer",desc:"Build your own two-variable linear program. Draw the feasible region, evaluate every corner point, and watch the optimum move as the objective changes.",meta:"Guided · Explore · Check",kw:"linear programming feasible region corner optimum constraints objective"},
+      {id:"sensitivity",cat:"Optimization",title:"LP Sensitivity Lab",desc:"Start from the same LP and push one number at a time: objective coefficients and right-hand sides. See shadow prices, slack, and the ranges where the current optimum survives.",meta:"Guided · Explore · Check",kw:"sensitivity shadow price allowable range rhs objective coefficient what-if tornado"},
+      {id:"clt",cat:"Probability & Statistics",title:"CLT & Confidence Interval Lab",desc:"Sample from a population you choose and watch the sampling distribution take shape — then check how often a 95% confidence interval actually captures the true mean.",meta:"Guided · Explore · Check",kw:"central limit theorem sampling distribution confidence interval coverage mean"},
+      {id:"decision",cat:"Decision Analysis",title:"Decision Lab",desc:"Compare alternatives under uncertainty with expected value, maximin, maximax, and regret — then find the probability where the best choice flips.",meta:"Guided · Explore · Check",kw:"decision expected value emv maximin maximax regret sensitivity probability states"}
+    ];
+    function renderHub(app){
+      var h='<div class="hero"><h1>Decision modeling, one idea at a time.</h1><p>Interactive labs for optimization, probability, and decision analysis. Every tool follows the same pattern — predict first, explore with your own numbers, then check yourself. Settings travel with the page address, so a link you send always opens the exact same problem.</p></div>';
+      h+='<div class="hub-tools"><div class="searchbox"><span aria-hidden="true">⌕</span><input type="search" id="hubq" placeholder="Search tools — try “shadow price” or “regret”" aria-label="Search tools"></div>';
+      h+='<button type="button" class="chip" data-cat="All" aria-pressed="true">All</button><button type="button" class="chip" data-cat="Optimization" aria-pressed="false">Optimization</button><button type="button" class="chip" data-cat="Probability & Statistics" aria-pressed="false">Probability &amp; Stats</button><button type="button" class="chip" data-cat="Decision Analysis" aria-pressed="false">Decision Analysis</button></div>';
+      h+='<div class="cards" id="cards">';
+      TOOLS.forEach(function(t){h+='<a class="card" href="#/'+t.id+'" data-cat="'+esc(t.cat)+'" data-kw="'+esc((t.title+" "+t.desc+" "+t.kw).toLowerCase())+'"><div class="cat">'+esc(t.cat)+'</div><h2>'+esc(t.title)+'</h2><p>'+esc(t.desc)+'</p><div class="meta"><span>'+esc(t.meta)+'</span><span class="go">Open →</span></div></a>'});
+      h+='</div><p class="noresults" id="nores" hidden>No tool matches that search. Try a concept name, like “corner”, “interval”, or “expected value”.</p>';
+      h+='<section class="roadmap"><h2>On the way</h2><p>The platform is built so new labs plug into the same shell. Planned next, in course order:</p><ul><li>LP in three variables (3D feasible region)</li><li>Probability distributions explorer</li><li>Linear regression lab</li><li>Forecasting: moving averages &amp; exponential smoothing</li><li>Queuing lab</li><li>Decision tree builder</li></ul></section>';
+      h+='<footer class="note">The two LP tools share the Okto mask problem used in this course\'s decision-modeling materials; the code and all explanatory text in these labs are new. All computation runs in your browser; nothing is uploaded.</footer>';
+      app.innerHTML=h;
+      var q=$("#hubq"),cat="All";
+      function apply(){var term=q.value.trim().toLowerCase(),n=0;
+        $$("#cards .card").forEach(function(c){var ok=(cat==="All"||c.dataset.cat===cat)&&(!term||c.dataset.kw.indexOf(term)>=0);c.style.display=ok?"":"none";if(ok)n++});
+        $("#nores").hidden=n>0}
+      q.addEventListener("input",apply);
+      $$(".chip").forEach(function(ch){ch.addEventListener("click",function(){$$(".chip").forEach(function(c2){c2.setAttribute("aria-pressed","false")});ch.setAttribute("aria-pressed","true");cat=ch.dataset.cat;apply()})});
+    }
+
+    /* ================= LP EXPLORER ================= */
+    function renderLP(app,state){
+      var P=lpFromState(state);
+      var h=toolHead("Optimization","LP Explorer",
+        "A two-variable linear program, solved exactly. The default problem is the Okto mask problem used across this course — edit any coefficient, add or remove constraints, or start from a shareable link and the picture, the corner points, and the optimum update together.",
+        "Read a feasible region, identify corner (extreme) points, and explain why an optimum of a linear program is always at a corner.",
+        "Graphing linear inequalities; solving two equations in two unknowns.","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you touch the controls",
+        "In the default problem, two constraints are doing the real work at the optimum — Labor (C2) and Fabric (C3). Suppose the profit on OktoValve masks rises from $4 to $8 while everything else stays fixed. What happens to the optimal production plan?",
+        ["Nothing changes — the same corner stays optimal, profit just rises","The optimum slides along the Labor line toward more OktoValve masks","The optimum jumps to making only OktoValve masks (500, 0)","The problem becomes infeasible"],1,
+        "A steeper objective tilts the level lines, and the optimum slides along the Labor line to the corner where Valves (C1) also binds: (500, 350), profit $5,050. It does not jump to (500, 0) — that corner earns only $4,000 — and past a coefficient of $7.50 the (440, 500) corner stops being the best trade-off. (At $6 it would have survived: $4,140 there vs. $4,050 at (500, 350).) Try it below: set the Xv coefficient to 8, then to 6, and compare.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Your problem</h2>';
+      h+='<div class="row2"><div><label class="fl" for="lp-xn">Variable x name</label><input type="text" id="lp-xn"></div><div><label class="fl" for="lp-yn">Variable y name</label><input type="text" id="lp-yn"></div></div>';
+      h+='<label class="fl">Objective <span class="hint">— profit (or cost) per unit</span></label><div class="row3"><select id="lp-sense" aria-label="Optimization sense"><option value="max">Maximize</option><option value="min">Minimize</option></select><input type="number" id="lp-cx" step="any" aria-label="Coefficient of x"><input type="number" id="lp-cy" step="any" aria-label="Coefficient of y"></div>';
+      h+='<div id="lp-cons"></div>';
+      h+='<div class="btnrow"><button type="button" class="btn secondary small" id="lp-add">+ Add constraint</button><button type="button" class="btn secondary small" id="lp-reset">Reset to Okto problem</button></div>';
+      h+='<p class="hint" style="margin-top:10px">Both variables are always ≥ 0. Your problem is encoded in this page\'s address — copy the address to share this exact setup.</p></section>';
+      h+='<section class="panel"><h2>Result</h2><div id="lp-result" class="readout" aria-live="polite"></div><div id="lp-vtable"></div>';
+      h+='<div class="btnrow"><button type="button" class="btn small" id="lp-dl">Download results (.txt)</button><a class="btn secondary small" id="lp-tosens" href="#/sensitivity">Open in Sensitivity Lab →</a></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Feasible region</h2><canvas class="chart" id="lp-cv" data-ratio="0.78" role="img" aria-label="Graph of the feasible region, constraint lines, corner points, and the optimal point"></canvas><p class="hint">Shaded region: points satisfying every constraint. Dashed amber lines: objective level lines — the optimum is where the best level line last touches the region, always at a corner.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "Why is it enough to evaluate only the corner points when solving an LP graphically?",
+        ["Because the objective is a straight line, so its best value over a polygon is reached at an extreme point of the region","Because corner points are the only points that satisfy the constraints","Because the solver rounds every answer to a corner anyway","Because constraints are always binding at every feasible point"],0,
+        "Moving along a level line keeps the objective constant; sliding it in the improving direction, the last feasible point it touches is a vertex of the feasible polygon (or an edge, whose endpoints are vertices with the same value). Interior points can always be improved — or matched at a corner.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      var consBox=$("#lp-cons");
+      function conRow(c){
+        var d=document.createElement("fieldset");d.className="conrow";
+        d.innerHTML='<legend>'+esc(c.name||"Constraint")+'</legend><div class="row3" style="grid-template-columns:1fr 1fr .7fr 1fr auto;gap:8px">'+
+        '<input type="number" step="any" class="ca" value="'+c.a+'" aria-label="Coefficient of x">'+
+        '<input type="number" step="any" class="cb" value="'+c.b+'" aria-label="Coefficient of y">'+
+        '<select class="cop" aria-label="Constraint direction"><option value="<=" '+(c.op==="<="?"selected":"")+'>≤</option><option value=">=" '+(c.op===">="?"selected":"")+'>≥</option></select>'+
+        '<input type="number" step="any" class="cr" value="'+c.rhs+'" aria-label="Right-hand side">'+
+        '<button type="button" class="btn secondary small crm" aria-label="Remove constraint">✕</button></div>'+
+        '<label class="fl">Label <input type="text" class="cn" value="'+esc(c.name||"")+'"></label>';
+        d.querySelector(".crm").addEventListener("click",function(){d.remove();sync()});
+        $$("input,select",d).forEach(function(inp){inp.addEventListener("input",sync)});
+        return d;
+      }
+      function readForm(){
+        P.xname=$("#lp-xn").value||"x";P.yname=$("#lp-yn").value||"y";
+        P.sense=$("#lp-sense").value;P.cx=parseFloat($("#lp-cx").value)||0;P.cy=parseFloat($("#lp-cy").value)||0;
+        P.cons=$$(".conrow",consBox).map(function(d){return{a:parseFloat($(".ca",d).value)||0,b:parseFloat($(".cb",d).value)||0,op:$(".cop",d).value,rhs:parseFloat($(".cr",d).value)||0,name:$(".cn",d).value}});
+      }
+      function writeForm(){
+        $("#lp-xn").value=P.xname;$("#lp-yn").value=P.yname;$("#lp-sense").value=P.sense;$("#lp-cx").value=P.cx;$("#lp-cy").value=P.cy;
+        consBox.innerHTML="";P.cons.forEach(function(c){consBox.appendChild(conRow(c))});
+      }
+      var lastSol=null;
+      function sync(){
+        readForm();var sol=solveLP(P);lastSol=sol;
+        setHash("lp",lpState(P));$("#lp-tosens").href="#/sensitivity?s="+encState(lpState(P));
+        drawLP($("#lp-cv"),P,sol);
+        var R=$("#lp-result"),T=$("#lp-vtable");
+        if(sol.status==="infeasible"){R.innerHTML="<strong>No feasible solution.</strong> The constraints contradict each other — no point satisfies all of them at once. Loosen a right-hand side or flip a constraint direction.";T.innerHTML=""}
+        else if(sol.status==="unbounded"){R.innerHTML="<strong>The problem is unbounded.</strong> The objective can improve forever along the open edge of the region — a real model is missing a constraint.";T.innerHTML=""}
+        else{
+          var bindNames=sol.binding.map(function(i){return esc(P.cons[i].name||("C"+(i+1)))});if(sol.bindX)bindNames.push(esc(P.xname)+" = 0");if(sol.bindY)bindNames.push(esc(P.yname)+" = 0");
+          R.innerHTML='<div class="bigstat"><div><div class="v">'+fmt(sol.opt.x)+'</div><div class="k">'+esc(P.xname)+'</div></div><div><div class="v">'+fmt(sol.opt.y)+'</div><div class="k">'+esc(P.yname)+'</div></div><div><div class="v">'+fmt(sol.opt.z)+'</div><div class="k">Objective</div></div></div>'+
+          '<p>Binding at the optimum: <strong>'+(bindNames.length?bindNames.join(", "):"none")+'</strong>. Every other constraint has slack there.</p>';
+          var rows=sol.vertices.slice().sort(function(a,b){return P.sense==="max"?b.z-a.z:a.z-b.z}).map(function(v){
+            var isOpt=Math.hypot(v.x-sol.opt.x,v.y-sol.opt.y)<1e-6;
+            return '<tr'+(isOpt?' class="hl"':"")+'><td class="num">('+fmt(v.x)+', '+fmt(v.y)+')</td><td class="num">'+fmt(v.z)+'</td><td>'+(isOpt?"optimal":"")+'</td></tr>'}).join("");
+          T.innerHTML='<table class="data"><caption class="sr">Corner points and objective values</caption><thead><tr><th>Corner (x, y)</th><th class="num">Objective</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+        }
+      }
+      ["lp-xn","lp-yn","lp-sense","lp-cx","lp-cy"].forEach(function(id){$("#"+id).addEventListener("input",sync)});
+      $("#lp-add").addEventListener("click",function(){consBox.appendChild(conRow({a:1,b:1,op:"<=",rhs:100,name:"C"+(consBox.children.length+1)}));sync()});
+      $("#lp-reset").addEventListener("click",function(){P=oktoCopy();writeForm();sync()});
+      $("#lp-dl").addEventListener("click",function(){
+        if(!lastSol||lastSol.status!=="optimal"){dl("lp-results.txt","LP Explorer\nNo optimal solution (status: "+(lastSol?lastSol.status:"none")+").\n");return}
+        var t="LP Explorer — results\nObjective: "+(P.sense==="max"?"Maximize":"Minimize")+" "+P.cx+"·("+P.xname+") + "+P.cy+"·("+P.yname+")\nConstraints:\n";
+        P.cons.forEach(function(c){t+="  "+(c.name||"")+" : "+c.a+"x + "+c.b+"y "+c.op+" "+c.rhs+"\n"});
+        t+="Optimal: x = "+fmt(lastSol.opt.x)+", y = "+fmt(lastSol.opt.y)+", objective = "+fmt(lastSol.opt.z)+"\nCorner points:\n";
+        lastSol.vertices.forEach(function(v){t+="  ("+fmt(v.x)+", "+fmt(v.y)+") -> "+fmt(v.z)+"\n"});
+        dl("lp-results.txt",t);
+      });
+      writeForm();sync();
+      window.addEventListener("resize",function(){if(document.getElementById("lp-cv"))drawLP($("#lp-cv"),P,lastSol||solveLP(P))});
+    }
+
+    /* ================= LP SENSITIVITY LAB ================= */
+    function renderSens(app,state){
+      var B=lpFromState(state);            /* base problem — fixed for this session */
+      var baseSol=solveLP(B);
+      var W={cx:B.cx,cy:B.cy,rhs:B.cons.map(function(c){return c.rhs})};
+      function whatIfProblem(){var P=JSON.parse(JSON.stringify(B));P.cx=W.cx;P.cy=W.cy;P.cons.forEach(function(c,i){c.rhs=W.rhs[i]});return P}
+      var h=toolHead("Optimization","LP Sensitivity Lab",
+        "Sensitivity analysis answers the manager's real question: <em>how much can a number change before my decision changes?</em> The base problem is the same Okto mask problem as the LP Explorer. Move one slider at a time and watch the optimum, the shadow prices, and the allowable ranges respond.",
+        "Interpret shadow prices and slack, and use allowable increase / decrease ranges to say when the current optimal plan stays optimal.",
+        "The LP Explorer: corner points, binding constraints, and why optima sit at corners.","About 20 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you move a slider",
+        "The base optimum is ("+fmt(baseSol.opt?baseSol.opt.x:0,0)+", "+fmt(baseSol.opt?baseSol.opt.y:0,0)+") with Labor and Fabric binding. Labor's right-hand side is 1,600 hours. If available labor rises <em>past</em> its allowable increase, what happens?",
+        ["Profit keeps rising at the same shadow-price rate forever","The optimal corner moves: a different pair of constraints becomes binding, and labor's shadow price changes","The problem becomes infeasible","Nothing — right-hand sides never affect the optimum"],1,
+        "Inside the allowable range the corner slides along the Fabric line and each extra hour is worth the same shadow price. Past the range, the sliding corner hits another constraint (here, the Valves limit), the binding pair changes, and the old shadow price no longer applies. Watch the corner-change banner when you push the Labor slider far enough.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>What-if controls</h2><p class="hint">One number at a time. The shaded band under each slider is the allowable range — inside it, the base optimal corner stays optimal. The tick marks your current value; it turns red outside the band.</p><div id="sens-ctls"></div>';
+      h+='<div class="btnrow"><button type="button" class="btn secondary small" id="sens-reset">Reset what-if to base case</button><button type="button" class="btn secondary small" id="sens-okto">Reset problem to Okto</button></div></section>';
+      h+='<section class="panel"><h2>What-if summary</h2><div id="sens-banner"></div><div id="sens-summary" aria-live="polite"></div>';
+      h+='<div class="btnrow"><button type="button" class="btn small" id="sens-dl">Download sensitivity report (.txt)</button><a class="btn secondary small" id="sens-tolp" href="#/lp">Back to LP Explorer →</a></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Feasible region (what-if)</h2><canvas class="chart" id="sens-cv" data-ratio="0.78" role="img" aria-label="Feasible region for the what-if problem, with the base optimum shown as a dashed marker"></canvas><p class="hint">Dashed marker: the base-case optimum, so you can see the corner move — or refuse to.</p></section>';
+      h+='<section class="panel"><h2>Constraints at the what-if optimum</h2><div id="sens-table"></div><p class="hint">Shadow price = how much the objective improves per extra unit of that right-hand side, valid only inside the allowable range. Non-binding constraints have a shadow price of 0 and slack to spare.</p></section>';
+      h+='<section class="panel"><h2>What moves the objective most?</h2><p class="hint">Each bar: the swing in the optimal objective when that one number moves ±10% from its base value, everything else at base. Longer bar, more leverage.</p><div class="tornado" id="sens-tornado"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "Labor's shadow price is $0.8125 per hour and its allowable increase is 96 hours. A supplier offers 40 extra labor hours at $0.50/hour. Best analysis?",
+        ["Take it: each hour adds ≈ $0.81 of profit and costs $0.50, and 40 hours is inside the range where that price holds","Refuse: shadow prices only apply to decreases","Take it, but the gain is 40 × $0.81 no matter how many hours are offered","Impossible to say without re-solving from scratch"],0,
+        "A shadow price is a local rate: profit gain ≈ shadow price × extra units, trustworthy only within the allowable range. 40 &lt; 96, so the estimate holds and the deal nets about 40 × ($0.8125 − $0.50) = $12.50. Beyond the range, re-solve — the binding pair changes.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#sens-tolp").href="#/lp?s="+encState(lpState(B));
+      /* ---- allowable ranges at base optimum ---- */
+      var p=baseSol.opt?{x:baseSol.opt.x,y:baseSol.opt.y}:null;
+      var allow={cx:p?allowableObj(B,p,0):null, cy:p?allowableObj(B,p,1):null, rhs:B.cons.map(function(c,i){return p?allowableRHS(B,p,i):null})};
+      var basePrices=p?shadowPrices(B,p).prices:{};
+      /* ---- controls ---- */
+      var ctls=$("#sens-ctls");
+      function rangeOf(base){return{min:0,max:Math.max(2*base,base+1),step:base>=100?1:(base>=10?0.1:0.05)}}
+      function sliderSpec(key,label,base,allowR,unit){
+        var r=rangeOf(base);
+        var d=document.createElement("div");d.className="sensctl";
+        d.innerHTML='<div class="lab"><b>'+esc(label)+'</b><span class="hint">base '+fmt(base)+'</span></div>'+
+        '<div class="pair"><input type="range" min="'+r.min+'" max="'+r.max+'" step="'+r.step+'" value="'+base+'" data-k="'+key+'" aria-label="'+esc(label)+' slider">'+
+        '<input type="number" step="any" value="'+base+'" data-kn="'+key+'" aria-label="'+esc(label)+' value"></div>'+
+        '<div class="rangebar" aria-hidden="true"><div class="zone"></div><div class="mark"></div></div>'+
+        '<div class="rangebar-cap"></div>';
+        var zone=$(".zone",d),mark=$(".mark",d),cap=$(".rangebar-cap",d);
+        function paint(val){
+          var lo=(allowR&&isFinite(allowR.lo))?allowR.lo:r.min, hi=(allowR&&isFinite(allowR.hi))?allowR.hi:r.max;
+          zone.style.left=(100*(Math.max(lo,r.min)-r.min)/(r.max-r.min))+"%";
+          zone.style.width=(100*(Math.min(hi,r.max)-Math.max(lo,r.min))/(r.max-r.min))+"%";
+          var out=val<lo-1e-9||val>hi+1e-9;
+          mark.style.left="calc("+(100*(val-r.min)/(r.max-r.min))+"% - 1px)";mark.classList.toggle("out",out);
+          if(!allowR)cap.textContent="Allowable range unavailable (no unique optimum).";
+          else cap.innerHTML="Allowable: "+(isFinite(allowR.lo)?fmt(allowR.lo):"−∞")+" to "+(isFinite(allowR.hi)?fmt(allowR.hi):"+∞")+
+            " &nbsp;·&nbsp; decrease "+(isFinite(allowR.dec)?fmt(allowR.dec):"∞")+", increase "+(isFinite(allowR.inc)?fmt(allowR.inc):"∞")+
+            (out?' &nbsp;<span class="tag bad">outside range</span>':' &nbsp;<span class="tag ok">inside range</span>');
+        }
+        d._paint=paint;d._range=r;
+        var sl=$('input[type="range"]',d),nm=$('input[type="number"]',d);
+        sl.addEventListener("input",function(){setVal(key,parseFloat(sl.value));nm.value=sl.value;paint(parseFloat(sl.value));update()});
+        nm.addEventListener("input",function(){var v=parseFloat(nm.value);if(isNaN(v))return;setVal(key,v);sl.value=Math.max(r.min,Math.min(r.max,v));paint(v);update()});
+        return d;
+      }
+      function setVal(k,v){if(k==="cx")W.cx=v;else if(k==="cy")W.cy=v;else W.rhs[+k.slice(1)]=v}
+      function getVal(k){if(k==="cx")return W.cx;if(k==="cy")return W.cy;return W.rhs[+k.slice(1)]}
+      var ctlList=[];
+      ctlList.push({key:"cx",el:sliderSpec("cx","Objective coefficient · "+B.xname,B.cx,allow.cx)});
+      ctlList.push({key:"cy",el:sliderSpec("cy","Objective coefficient · "+B.yname,B.cy,allow.cy)});
+      B.cons.forEach(function(c,i){ctlList.push({key:"r"+i,el:sliderSpec("r"+i,"RHS · "+c.name,c.rhs,allow.rhs[i])})});
+      ctlList.forEach(function(c){ctls.appendChild(c.el);c.el._paint(getVal(c.key))});
+      /* ---- tornado (±10% swings from base) ---- */
+      (function(){
+        var rows=[];
+        function swing(mutate){var P2=JSON.parse(JSON.stringify(B));mutate(P2);var s=solveLP(P2);return s.status==="optimal"?s.opt.z:null}
+        [["Objective · x",function(P2,f){P2.cx=B.cx*f}],["Objective · y",function(P2,f){P2.cy=B.cy*f}]].forEach(function(pr){
+          var lo=swing(function(P2){pr[1](P2,0.9)}),hi=swing(function(P2){pr[1](P2,1.1)});
+          if(lo!==null&&hi!==null)rows.push({name:pr[0],lo:Math.min(lo,hi),hi:Math.max(lo,hi)});
+        });
+        B.cons.forEach(function(c,i){var lo=swing(function(P2){P2.cons[i].rhs=c.rhs*0.9}),hi=swing(function(P2){P2.cons[i].rhs=c.rhs*1.1});
+          if(lo!==null&&hi!==null)rows.push({name:"RHS · "+c.name,lo:Math.min(lo,hi),hi:Math.max(lo,hi)})});
+        rows.forEach(function(r){r.swing=r.hi-r.lo});rows.sort(function(a,b){return b.swing-a.swing});
+        var maxS=Math.max.apply(null,rows.map(function(r){return r.swing}).concat([1e-9]));
+        $("#sens-tornado").innerHTML=rows.map(function(r){
+          var left=100*(r.lo-baseSol.opt.z)/ (2*maxS) + 50 - 100*(r.swing)/(2*maxS);
+          return '<div class="trow"><span>'+esc(r.name)+'</span><span class="tbar"><i style="left:'+(50-50*r.swing/maxS)+'%;width:'+(100*r.swing/maxS)+'%"></i></span><span class="tv">±'+fmt(r.swing/2)+'</span></div>'}).join("")+
+          '<p class="hint">Objective at base: '+fmt(baseSol.opt.z)+'. Bars are centered; the value shown is half the total swing.</p>';
+      })();
+      /* ---- update ---- */
+      var wiSol=null;
+      function bindNames(P2,sol){var n=sol.binding.map(function(i){return P2.cons[i].name||("C"+(i+1))});if(sol.bindX)n.push(P2.xname+" = 0");if(sol.bindY)n.push(P2.yname+" = 0");return n}
+      function update(){
+        setHash("sensitivity",lpState(B));
+        var P2=whatIfProblem();wiSol=solveLP(P2);
+        drawLP($("#sens-cv"),P2,wiSol,{ghostOpt:baseSol.opt});
+        var bn=$("#sens-banner"),sm=$("#sens-summary"),tb=$("#sens-table");
+        if(wiSol.status!=="optimal"){bn.innerHTML='<div class="banner bad"><strong>The what-if problem has no optimum</strong> (status: '+wiSol.status+'). Move the sliders back toward the base case.</div>';sm.innerHTML="";tb.innerHTML="";return}
+        var moved=Math.hypot(wiSol.opt.x-baseSol.opt.x,wiSol.opt.y-baseSol.opt.y)>1e-6;
+        bn.innerHTML=moved?'<div class="banner warn"><strong>The optimal corner moved</strong> — from ('+fmt(baseSol.opt.x)+', '+fmt(baseSol.opt.y)+') to ('+fmt(wiSol.opt.x)+', '+fmt(wiSol.opt.y)+'). At least one slider is outside its allowable range, so base-case shadow prices no longer apply.</div>'
+          :'<div class="banner good"><strong>Same optimal corner</strong> as the base case ('+fmt(baseSol.opt.x)+', '+fmt(baseSol.opt.y)+'). Base-case shadow prices still price small changes correctly.</div>';
+        function dCell(a,b){var d=b-a;return fmt(b)+' <span class="hint">('+(d>1e-9?"+":"")+(Math.abs(d)>1e-9?fmt(d):"0")+')</span>'}
+        sm.innerHTML='<table class="data"><thead><tr><th></th><th class="num">Base case</th><th class="num">What-if</th></tr></thead><tbody>'+
+          '<tr><td>'+esc(B.xname)+'</td><td class="num">'+fmt(baseSol.opt.x)+'</td><td class="num">'+dCell(baseSol.opt.x,wiSol.opt.x)+'</td></tr>'+
+          '<tr><td>'+esc(B.yname)+'</td><td class="num">'+fmt(baseSol.opt.y)+'</td><td class="num">'+dCell(baseSol.opt.y,wiSol.opt.y)+'</td></tr>'+
+          '<tr><td>Objective (profit)</td><td class="num">'+fmt(baseSol.opt.z)+'</td><td class="num">'+dCell(baseSol.opt.z,wiSol.opt.z)+'</td></tr>'+
+          '<tr><td>Binding constraints</td><td>'+esc(bindNames(B,baseSol).join(", ")||"none")+'</td><td>'+esc(bindNames(P2,wiSol).join(", ")||"none")+'</td></tr></tbody></table>';
+        var prices=shadowPrices(P2,wiSol.opt).prices;
+        var rowsHtml=P2.cons.map(function(c,i){
+          var lhs=c.a*wiSol.opt.x+c.b*wiSol.opt.y,slack=(c.op==="<=")?(c.rhs-lhs):(lhs-c.rhs);
+          var binding=Math.abs(slack)<1e-6;
+          var al=allow.rhs[i];
+          var rangeTxt=al?((isFinite(al.dec)?fmt(al.dec):"∞")+" / "+(isFinite(al.inc)?fmt(al.inc):"∞")):"—";
+          return '<tr'+(binding?' class="hl"':"")+'><td>'+esc(c.name)+'</td><td class="num">'+fmt(c.rhs)+'</td><td class="num">'+fmt(Math.abs(slack))+'</td><td class="num">'+fmt(prices[i]||0,4)+'</td><td class="num">'+rangeTxt+'</td><td>'+(binding?'<span class="tag bind">binding</span>':'<span class="tag ok">slack</span>')+'</td></tr>'}).join("");
+        tb.innerHTML='<table class="data"><thead><tr><th>Constraint</th><th class="num">RHS</th><th class="num">Slack</th><th class="num">Shadow price</th><th class="num">Allow. dec / inc</th><th></th></tr></thead><tbody>'+rowsHtml+'</tbody></table>';
+      }
+      $("#sens-reset").addEventListener("click",function(){W={cx:B.cx,cy:B.cy,rhs:B.cons.map(function(c){return c.rhs})};
+        ctlList.forEach(function(c){var d=c.el;$('input[type="range"]',d).value=getVal(c.key);$('input[type="number"]',d).value=getVal(c.key);d._paint(getVal(c.key))});update()});
+      $("#sens-okto").addEventListener("click",function(){location.hash="#/sensitivity"});
+      $("#sens-dl").addEventListener("click",function(){
+        var t="LP Sensitivity Lab — report\nBase problem: Maximize "+B.cx+"·("+B.xname+") + "+B.cy+"·("+B.yname+")\n";
+        B.cons.forEach(function(c){t+="  "+c.name+": "+c.a+"x + "+c.b+"y "+c.op+" "+c.rhs+"\n"});
+        t+="Base optimum: ("+fmt(baseSol.opt.x)+", "+fmt(baseSol.opt.y)+"), objective "+fmt(baseSol.opt.z)+"\n\nAllowable ranges (base optimum stays optimal):\n";
+        t+="  Objective x coefficient: dec "+(allow.cx&&isFinite(allow.cx.dec)?fmt(allow.cx.dec):"inf")+", inc "+(allow.cx&&isFinite(allow.cx.inc)?fmt(allow.cx.inc):"inf")+"\n";
+        t+="  Objective y coefficient: dec "+(allow.cy&&isFinite(allow.cy.dec)?fmt(allow.cy.dec):"inf")+", inc "+(allow.cy&&isFinite(allow.cy.inc)?fmt(allow.cy.inc):"inf")+"\n";
+        B.cons.forEach(function(c,i){var al=allow.rhs[i];t+="  RHS "+c.name+": dec "+(al&&isFinite(al.dec)?fmt(al.dec):"inf")+", inc "+(al&&isFinite(al.inc)?fmt(al.inc):"inf")+", shadow price "+fmt(basePrices[i]||0,4)+"\n"});
+        if(wiSol&&wiSol.status==="optimal")t+="\nWhat-if optimum: ("+fmt(wiSol.opt.x)+", "+fmt(wiSol.opt.y)+"), objective "+fmt(wiSol.opt.z)+"\n";
+        dl("sensitivity-report.txt",t);
+      });
+      update();
+      window.addEventListener("resize",function(){if(document.getElementById("sens-cv"))update()});
+    }
+
+    /* ================= CLT & CI LAB ================= */
+    var POPS={
+      normal:{label:"Normal — test scores (μ = 50, σ = 10)",mu:50,sigma:10,draw:function(r){var u=0,v=0;while(!u)u=r();while(!v)v=r();return 50+10*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}},
+      uniform:{label:"Uniform — wait times 0 to 100 min (μ = 50, σ ≈ 28.9)",mu:50,sigma:100/Math.sqrt(12),draw:function(r){return r()*100}},
+      skewed:{label:"Right-skewed — daily sales, exponential (μ = 40, σ = 40)",mu:40,sigma:40,draw:function(r){return -40*Math.log(1-r())}},
+      bimodal:{label:"Bimodal — two customer groups (μ = 50, σ ≈ 20.6)",mu:50,sigma:Math.sqrt(425),draw:function(r){var c=r()<0.5?30:70;var u=0,v=0;while(!u)u=r();while(!v)v=r();return c+8*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}}
+    };
+    var ZMAP={"80":1.282,"90":1.645,"95":1.96,"99":2.576};
+    /* t critical value (df = n-1) via the standard series expansion around z */
+    function tCrit(conf,df){var z=ZMAP[conf];if(!df||df<1)return z;var z2=z*z;
+      return z+(z*z2+z)/(4*df)+(5*z*z2*z2+16*z*z2+3*z)/(96*df*df)+(3*z*z2*z2*z2+19*z*z2*z2+17*z*z2-15*z)/(384*df*df*df)}
+    function renderCLT(app,state){
+      var S=Object.assign({pop:"skewed",n:5,reps:1000,conf:"95",seed:42},state||{});
+      var h=toolHead("Probability & Statistics","CLT & Confidence Interval Lab",
+        "Two facts students often memorize without believing: sample means pile up into a bell shape whatever the population looks like, and a “95% confidence interval” really does capture the true mean about 95% of the time. Here you run the experiment yourself, thousands of samples at a time.",
+        "Explain the Central Limit Theorem in terms of the sampling distribution of the mean, and interpret a confidence level as a long-run capture rate.",
+        "Population vs. sample; mean and standard deviation; the normal distribution.","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you run it",
+        "The default population is strongly right-skewed (most days sell little, a few days sell a lot). You draw 1,000 samples of size n = 5 and plot the 1,000 sample means. What will that histogram look like?",
+        ["Just as skewed as the population — averages inherit the shape","Roughly bell-shaped already, centered at the population mean","Flat — every average is equally likely","Bell-shaped, but centered well above the population mean"],1,
+        "That is the Central Limit Theorem at work: averaging even 5 draws pulls extremes toward the middle, so the distribution of means is already close to normal and centered at μ = 40. Its spread is σ/√n = 40/√5 ≈ 17.9. Raise n and watch the histogram narrow and symmetrize.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Simulation controls</h2>'+
+        '<label class="fl" for="clt-pop">Population</label><select id="clt-pop">'+Object.keys(POPS).map(function(k){return '<option value="'+k+'">'+esc(POPS[k].label)+'</option>'}).join("")+'</select>'+
+        '<label class="fl" for="clt-n">Sample size n <span class="hint" id="clt-nv"></span></label><input type="range" id="clt-n" min="1" max="100" step="1">'+
+        '<label class="fl" for="clt-reps">Samples drawn <span class="hint" id="clt-repsv"></span></label><input type="range" id="clt-reps" min="100" max="5000" step="100">'+
+        '<label class="fl" for="clt-conf">Confidence level</label><select id="clt-conf"><option value="80">80%</option><option value="90">90%</option><option value="95">95%</option><option value="99">99%</option></select>'+
+        '<label class="fl" for="clt-seed">Seed <span class="hint">— same seed, same simulation; change it for a fresh variant</span></label><input type="number" id="clt-seed" step="1">'+
+        '<div class="btnrow"><button type="button" class="btn" id="clt-run">Run simulation</button><button type="button" class="btn secondary" id="clt-dl">Download results (.txt)</button></div></section>';
+      h+='<section class="panel"><h2>What happened</h2><div id="clt-stats" class="readout" aria-live="polite"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Distribution of sample means</h2><canvas class="chart" id="clt-cv" data-ratio="0.6" role="img" aria-label="Histogram of simulated sample means with the theoretical normal curve overlaid"></canvas><p class="hint">Teal curve: what the CLT predicts — normal with mean μ and standard deviation σ/√n. Compare the histogram against it, especially for the skewed and bimodal populations.</p></section>';
+      h+='<section class="panel"><h2>Do the intervals capture μ?</h2><canvas class="chart" id="clt-civ" data-ratio="0.62" role="img" aria-label="Plot of the first 40 confidence intervals; intervals that miss the true mean are shown in red"></canvas><p class="hint">The first 40 intervals from the run. Red intervals miss the true mean μ (dashed line). The capture rate on the left counts all samples, not just these 40.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "Your run reports that 93.8% of 1,000 intervals captured μ at the 95% level. The best conclusion is:",
+        ["The method is broken — it promised exactly 95%","That is ordinary sampling variation; a capture rate near 95%, give or take a couple of points, is exactly what the method promises","It proves this particular population is not normal","The intervals were too narrow and should all be doubled"],1,
+        "A 95% confidence level is a long-run rate for the procedure, not a guarantee for any batch. With 1,000 intervals the standard error of the capture rate is √(0.95·0.05/1000) ≈ 0.7 points, so 93.8% is a mildly unlucky but unremarkable batch. Rerun with a different seed and compare.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#clt-pop").value=S.pop;$("#clt-n").value=S.n;$("#clt-reps").value=S.reps;$("#clt-conf").value=S.conf;$("#clt-seed").value=S.seed;
+      var last=null;
+      function readCtl(){S={pop:$("#clt-pop").value,n:+$("#clt-n").value,reps:+$("#clt-reps").value,conf:$("#clt-conf").value,seed:+$("#clt-seed").value||0};
+        $("#clt-nv").textContent="n = "+S.n;$("#clt-repsv").textContent=S.reps.toLocaleString()+" samples";setHash("clt",S)}
+      function run(){
+        readCtl();var pop=POPS[S.pop],rng=mulberry32(S.seed*2654435761%2147483647+1);
+        var means=[],capture=0,z=tCrit(S.conf,S.n-1),intervals=[];
+        var se=pop.sigma/Math.sqrt(S.n);
+        for(var i=0;i<S.reps;i++){var sum=0,sq=0,vals=[];
+          for(var j=0;j<S.n;j++){var v=pop.draw(rng);vals.push(v);sum+=v}
+          var m=sum/S.n;means.push(m);
+          for(j=0;j<S.n;j++)sq+=(vals[j]-m)*(vals[j]-m);
+          var sd=S.n>1?Math.sqrt(sq/(S.n-1)):pop.sigma;
+          var half=z*sd/Math.sqrt(S.n),lo=m-half,hi=m+half;
+          if(lo<=pop.mu&&pop.mu<=hi)capture++;
+          if(i<40)intervals.push({lo:lo,hi:hi,hit:lo<=pop.mu&&pop.mu<=hi});
+        }
+        var mm=means.reduce(function(a,b){return a+b},0)/means.length;
+        var vm=means.reduce(function(a,b){return a+(b-mm)*(b-mm)},0)/means.length;
+        last={mm:mm,sdm:Math.sqrt(vm),se:se,capture:capture,pop:pop,intervals:intervals};
+        $("#clt-stats").innerHTML='<div class="bigstat"><div><div class="v">'+fmt(mm,1)+'</div><div class="k">Mean of means (μ = '+fmt(pop.mu,1)+')</div></div>'+
+          '<div><div class="v">'+fmt(last.sdm,1)+'</div><div class="k">SD of means (σ/√n = '+fmt(se,1)+')</div></div>'+
+          '<div><div class="v">'+fmt(100*capture/S.reps,1)+'%</div><div class="k">Intervals capturing μ (target '+S.conf+'%)</div></div></div>'+
+          '<p>'+S.reps.toLocaleString()+' samples of size '+S.n+' from the <strong>'+esc(pop.label.split(" — ")[0])+'</strong> population (intervals use the t critical value with n − 1 degrees of freedom). '+(S.n<10?'With n this small the histogram still leans with the population — push n toward 30 and run again. ':'')+(Math.abs(100*capture/S.reps-(+S.conf))>4&&S.n<30?'Coverage is running below the level here: the interval formula leans on the CLT, and at this sample size the sampling distribution has not finished turning normal. Raise n and watch the capture rate climb toward '+S.conf+'%.':'')+'</p>';
+        drawHist(means,pop,mm,last.sdm,se);drawCI(intervals,pop);
+      }
+      function drawHist(means,pop,mm,sdm,se){
+        var cv=$("#clt-cv"),f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),ink=cssVar("--ink"),acc=cssVar("--accent"),amb=cssVar("--amber");
+        var lo=Math.min.apply(null,means),hi=Math.max.apply(null,means);lo=Math.min(lo,pop.mu-3.4*se);hi=Math.max(hi,pop.mu+3.4*se);
+        var bins=26,bw=(hi-lo)/bins,counts=new Array(bins).fill(0);
+        means.forEach(function(m){var b=Math.min(bins-1,Math.floor((m-lo)/bw));counts[b]++});
+        var peak=Math.max.apply(null,counts),normPeak=S2(0);
+        function S2(x){return Math.exp(-0.5*Math.pow((x-pop.mu)/se,2))/(se*Math.sqrt(2*Math.PI))}
+        peak=Math.max(peak,means.length*bw*normPeak);
+        var padL=44,padR=12,padT=12,padB=30,pw=W-padL-padR,ph=H-padT-padB;
+        function X(x){return padL+pw*(x-lo)/(hi-lo)}function Y(c){return padT+ph-ph*c/peak}
+        ctx.clearRect(0,0,W,H);ctx.strokeStyle=grid;ctx.fillStyle=axis;ctx.font="11px ui-monospace,monospace";ctx.textAlign="center";
+        for(var g=0;g<=4;g++){var gx=lo+(hi-lo)*g/4;ctx.beginPath();ctx.moveTo(X(gx),padT);ctx.lineTo(X(gx),padT+ph);ctx.stroke();ctx.fillText(fmt(gx,0),X(gx),H-14)}
+        ctx.fillStyle=acc;counts.forEach(function(c,i){if(!c)return;ctx.fillRect(X(lo+i*bw)+1,Y(c),pw/bins-2,ph-(Y(c)-padT))});
+        ctx.strokeStyle=amb;ctx.lineWidth=2.2;ctx.beginPath();
+        for(var px=0;px<=pw;px+=3){var x=lo+(hi-lo)*px/pw,yv=means.length*bw*S2(x);if(px===0)ctx.moveTo(padL+px,Y(yv));else ctx.lineTo(padL+px,Y(yv))}
+        ctx.stroke();ctx.lineWidth=1;
+        ctx.strokeStyle=cssVar("--red");ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(X(pop.mu),padT);ctx.lineTo(X(pop.mu),padT+ph);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=cssVar("--red");ctx.textAlign="left";ctx.fillText("μ = "+fmt(pop.mu,0),X(pop.mu)+5,padT+11);
+        cv.setAttribute("aria-label","Histogram of "+means.length+" sample means. Mean of means "+fmt(mm,1)+", standard deviation "+fmt(sdm,1)+", theoretical standard error "+fmt(se,1)+".");
+      }
+      function drawCI(intervals,pop){
+        var cv=$("#clt-civ"),f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var axis=cssVar("--chart-axis"),acc=cssVar("--accent"),red=cssVar("--red"),grid=cssVar("--chart-grid");
+        var lo=Math.min.apply(null,intervals.map(function(d){return d.lo}).concat([pop.mu])),hi=Math.max.apply(null,intervals.map(function(d){return d.hi}).concat([pop.mu]));
+        var pad=(hi-lo)*0.06||1;lo-=pad;hi+=pad;
+        var padL=34,padR=12,padT=10,padB=26,pw=W-padL-padR,ph=H-padT-padB;
+        function X(x){return padL+pw*(x-lo)/(hi-lo)}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.textAlign="center";
+        for(var g=0;g<=4;g++){var gx=lo+(hi-lo)*g/4;ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(X(gx),padT);ctx.lineTo(X(gx),padT+ph);ctx.stroke();ctx.fillText(fmt(gx,0),X(gx),H-10)}
+        intervals.forEach(function(d,i){var y=padT+ph*(i+0.5)/intervals.length;
+          ctx.strokeStyle=d.hit?acc:red;ctx.lineWidth=d.hit?2:2.6;ctx.beginPath();ctx.moveTo(X(d.lo),y);ctx.lineTo(X(d.hi),y);ctx.stroke();
+          ctx.beginPath();ctx.arc(X((d.lo+d.hi)/2),y,2,0,7);ctx.fillStyle=d.hit?acc:red;ctx.fill()});
+        ctx.strokeStyle=red;ctx.setLineDash([5,4]);ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(X(pop.mu),padT);ctx.lineTo(X(pop.mu),padT+ph);ctx.stroke();ctx.setLineDash([]);
+      }
+      ["clt-pop","clt-n","clt-reps","clt-conf","clt-seed"].forEach(function(id){$("#"+id).addEventListener("input",readCtl)});
+      $("#clt-run").addEventListener("click",run);
+      $("#clt-dl").addEventListener("click",function(){if(!last)return;dl("clt-results.txt","CLT & CI Lab — results\nPopulation: "+last.pop.label+"\nn = "+S.n+", samples = "+S.reps+", confidence = "+S.conf+"%, seed = "+S.seed+"\nMean of sample means: "+fmt(last.mm,2)+" (true mu = "+fmt(last.pop.mu,2)+")\nSD of sample means: "+fmt(last.sdm,2)+" (sigma/sqrt(n) = "+fmt(last.se,2)+")\nIntervals capturing mu: "+last.capture+" of "+S.reps+" ("+fmt(100*last.capture/S.reps,1)+"%)\n")});
+      readCtl();run();
+      window.addEventListener("resize",function(){if(last&&document.getElementById("clt-cv"))run()});
+    }
+
+    /* ================= DECISION LAB ================= */
+    var DEC_DEFAULT={
+      alts:["Sign the fixed-price contract","Buy on the spot market","Split: half contract, half spot"],
+      states:["Bean prices rise","Bean prices steady","Bean prices fall"],
+      probs:[0.3,0.45,0.25],
+      pay:[[62,58,54],[95,55,20],[80,57,38]]
+    };
+    function renderDecision(app,state){
+      var D=(state&&state.alts)?JSON.parse(JSON.stringify(state)):JSON.parse(JSON.stringify(DEC_DEFAULT));
+      var h=toolHead("Decision Analysis","Decision Lab",
+        "A coffee roaster must lock in next season's bean supply before prices are known. The payoff table below is fully editable — change the payoffs, rename the options, add states — and every criterion updates: expected monetary value, maximin, maximax, and minimax regret. Then slide one state's probability and find exactly where the recommended choice flips.",
+        "Build a payoff table, apply the standard decision criteria, and use one-way probability sensitivity to defend a recommendation.",
+        "Weighted averages; basic probability (probabilities sum to 1).","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you compute",
+        "The spot market has the highest payoff if prices rise ($95k) and the lowest if they fall ($20k). The fixed contract barely moves. Which criterion will recommend buying on the spot market?",
+        ["Maximin — it protects the worst case","Maximax — it chases the best case","Expected value must agree with maximin here","All four criteria always agree"],1,
+        "Maximax looks only at each row's best outcome and ignores risk entirely, so it picks the spot market's $95k. Maximin picks the contract (its worst case, $54k, is the best of the worst cases). Expected value lands in between — it weights the spot market's bad outcome by its 25% chance. Criteria disagree because they encode different attitudes to risk; your job is to say which attitude fits the decision-maker.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Payoff table <span class="hint">(payoffs in $000s profit)</span></h2><div id="dec-table" style="overflow-x:auto"></div>';
+      h+='<div class="btnrow"><button type="button" class="btn secondary small" id="dec-addalt">+ Alternative</button><button type="button" class="btn secondary small" id="dec-addstate">+ State</button><button type="button" class="btn secondary small" id="dec-reset">Reset example</button></div>';
+      h+='<p class="hint">Probabilities are re-scaled to sum to 1 when EMVs are computed; the raw values you type are shown in the table header.</p></section>';
+      h+='<section class="panel"><h2>Criteria</h2><div id="dec-crit" aria-live="polite"></div>';
+      h+='<div class="btnrow"><button type="button" class="btn small" id="dec-dl">Download analysis (.txt)</button></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Probability sensitivity</h2><p class="hint">Vary one state\'s probability from 0 to 1; the others shrink or grow in proportion to their current shares. Where two EMV lines cross, the recommendation flips.</p>'+
+        '<label class="fl" for="dec-var">State to vary</label><select id="dec-var"></select>'+
+        '<canvas class="chart" id="dec-cv" data-ratio="0.58" role="img" aria-label="Line chart of each alternative\'s expected value as the selected state\'s probability varies from 0 to 1"></canvas>'+
+        '<div id="dec-cross" class="readout" aria-live="polite"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "The sensitivity chart shows the spot market's EMV line crossing the split option's line at p ≈ 0.34 for “prices rise”. The current estimate is p = 0.30, where the split option has the best EMV. The most defensible recommendation is:",
+        ["Spot market — its line ends highest, so it must be the best choice","Split for now, but flag the margin: if the chance of a price rise climbs past about 0.34, the spot market takes over","Contract — it is the maximin choice, and maximin always overrides EMV","It doesn't matter — the three lines stay close at every probability"],1,
+        "Sensitivity analysis turns a single answer into an answer with a margin: at p = 0.30 the split option leads on EMV (59.2, just ahead of the spot market's 58.3), and that lead survives only until p ≈ 0.34 — a real but not huge cushion. On the way up, the split also passes the contract at p ≈ 0.26. Reporting the flip points is what makes the analysis useful to a decision-maker who distrusts the probability estimate.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      var T=$("#dec-table");
+      function normProbs(){var s=D.probs.reduce(function(a,b){return a+(+b||0)},0);return D.probs.map(function(p){return s>0?(+p||0)/s:1/D.probs.length})}
+      function criteria(){
+        var pr=normProbs(),out=[];
+        D.alts.forEach(function(a,i){
+          var row=D.pay[i],emv=0;row.forEach(function(v,j){emv+=v*pr[j]});
+          var mn=Math.min.apply(null,row),mx=Math.max.apply(null,row);
+          out.push({alt:a,emv:emv,min:mn,max:mx,row:row});
+        });
+        var bestCol=D.states.map(function(s,j){return Math.max.apply(null,D.pay.map(function(r){return r[j]}))});
+        out.forEach(function(o,i){o.regret=Math.max.apply(null,D.pay[i].map(function(v,j){return bestCol[j]-v}))});
+        return{pr:pr,list:out,bestCol:bestCol};
+      }
+      function buildTable(){
+        var pr=normProbs();
+        var th='<table class="data"><thead><tr><th>Alternative ↓ · State →</th>'+D.states.map(function(s,j){return '<th><input type="text" class="dsn" data-j="'+j+'" value="'+esc(s)+'" aria-label="State name" style="min-width:110px"><br><span class="hint">p = <input type="number" class="dpr" data-j="'+j+'" value="'+D.probs[j]+'" step="any" style="width:64px" aria-label="Probability of '+esc(s)+'"> → '+fmt(pr[j],2)+'</span></th>'}).join("")+'<th></th></tr></thead><tbody>';
+        D.alts.forEach(function(a,i){th+='<tr><td><input type="text" class="dan" data-i="'+i+'" value="'+esc(a)+'" aria-label="Alternative name" style="min-width:150px"></td>'+
+          D.states.map(function(s,j){return '<td><input type="number" class="dpy" data-i="'+i+'" data-j="'+j+'" value="'+D.pay[i][j]+'" step="any" style="width:78px" aria-label="Payoff"></td>'}).join("")+
+          '<td><button type="button" class="btn secondary small drm" data-i="'+i+'" aria-label="Remove alternative">✕</button></td></tr>'});
+        th+='</tbody></table>';T.innerHTML=th;
+        $$(".dsn",T).forEach(function(inp){inp.addEventListener("input",function(){D.states[+inp.dataset.j]=inp.value;sync(false)})});
+        $$(".dpr",T).forEach(function(inp){inp.addEventListener("input",function(){D.probs[+inp.dataset.j]=parseFloat(inp.value)||0;sync(false)})});
+        $$(".dan",T).forEach(function(inp){inp.addEventListener("input",function(){D.alts[+inp.dataset.i]=inp.value;sync(false)})});
+        $$(".dpy",T).forEach(function(inp){inp.addEventListener("input",function(){D.pay[+inp.dataset.i][+inp.dataset.j]=parseFloat(inp.value)||0;sync(false)})});
+        $$(".drm",T).forEach(function(b){b.addEventListener("click",function(){if(D.alts.length>2){D.alts.splice(+b.dataset.i,1);D.pay.splice(+b.dataset.i,1);sync(true)}})});
+        var vs=$("#dec-var");var cur=vs.value;
+        vs.innerHTML=D.states.map(function(s,j){return '<option value="'+j+'">'+esc(s)+'</option>'}).join("");
+        vs.value=(cur!==""&&+cur<D.states.length)?cur:"0";
+      }
+      function emvAt(i,varJ,p){
+        var pr=normProbs(),others=1-pr[varJ],rest=0,j;
+        var w=D.states.map(function(s,j2){return j2===varJ?p:(others>0?pr[j2]/others*(1-p):(1-p)/(D.states.length-1))});
+        var e=0;for(j=0;j<D.states.length;j++)e+=D.pay[i][j]*w[j];return e;
+      }
+      var lastCrit=null;
+      function sync(rebuild){
+        if(rebuild)buildTable();
+        setHash("decision",D);
+        var C=criteria();lastCrit=C;
+        var best={emv:argbest(C.list,"emv",1),min:argbest(C.list,"min",1),max:argbest(C.list,"max",1),reg:argbest(C.list,"regret",-1)};
+        function argbest(list,k,dir){var bi=0;list.forEach(function(o,i){if(dir*(o[k]-list[bi][k])>0)bi=i});return bi}
+        var rows=C.list.map(function(o,i){return '<tr'+(i===best.emv?' class="hl"':"")+'><td>'+esc(o.alt)+(i===best.emv?' <span class="tag ok">best EMV</span>':"")+'</td><td class="num">'+fmt(o.emv,1)+'</td><td class="num">'+fmt(o.min,1)+'</td><td class="num">'+fmt(o.max,1)+'</td><td class="num">'+fmt(o.regret,1)+'</td></tr>'}).join("");
+        $("#dec-crit").innerHTML='<table class="data"><thead><tr><th>Alternative</th><th class="num">EMV</th><th class="num">Worst (maximin)</th><th class="num">Best (maximax)</th><th class="num">Max regret</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+          '<p class="readout" style="margin-top:8px">Maximin picks <strong>'+esc(C.list[best.min].alt)+'</strong> · Maximax picks <strong>'+esc(C.list[best.max].alt)+'</strong> · Minimax regret picks <strong>'+esc(C.list[best.reg].alt)+'</strong>. When they disagree, the criteria — not the arithmetic — are what you argue about.</p>';
+        drawSens(C);
+      }
+      function drawSens(C){
+        var varJ=+($("#dec-var").value||0);
+        var cv=$("#dec-cv"),f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis");
+        var cols=["#0e6b5c","#b45309","#0369a1","#be185d","#7c3aed","#15803d"];
+        if(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)cols=["#3ec9ae","#f0b45a","#5eb1ef","#f08bb4","#b79cff","#6fce8b"];
+        var padL=48,padR=12,padT=12,padB=32,pw=W-padL-padR,ph=H-padT-padB;
+        var all=[];D.alts.forEach(function(a,i){for(var p=0;p<=1.001;p+=0.05)all.push(emvAt(i,varJ,p))});
+        var lo=Math.min.apply(null,all),hi=Math.max.apply(null,all),pad=(hi-lo)*0.08||1;lo-=pad;hi+=pad;
+        function X(p){return padL+pw*p}function Y(v){return padT+ph-ph*(v-lo)/(hi-lo)}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;
+        for(var g=0;g<=4;g++){var gx=g/4;ctx.beginPath();ctx.moveTo(X(gx),padT);ctx.lineTo(X(gx),padT+ph);ctx.stroke();ctx.textAlign="center";ctx.fillText(fmt(gx,2),X(gx),H-16);
+          var gy=lo+(hi-lo)*g/4;ctx.beginPath();ctx.moveTo(padL,Y(gy));ctx.lineTo(padL+pw,Y(gy));ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(gy,0),padL-6,Y(gy)+4)}
+        ctx.textAlign="center";ctx.fillText("P("+D.states[varJ]+") →",padL+pw/2,H-2);
+        D.alts.forEach(function(a,i){ctx.strokeStyle=cols[i%cols.length];ctx.lineWidth=2.2;ctx.beginPath();
+          for(var p=0;p<=1.0001;p+=0.02){var v=emvAt(i,varJ,p);if(p===0)ctx.moveTo(X(p),Y(v));else ctx.lineTo(X(p),Y(v))}
+          ctx.stroke();ctx.lineWidth=1;
+          ctx.fillStyle=cols[i%cols.length];ctx.textAlign="left";ctx.font="bold 11.5px system-ui";ctx.fillText(a.length>26?a.slice(0,25)+"…":a,X(1)+6,Y(emvAt(i,varJ,1)));ctx.font="11px ui-monospace,monospace"});
+        /* current probability marker */
+        var cp=C.pr[varJ];ctx.strokeStyle=axis;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(X(cp),padT);ctx.lineTo(X(cp),padT+ph);ctx.stroke();ctx.setLineDash([]);
+        /* crossovers */
+        var crosses=[];
+        for(var i=0;i<D.alts.length;i++)for(var j=i+1;j<D.alts.length;j++){
+          var prev=emvAt(i,varJ,0)-emvAt(j,varJ,0);
+          for(var p=0.01;p<=1.0001;p+=0.01){var cur=emvAt(i,varJ,p)-emvAt(j,varJ,p);
+            if(prev!==0&&cur!==0&&Math.sign(cur)!==Math.sign(prev)){var a2=p-0.01,b2=p,f1=emvAt(i,varJ,a2)-emvAt(j,varJ,a2);
+              for(var it=0;it<40;it++){var m=(a2+b2)/2,fm=emvAt(i,varJ,m)-emvAt(j,varJ,m);if(Math.sign(fm)===Math.sign(f1))a2=m;else b2=m}
+              var px=(a2+b2)/2;crosses.push({p:px,i:i,j:j,above:emvAt(0,varJ,px)});
+            }
+            prev=cur;
+          }
+        }
+        crosses.forEach(function(c){ctx.beginPath();ctx.arc(X(c.p),Y(emvAt(c.i,varJ,c.p)),4.5,0,7);ctx.fillStyle=cssVar("--red");ctx.fill()});
+        var box=$("#dec-cross");
+        if(!crosses.length)box.innerHTML='<p>No crossovers: the EMV ranking is the same for every value of P('+esc(D.states[varJ])+') from 0 to 1.</p>';
+        else box.innerHTML='<p><strong>Flip points for P('+esc(D.states[varJ])+'):</strong></p><ul style="margin:4px 0 0;padding-left:20px">'+
+          crosses.sort(function(a,b){return a.p-b.p}).map(function(c){
+            var winnerBelow=emvAt(c.i,varJ,Math.max(0,c.p-0.02))>emvAt(c.j,varJ,Math.max(0,c.p-0.02))?D.alts[c.i]:D.alts[c.j];
+            var winnerAbove=emvAt(c.i,varJ,Math.min(1,c.p+0.02))>emvAt(c.j,varJ,Math.min(1,c.p+0.02))?D.alts[c.i]:D.alts[c.j];
+            return '<li>At p ≈ <strong>'+fmt(c.p,2)+'</strong>, <strong>'+esc(winnerAbove)+'</strong> overtakes <strong>'+esc(winnerBelow)+'</strong>.</li>'}).join("")+'</ul>'+
+          '<p>Current estimate: p = '+fmt(cp,2)+' (dashed line) — best EMV there is <strong>'+esc(C.list[argmaxEmv(C)].alt)+'</strong>.</p>';
+        function argmaxEmv(C2){var bi=0;C2.list.forEach(function(o,i){if(o.emv>C2.list[bi].emv)bi=i});return bi}
+        var lbl="EMV sensitivity chart. ";crosses.forEach(function(c){lbl+="At probability "+fmt(c.p,2)+", "+D.alts[c.i]+" and "+D.alts[c.j]+" tie. "});
+        cv.setAttribute("aria-label",lbl);
+      }
+      $("#dec-var").addEventListener("change",function(){sync(false)});
+      $("#dec-addalt").addEventListener("click",function(){D.alts.push("New alternative");D.pay.push(D.states.map(function(){return 50}));sync(true)});
+      $("#dec-addstate").addEventListener("click",function(){if(D.states.length<5){D.states.push("New state");D.probs.push(0.2);D.pay.forEach(function(r){r.push(50)});sync(true)}});
+      $("#dec-reset").addEventListener("click",function(){D=JSON.parse(JSON.stringify(DEC_DEFAULT));sync(true)});
+      $("#dec-dl").addEventListener("click",function(){if(!lastCrit)return;var t="Decision Lab — analysis\nStates: "+D.states.join(", ")+"\nProbabilities (normalized): "+lastCrit.pr.map(function(p){return fmt(p,3)}).join(", ")+"\n\n";
+        lastCrit.list.forEach(function(o){t+=o.alt+": EMV "+fmt(o.emv,1)+", worst "+fmt(o.min,1)+", best "+fmt(o.max,1)+", max regret "+fmt(o.regret,1)+"\n"});
+        dl("decision-analysis.txt",t)});
+      buildTable();sync(false);
+      window.addEventListener("resize",function(){if(document.getElementById("dec-cv")&&lastCrit)drawSens(lastCrit)});
+    }
+
+    /* ================= ROUTER ================= */
+    function parseHash(){
+      var h=location.hash.replace(/^#\/?/,"");var parts=h.split("?");var route=parts[0]||"";
+      var state=null;if(parts[1]){var m=parts[1].match(/(?:^|&)s=([^&]+)/);if(m)state=decState(decodeURIComponent(m[1]))}
+      return{route:route,state:state};
+    }
+    function route(){
+      var r=parseHash(),app=$("#app");
+      $$(".topnav a").forEach(function(a){if(a.dataset.nav===r.route)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+      window.scrollTo(0,0);
+      if(r.route==="lp")renderLP(app,r.state);
+      else if(r.route==="sensitivity")renderSens(app,r.state);
+      else if(r.route==="clt")renderCLT(app,r.state);
+      else if(r.route==="decision")renderDecision(app,r.state);
+      else renderHub(app);
+    }
+    window.addEventListener("hashchange",route);
+    route();
+
+
+
+</script>
+  </body>
+</html>
