@@ -207,6 +207,21 @@
       .statgrid>div{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
       .statgrid .v{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:20px;font-weight:700;color:var(--ink)}
       .statgrid .k{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-top:2px}
+      /* final-batch tools */
+      .btn[aria-pressed="false"]{opacity:.5}
+      .btn[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)}
+      .mtx td,.mtx th{padding:5px 6px}
+      .mtx select{width:auto;padding:4px 6px;font-size:13.5px}
+      .mtx input[type="text"]{padding:5px 7px;font-size:13.5px}
+      .atlas{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px;margin-top:12px}
+      .atlas .ac{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+      .atlas .ac h3{font-family:"Iowan Old",Palatino,Georgia,serif;font-size:16.5px;margin:0 0 4px}
+      .atlas .ac p{margin:4px 0;font-size:13.5px;color:var(--ink2)}
+      .atlas .ac p b{color:var(--ink)}
+      .atlas canvas{width:100%;height:auto;display:block}
+      .waffle-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:6px}
+      .simstage{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px}
+      .stationrow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
       footer.note{margin-top:44px;border-top:1px solid var(--line);padding-top:14px;color:var(--ink3);font-size:13.5px;max-width:52em}
       .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
       @media print{.topbar,.btnrow,.hub-tools{display:none}}
@@ -480,7 +495,19 @@
       {id:"decision",cat:"Decision Analysis",title:"Decision Lab",desc:"Compare alternatives under uncertainty with expected value, maximin, maximax, and regret — then find the probability where the best choice flips.",meta:"Guided · Explore · Check",kw:"decision expected value emv maximin maximax regret sensitivity probability states"},
       {id:"lp3d",cat:"Optimization",title:"LP 3D Visualizer",desc:"The same Oktomasks problem lifted into three dimensions: the profit plane over the feasible region, every extreme point, and a Play sweep that raises the profit level to the optimum at (440, 500).",meta:"Guided · Explore · Check",kw:"lp 3d three dimensions profit plane extreme point vertex isoprofit level curve polytope"},
       {id:"tree",cat:"Decision Analysis",title:"Decision Tree Builder",desc:"Build a decision tree node by node — decision, chance, and end nodes — then roll it back to expected values, see the best branch at each decision, the risk profile, and save or reopen your tree as a file.",meta:"Guided · Explore · Check",kw:"decision tree builder rollback expected value chance node risk profile fold back"},
-      {id:"queue",cat:"Decision Analysis",title:"Queuing Lab",desc:"Waiting-line models M/M/1, M/M/s, M/M/s with a finite queue, and M/G/1: utilization, L, Lq, W, Wq, and the probability the system is empty or an arrival has to wait.",meta:"Guided · Explore · Check",kw:"queuing queue waiting line mm1 mms mg1 little law utilization arrival service erlang"}
+      {id:"queue",cat:"Decision Analysis",title:"Queuing Lab",desc:"Waiting-line models M/M/1, M/M/s, M/M/s with a finite queue, and M/G/1: utilization, L, Lq, W, Wq, and the probability the system is empty or an arrival has to wait.",meta:"Guided · Explore · Check",kw:"queuing queue waiting line mm1 mms mg1 little law utilization arrival service erlang"},
+      {id:"pairwise",cat:"Decision Analysis",title:"PairWise — AHP Decision Tool",desc:"Build a goal hierarchy, compare criteria and alternatives two at a time on the Saaty 1–9 scale, and let the eigenvector priorities, consistency ratios, and synthesis rank your options for you.",meta:"Guided · Explore · Check",kw:"ahp analytic hierarchy process pairwise comparison saaty consistency ratio eigenvector criteria alternatives"},
+      {id:"nextinline",cat:"Decision Analysis",title:"Next in Line — Queue Simulation",desc:"A discrete-event simulation of the post-office line: seeded Poisson arrivals, exponential service, s stations, warm-up, an animated event flow, and measured averages set against M/M/s theory.",meta:"Guided · Explore · Check",kw:"simulation discrete event queue post office warm-up steady state seed arrivals departures next in line"},
+      {id:"levelcurves",cat:"Optimization",title:"Let Me See the Level Curves!",desc:"A mountain flattened onto paper: contour maps of two-variable functions, the gradient at any point you click, and — for a linear objective — the level line whose last touch of the feasible region is the LP optimum.",meta:"Guided · Explore · Check",kw:"level curves contours gradient topo map objective level line last touch optimum"},
+      {id:"hiker",cat:"Optimization",title:"The Hiker on the Flat Mountain",desc:"Stand anywhere on a landscape, read the gradient under your boots, and step in the steepest-ascent direction — until the top goes flat and the gradient gives you nothing at all.",meta:"Guided · Explore · Check",kw:"gradient steepest ascent hiker mountain plateau flat optimization step direction"},
+      {id:"linear",cat:"Optimization",title:"That's What Linear Is All About!",desc:"The feasible region, taken apart: shade each constraint's half-plane, switch constraints off, slide a right-hand side, and watch the polygon, its corners, and the optimum respond.",meta:"Guided · Explore · Check",kw:"linear feasible region half-plane constraints polygon corner points rhs graphical method"},
+      {id:"distributions",cat:"Probability & Statistics",title:"Probability Distributions — The Prom Dance",desc:"Meet the distribution families as dancers: normal, uniform, exponential, binomial, and Poisson. Set the parameters, watch the shape move, and compute exact probabilities for intervals and values.",meta:"Guided · Explore · Check",kw:"probability distribution normal binomial poisson exponential uniform pdf pmf density prom dance"},
+      {id:"regression",cat:"Probability & Statistics",title:"Linear Regression Lab",desc:"Fit a line by least squares: sample from a known population (possession time vs. attacking threat) or paste your own data, then read slope, intercept, r, R², residuals, and predictions.",meta:"Guided · Explore · Check",kw:"linear regression least squares slope intercept correlation r squared residuals prediction sampling"},
+      {id:"forecasting",cat:"Probability & Statistics",title:"Forecasting Lab",desc:"Forecast a time series four ways — moving average, weighted moving average, exponential smoothing, and trend projection — and judge each method with MAD, MSE, and MAPE.",meta:"Guided · Explore · Check",kw:"forecasting time series moving average exponential smoothing trend projection mad mse mape"},
+      {id:"statbalance",cat:"Probability & Statistics",title:"StatBalance — Mean, Median, Mode",desc:"A distribution on a balance beam: drag the values and watch the mean — the balance point — chase them, while the median and mode stay put. Then drop in an outlier and see who moves.",meta:"Guided · Explore · Check",kw:"mean median mode balance beam outlier central tendency statbalance drag values"},
+      {id:"plotcompass",cat:"Probability & Statistics",title:"Plot Compass — Choose a Chart",desc:"Answer two questions — what kind of variables do you have, and what should the audience notice? — and get a ranked chart recommendation with a live example, plus a chart atlas and the levels of measurement.",meta:"Guided · Explore · Check",kw:"chart choice plot compass data visualization nominal ordinal interval ratio bar scatter histogram box plot"},
+      {id:"quants",cat:"Probability & Statistics",title:"Quants — Quantiles & Percentiles",desc:"Percentiles from your own data with the position rule shown step by step and a box plot, plus the normal-distribution quantile calculator: give a probability, get the value that cuts off that area.",meta:"Guided · Explore · Check",kw:"quantile percentile quartile box plot iqr position rule normal quantile inverse cdf"},
+      {id:"probly",cat:"Probability & Statistics",title:"Probly — See the Odds",desc:"Probability you can count: any chance drawn as a field of dots, translated into “1 in X” and odds, stress-tested with simulated trials, and the chance of at least one success in n tries.",meta:"Guided · Explore · Check",kw:"probly odds probability visualizer 1 in x waffle icon array at least one trials frequency"}
     ];
     function renderHub(app){
       var h='<div class="hero"><h1>Decision modeling, one idea at a time.</h1><p>Interactive labs for optimization, probability, and decision analysis. Every tool follows the same pattern — predict first, explore with your own numbers, then check yourself. Settings travel with the page address, so a link you send always opens the exact same problem.</p></div>';
@@ -489,7 +516,7 @@
       h+='<div class="cards" id="cards">';
       TOOLS.forEach(function(t){h+='<a class="card" href="#/'+t.id+'" data-cat="'+esc(t.cat)+'" data-kw="'+esc((t.title+" "+t.desc+" "+t.kw).toLowerCase())+'"><div class="cat">'+esc(t.cat)+'</div><h2>'+esc(t.title)+'</h2><p>'+esc(t.desc)+'</p><div class="meta"><span>'+esc(t.meta)+'</span><span class="go">Open →</span></div></a>'});
       h+='</div><p class="noresults" id="nores" hidden>No tool matches that search. Try a concept name, like “corner”, “interval”, or “expected value”.</p>';
-      h+='<section class="roadmap"><h2>On the way</h2><p>The platform is built so new labs plug into the same shell. Planned next, in course order:</p><ul><li>LP in three variables (3D feasible region)</li><li>Probability distributions explorer</li><li>Linear regression lab</li><li>Forecasting: moving averages &amp; exponential smoothing</li><li>Pairwise comparison (AHP)</li><li>Next in Line — games and challenges</li></ul></section>';
+      h+='<section class="roadmap"><h2>The full course set is here</h2><p>Every lab in the set now lives in this shell — the LP family (Explorer, Sensitivity, 3D, level curves, the hiker, and the feasible-region builder), the decision tools (Decision Lab, Tree Builder, Queuing, PairWise, Next in Line), and the probability &amp; statistics set (CLT &amp; CI, Distributions, Regression, Forecasting, StatBalance, Plot Compass, Quants, Probly). Search or filter above to find the one you need.</p></section>';
       h+='<footer class="note">The three LP tools share the Okto mask problem used in this course\'s decision-modeling materials; the code and all explanatory text in these labs are new. All computation runs in your browser; nothing is uploaded.</footer>';
       app.innerHTML=h;
       var q=$("#hubq"),cat="All";
@@ -1686,6 +1713,1794 @@
       window.addEventListener("resize",function(){if(document.getElementById("q-cv")&&last)drawDist(last)});
     }
 
+    /* ================= shared statistics helpers ================= */
+    function erfNR(x){ /* Numerical Recipes erfc-based erf, ~1e-7 accuracy */
+      var t,z,ans; z=Math.abs(x); t=1/(1+0.5*z);
+      ans=t*Math.exp(-z*z-1.26551223+t*(1.00002368+t*(0.37409196+t*(0.09678418+t*(-0.18628806+t*(0.27886807+t*(-1.13520398+t*(1.48851587+t*(-0.82215223+t*0.17087277)))))))));
+      return x>=0?1-ans:ans-1;
+    }
+    function normCdf(z){return 0.5*(1+erfNR(z/Math.SQRT2))}
+    function normPdf(x,mu,sd){var z=(x-mu)/sd;return Math.exp(-0.5*z*z)/(sd*Math.sqrt(2*Math.PI))}
+    function normInv(p){ /* Acklam's inverse normal CDF */
+      if(p<=0)return -Infinity; if(p>=1)return Infinity;
+      var a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+      var b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+      var c=[-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+      var d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+      var plow=0.02425,phigh=1-plow,q,r;
+      if(p<plow){q=Math.sqrt(-2*Math.log(p));return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
+      if(p<=phigh){q=p-0.5;r=q*q;return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)}
+      q=Math.sqrt(-2*Math.log(1-p));return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    }
+    function logGamma(x){var c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.001208650973866179,-0.5395239384953e-5];var y=x,tmp=x+5.5;tmp-=(x+0.5)*Math.log(tmp);var ser=1.000000000190015;for(var j=0;j<6;j++)ser+=c[j]/++y;return -tmp+Math.log(2.5066282746310005*ser/x)}
+    function binomPMF(n,p,k){if(k<0||k>n)return 0;if(p===0)return k===0?1:0;if(p===1)return k===n?1:0;
+      return Math.exp(logGamma(n+1)-logGamma(k+1)-logGamma(n-k+1)+k*Math.log(p)+(n-k)*Math.log(1-p))}
+    function binomCDF(n,p,k){var s=0;for(var i=0;i<=Math.floor(k);i++)s+=binomPMF(n,p,i);return Math.min(1,s)}
+    function poisPMF(lam,k){if(k<0)return 0;return Math.exp(-lam+k*Math.log(lam)-logGamma(k+1))}
+    function poisCDF(lam,k){var s=0;for(var i=0;i<=Math.floor(k);i++)s+=poisPMF(lam,i);return Math.min(1,s)}
+    function expCDF(lam,x){return x<=0?0:1-Math.exp(-lam*x)}
+    function quantile7(sorted,p){var n=sorted.length;if(!n)return NaN;if(n===1)return sorted[0];
+      var pos=(n-1)*p,lo=Math.floor(pos),hi=Math.min(n-1,lo+1);return sorted[lo]+(sorted[hi]-sorted[lo])*(pos-lo)}
+    function meanOf(a){return a.reduce(function(s,v){return s+v},0)/a.length}
+    function medianOf(a){var s=a.slice().sort(function(x,y){return x-y});return quantile7(s,0.5)}
+    function sdOf(a,pop){var m=meanOf(a),s=0;a.forEach(function(v){s+=(v-m)*(v-m)});return Math.sqrt(s/(pop?a.length:Math.max(1,a.length-1)))}
+    function ols(xs,ys){var n=xs.length,mx=meanOf(xs),my=meanOf(ys),sxy=0,sxx=0,syy=0,i;
+      for(i=0;i<n;i++){sxy+=(xs[i]-mx)*(ys[i]-my);sxx+=(xs[i]-mx)*(xs[i]-mx);syy+=(ys[i]-my)*(ys[i]-my)}
+      var slope=sxx>0?sxy/sxx:0,icpt=my-slope*mx,r=(sxx>0&&syy>0)?sxy/Math.sqrt(sxx*syy):0;
+      return{slope:slope,intercept:icpt,r:r,r2:r*r,mx:mx,my:my,n:n}}
+    function parseNums(txt){return String(txt||"").split(/[\s,;]+/).map(function(v){return parseFloat(v)}).filter(function(v){return isFinite(v)})}
+    function parsePairs(txt){var pts=[];String(txt||"").split(/\n+/).forEach(function(line){var v=line.split(/[\s,;]+/).map(parseFloat).filter(function(x){return isFinite(x)});if(v.length>=2)pts.push({x:v[0],y:v[1]})});return pts}
+
+    /* ================= contour engine (marching squares) ================= */
+    function contourSegs(f,x0,x1,y0,y1,nx,ny,level){
+      var dx=(x1-x0)/nx,dy=(y1-y0)/ny,vals=[],i,j;
+      for(j=0;j<=ny;j++){vals.push([]);for(i=0;i<=nx;i++)vals[j].push(f(x0+i*dx,y0+j*dy)-level)}
+      function interp(ax,ay,av,bx,by,bv){var t=av/(av-bv);return[ax+t*(bx-ax),ay+t*(by-ay)]}
+      var segs=[];
+      for(j=0;j<ny;j++)for(i=0;i<nx;i++){
+        var xA=x0+i*dx,xB=x0+(i+1)*dx,yA=y0+j*dy,yB=y0+(j+1)*dy;
+        var vBL=vals[j][i],vBR=vals[j][i+1],vTR=vals[j+1][i+1],vTL=vals[j+1][i];
+        var idx=(vBL>0?1:0)|(vBR>0?2:0)|(vTR>0?4:0)|(vTL>0?8:0);
+        if(idx===0||idx===15)continue;
+        var bot=function(){return interp(xA,yA,vBL,xB,yA,vBR)};
+        var rgt=function(){return interp(xB,yA,vBR,xB,yB,vTR)};
+        var top=function(){return interp(xA,yB,vTL,xB,yB,vTR)};
+        var lft=function(){return interp(xA,yA,vBL,xA,yB,vTL)};
+        function seg(p,q){segs.push([p[0],p[1],q[0],q[1]])}
+        switch(idx){
+          case 1: case 14: seg(lft(),bot()); break;
+          case 2: case 13: seg(bot(),rgt()); break;
+          case 3: case 12: seg(lft(),rgt()); break;
+          case 4: case 11: seg(rgt(),top()); break;
+          case 6: case 9: seg(bot(),top()); break;
+          case 7: case 8: seg(lft(),top()); break;
+          case 5: seg(lft(),top()); seg(bot(),rgt()); break;
+          case 10: seg(lft(),bot()); seg(rgt(),top()); break;
+        }
+      }
+      return segs;
+    }
+    /* draws contour lines for f over [x0,x1]x[y0,y1]; cfg: {levels, hiLevel, point, arrow:{x,y,dx,dy}, poly, optMark, trail} */
+    function drawContourPlot(cv,f,cfg){
+      var fz=fitCanvas(cv),ctx=fz.ctx,W=fz.W,H=fz.H;
+      var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),ink=cssVar("--ink"),acc=cssVar("--accent"),amb=cssVar("--amber"),red=cssVar("--red");
+      var padL=46,padR=14,padT=12,padB=34,pw=W-padL-padR,ph=H-padT-padB;
+      var us=Math.min(pw/(cfg.x1-cfg.x0),ph/(cfg.y1-cfg.y0));
+      var ox=padL+(pw-us*(cfg.x1-cfg.x0))/2, oy=padT+(ph-us*(cfg.y1-cfg.y0))/2;
+      function X(x){return ox+(x-cfg.x0)*us} function Y(y){return oy+ph-(y-cfg.y0)*us-us*(0)} /* oy already top */
+      Y=function(y){return oy+(cfg.y1-y)*us};
+      function invX(px){return cfg.x0+(px-ox)/us} function invY(py){return cfg.y1-(py-oy)/us}
+      ctx.clearRect(0,0,W,H);
+      ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;ctx.lineWidth=1;
+      var stepX=(cfg.x1-cfg.x0)/6,stepY=(cfg.y1-cfg.y0)/6,i;
+      ctx.textAlign="center";
+      for(i=0;i<=6;i++){var gx=cfg.x0+stepX*i;ctx.beginPath();ctx.moveTo(X(gx),oy);ctx.lineTo(X(gx),oy+us*(cfg.y1-cfg.y0));ctx.stroke();ctx.fillText(fmt(gx,Math.abs(gx%1)>1e-9?1:0),X(gx),H-18)}
+      ctx.textAlign="right";
+      for(i=0;i<=6;i++){var gy=cfg.y0+stepY*i;ctx.beginPath();ctx.moveTo(ox,Y(gy));ctx.lineTo(ox+us*(cfg.x1-cfg.x0),Y(gy));ctx.stroke();ctx.fillText(fmt(gy,Math.abs(gy%1)>1e-9?1:0),ox-6,Y(gy)+4)}
+      ctx.fillText("x →",W-16,H-18);ctx.textAlign="left";ctx.fillText("y",6,oy+4);
+      if(cfg.poly&&cfg.poly.length>2){ctx.beginPath();cfg.poly.forEach(function(p,k){if(k===0)ctx.moveTo(X(p[0]),Y(p[1]));else ctx.lineTo(X(p[0]),Y(p[1]))});ctx.closePath();ctx.fillStyle=acc;ctx.globalAlpha=.15;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=acc;ctx.lineWidth=1.6;ctx.stroke()}
+      var nx=72,ny=72;
+      (cfg.levels||[]).forEach(function(L){
+        var hi=cfg.hiLevel!==null&&cfg.hiLevel!==undefined&&Math.abs(L-cfg.hiLevel)<1e-9;
+        var segs=contourSegs(f,cfg.x0,cfg.x1,cfg.y0,cfg.y1,nx,ny,L);
+        ctx.strokeStyle=hi?amb:acc;ctx.globalAlpha=hi?1:0.55;ctx.lineWidth=hi?2.4:1.1;
+        ctx.beginPath();segs.forEach(function(s){ctx.moveTo(X(s[0]),Y(s[1]));ctx.lineTo(X(s[2]),Y(s[3]))});ctx.stroke();ctx.globalAlpha=1;
+        if(segs.length){var s0=segs[Math.floor(segs.length/2)];ctx.fillStyle=hi?amb:axis;ctx.font="bold 10.5px ui-monospace,monospace";ctx.textAlign="left";ctx.fillText(fmt(L,Math.abs(L%1)>1e-9?1:0),X(s0[0])+3,Y(s0[1])-3);ctx.font="11px ui-monospace,monospace"}
+      });
+      if(cfg.trail&&cfg.trail.length>1){ctx.strokeStyle=red;ctx.lineWidth=1.6;ctx.setLineDash([4,3]);ctx.beginPath();cfg.trail.forEach(function(p,k){if(k===0)ctx.moveTo(X(p[0]),Y(p[1]));else ctx.lineTo(X(p[0]),Y(p[1]))});ctx.stroke();ctx.setLineDash([]);
+        cfg.trail.forEach(function(p){ctx.beginPath();ctx.arc(X(p[0]),Y(p[1]),2.6,0,7);ctx.fillStyle=red;ctx.fill()})}
+      if(cfg.optMark){ctx.beginPath();ctx.arc(X(cfg.optMark[0]),Y(cfg.optMark[1]),7,0,7);ctx.strokeStyle=red;ctx.lineWidth=2.2;ctx.stroke();ctx.beginPath();ctx.arc(X(cfg.optMark[0]),Y(cfg.optMark[1]),3.6,0,7);ctx.fillStyle=red;ctx.fill();
+        ctx.fillStyle=red;ctx.font="bold 11.5px system-ui";ctx.textAlign="left";ctx.fillText(cfg.optMark[2]||"optimum",X(cfg.optMark[0])+9,Y(cfg.optMark[1])-7);ctx.font="11px ui-monospace,monospace"}
+      if(cfg.arrow){var a=cfg.arrow,mag=Math.hypot(a.dx,a.dy);
+        if(mag>1e-12){var L2=Math.min(1.6,Math.max(0.5,mag))*us*0.9,uxv=a.dx/mag,uyv=a.dy/mag;
+          var ex=X(a.x)+uxv*L2,ey=Y(a.y)-uyv*L2;
+          ctx.strokeStyle=amb;ctx.lineWidth=2.6;ctx.beginPath();ctx.moveTo(X(a.x),Y(a.y));ctx.lineTo(ex,ey);ctx.stroke();
+          var ang=Math.atan2(ey-Y(a.y),ex-X(a.x));
+          ctx.fillStyle=amb;ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(ex-9*Math.cos(ang-0.42),ey-9*Math.sin(ang-0.42));ctx.lineTo(ex-9*Math.cos(ang+0.42),ey-9*Math.sin(ang+0.42));ctx.closePath();ctx.fill()}}
+      if(cfg.point){ctx.beginPath();ctx.arc(X(cfg.point[0]),Y(cfg.point[1]),5.5,0,7);ctx.fillStyle=ink;ctx.fill();ctx.beginPath();ctx.arc(X(cfg.point[0]),Y(cfg.point[1]),2.2,0,7);ctx.fillStyle=cssVar("--surface");ctx.fill()}
+      cv._map={invX:invX,invY:invY,x0:cfg.x0,x1:cfg.x1,y0:cfg.y0,y1:cfg.y1};
+      return{X:X,Y:Y};
+    }
+
+    /* ================= PAIRWISE (AHP) ================= */
+    var AHP_RI=[0,0,0,0.58,0.90,1.12,1.24,1.32,1.41,1.45,1.49,1.51,1.48,1.56,1.57,1.59];
+    var SAATY=[9,8,7,6,5,4,3,2,1,1/2,1/3,1/4,1/5,1/6,1/7,1/8,1/9];
+    var SAATY_WORD={9:"extreme",7:"very strong",5:"strong",3:"moderate",2:"weak",1:"equal"};
+    function saatyLabel(v){
+      if(v===1)return "1 · equal";
+      if(v>1)return v+" · "+(SAATY_WORD[v]||"")+" more important";
+      return "1/"+Math.round(1/v)+" · "+(SAATY_WORD[Math.round(1/v)]||"")+" less important";
+    }
+    function ahpPrior(A){
+      var n=A.length,v=[],i,j,it;
+      for(i=0;i<n;i++)v.push(1/n);
+      for(it=0;it<300;it++){var w=[],sum=0;
+        for(i=0;i<n;i++){var s=0;for(j=0;j<n;j++)s+=A[i][j]*v[j];w.push(s);sum+=s}
+        var diff=0;for(i=0;i<n;i++){w[i]/=sum;diff=Math.max(diff,Math.abs(w[i]-v[i]))}
+        v=w;if(diff<1e-13)break}
+      var lam=0;for(i=0;i<n;i++){var s2=0;for(j=0;j<n;j++)s2+=A[i][j]*v[j];lam+=s2/v[i]}lam/=n;
+      var ci=n>1?(lam-n)/(n-1):0, cr=n>2?ci/AHP_RI[n]:0;
+      return{w:v,lam:lam,ci:ci,cr:cr};
+    }
+    function ahpMatrix(items,J,key){
+      var n=items.length,A=[],i,j;
+      for(i=0;i<n;i++){A.push([]);for(j=0;j<n;j++){
+        if(i===j)A[i].push(1);
+        else if(i<j)A[i].push(+(J[key]&&J[key][items[i].id+">"+items[j].id])||1);
+        else A[i].push(1/(+(J[key]&&J[key][items[j].id+">"+items[i].id])||1));
+      }}
+      return A;
+    }
+    var AHP_UID=100;
+    function ahpDefault(){
+      AHP_UID=100;
+      function nid(p){return p+(++AHP_UID)}
+      var cost={id:nid("c"),name:"Cost",subs:[{id:nid("s"),name:"Purchase price"},{id:nid("s"),name:"Running costs"}]};
+      var comf={id:nid("c"),name:"Comfort",subs:[]};
+      var perf={id:nid("c"),name:"Performance",subs:[]};
+      var alts=[{id:nid("a"),name:"Sedan"},{id:nid("a"),name:"Hatchback"},{id:nid("a"),name:"SUV"}];
+      var J={};
+      function setJ(key,items,pairs){var o={};pairs.forEach(function(pr){o[items[pr[0]].id+">"+items[pr[1]].id]=pr[2]});J[key]=o}
+      var crits=[cost,comf,perf];
+      setJ("crit",crits,[[0,1,3],[0,2,5],[1,2,2]]);
+      setJ("sub:"+cost.id,cost.subs,[[0,1,2]]);
+      setJ("alt:c"+cost.id+"s"+cost.subs[0].id,alts,[[0,1,2],[0,2,4],[1,2,2]]);
+      setJ("alt:c"+cost.id+"s"+cost.subs[1].id,alts,[[0,1,1],[0,2,3],[1,2,3]]);
+      setJ("alt:c"+comf.id,alts,[[0,1,1/3],[0,2,1/4],[1,2,1/2]]);
+      setJ("alt:c"+perf.id,alts,[[0,1,1/2],[0,2,2],[1,2,3]]);
+      return{goal:"Choose the best car for a new driver",crits:crits,alts:alts,J:J};
+    }
+    function ahpSets(P){
+      var sets=[];
+      if(P.crits.length>=2)sets.push({key:"crit",title:"Criteria — how much each matters for the goal",items:P.crits,kind:"crit"});
+      P.crits.forEach(function(c){
+        if(c.subs.length>=2)sets.push({key:"sub:"+c.id,title:"Sub-criteria of "+c.name,items:c.subs,kind:"sub"});
+      });
+      P.crits.forEach(function(c){
+        if(c.subs.length){c.subs.forEach(function(s){sets.push({key:"alt:c"+c.id+"s"+s.id,title:"Alternatives under "+c.name+" → "+s.name,items:P.alts,kind:"alt"})})}
+        else sets.push({key:"alt:c"+c.id,title:"Alternatives under "+c.name,items:P.alts,kind:"alt"});
+      });
+      return sets.filter(function(s){return s.items.length>=2});
+    }
+    function ahpSolve(P,critMult){ /* critMult: {critId: multiplier} optional sensitivity override */
+      var sets=ahpSets(P),priors={};
+      sets.forEach(function(s){priors[s.key]=ahpPrior(ahpMatrix(s.items,P.J,s.key))});
+      var critW={};
+      if(P.crits.length===1)critW[P.crits[0].id]=1;
+      else if(priors["crit"])P.crits.forEach(function(c,i){critW[c.id]=priors["crit"].w[i]});
+      if(critMult){
+        var tot=0;P.crits.forEach(function(c){critW[c.id]=critW[c.id]*(critMult[c.id]||1);tot+=critW[c.id]});
+        if(tot>0)P.crits.forEach(function(c){critW[c.id]/=tot});
+      }
+      var terminal=[]; /* {label, globalW, setKey} */
+      P.crits.forEach(function(c){
+        if(c.subs.length>=2){var sp=priors["sub:"+c.id];
+          c.subs.forEach(function(s,j){terminal.push({label:c.name+" → "+s.name,gw:critW[c.id]*(sp?sp.w[j]:1/c.subs.length),setKey:"alt:c"+c.id+"s"+s.id})});
+        }else if(c.subs.length===1){terminal.push({label:c.name+" → "+c.subs[0].name,gw:critW[c.id],setKey:"alt:c"+c.id+"s"+c.subs[0].id});
+        }else terminal.push({label:c.name,gw:critW[c.id],setKey:"alt:c"+c.id});
+      });
+      var scores=P.alts.map(function(a){return{name:a.name,score:0,parts:[]}});
+      terminal.forEach(function(t){
+        var pr=priors[t.setKey];if(!pr)return;
+        P.alts.forEach(function(a,i){scores[i].score+=t.gw*pr.w[i];scores[i].parts.push({t:t.label,w:t.gw,p:pr.w[i]})});
+      });
+      return{priors:priors,critW:critW,terminal:terminal,scores:scores,sets:sets};
+    }
+    function renderPairwise(app,state){
+      var P=(state&&state.crits&&state.alts)?state:ahpDefault();
+      (function bump(o){(o.crits||[]).forEach(function(c){var m=/(\d+)$/.exec(c.id);if(m)AHP_UID=Math.max(AHP_UID,+m[1]);(c.subs||[]).forEach(function(s){var m2=/(\d+)$/.exec(s.id);if(m2)AHP_UID=Math.max(AHP_UID,+m2[1])})});(o.alts||[]).forEach(function(a){var m=/(\d+)$/.exec(a.id);if(m)AHP_UID=Math.max(AHP_UID,+m[1])})})(P);
+      function nid(p){return p+(++AHP_UID)}
+      var h=toolHead("Decision Analysis","PairWise — AHP Decision Tool",
+        "The Analytic Hierarchy Process, in the three stages of the original lab: build the hierarchy (goal, criteria, alternatives), make pairwise judgments on Saaty's 1–9 scale, then read the synthesized ranking — with a consistency check on every matrix and a sensitivity view of the result. The car-selection example is loaded, completed; replace it with your own problem.",
+        "Structure a multi-criteria decision as a hierarchy, turn pairwise judgments into eigenvector priorities, and judge whether those judgments are consistent enough to trust (CR &lt; 0.10).",
+        "Fractions and reciprocals; what a weighted average is. No matrix algebra assumed — the eigenvector is computed for you.","About 25 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you judge",
+        "Suppose your judgments say: Cost is twice as important as Comfort, Comfort is three times as important as Performance, and Cost is six times as important as Performance. The consistency ratio of that matrix will be:",
+        ["CR = 0 — the judgments agree with each other perfectly","CR ≈ 0.10 — borderline","CR ≈ 0.50 — badly inconsistent","CR cannot be computed for a 3×3 matrix"],0,
+        "Twice-then-three-times implies six-times: 2 × 3 = 6, and the third judgment says exactly 6. Perfectly consistent judgments always give CR = 0 and weights proportional to 0.6 / 0.3 / 0.1 here. Real judgments are rarely perfect — that is what the consistency panel watches.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Stage 1 · Build the hierarchy</h2>'+
+        '<label class="fl" for="ah-goal">Goal</label><input type="text" id="ah-goal" value="'+esc(P.goal)+'">'+
+        '<h3>Criteria</h3><div id="ah-crits"></div>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="ah-addcrit">+ Add criterion</button></div>'+
+        '<h3>Alternatives</h3><div id="ah-alts"></div>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="ah-addalt">+ Add alternative</button><button type="button" class="btn secondary small" id="ah-reset">Reset to car example</button></div>'+
+        '<p class="hint">The same alternatives are judged under every terminal (bottom-level) criterion. Add sub-criteria to a criterion when it splits into parts — alternatives are then judged under each part, and the weights multiply down the hierarchy.</p></section>';
+      h+='<section class="panel"><h2>Consistency panel</h2><div id="ah-cons" aria-live="polite"></div><p class="hint">CR compares the inconsistency of your matrix (CI) with the average inconsistency of random matrices of the same size (RI). The standard rule of thumb: CR below 0.10 is acceptable. RI: n=3 → 0.58, 4 → 0.90, 5 → 1.12, 6 → 1.24, 7 → 1.32, 8 → 1.41, 9 → 1.45, 10 → 1.49.</p></section>';
+      h+='<section class="panel"><h2>Stage 3 · The synthesized ranking</h2><div id="ah-scores" aria-live="polite"></div><div id="ah-weights"></div>'+
+        '<div class="btnrow"><button type="button" class="btn small" id="ah-dl">Download decision summary (.txt)</button></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Stage 2 · Make judgments</h2><p class="hint">Each cell asks: how much more important is the <strong>row</strong> item than the <strong>column</strong> item? 1 = equal, 3 = moderate, 5 = strong, 7 = very strong, 9 = extreme; fractions reverse the direction. The mirror cell fills itself in.</p><div id="ah-judge"></div></section>';
+      h+='<section class="panel"><h2>Sensitivity — push one criterion</h2>'+
+        '<label class="fl" for="ah-sens-c">Criterion</label><select id="ah-sens-c"></select>'+
+        '<label class="fl" for="ah-sens-v">Its weight, as % of the judged weight: <strong id="ah-sens-lab">100%</strong></label><input type="range" id="ah-sens-v" min="0" max="300" step="5" value="100">'+
+        '<div id="ah-sens-out" class="readout" aria-live="polite"></div>'+
+        '<p class="hint">The other criteria keep their relative shares and absorb the difference. If the winner survives a wide range of weights, the recommendation is robust; if it flips at 105%, it is a coin toss dressed as analysis.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "One of your matrices comes back with CR = 0.24. What is the right response?",
+        ["Report the results anyway — CR is only a formality","Revisit the judgments in that matrix: find the comparisons that contradict the others and reconsider them","Add more alternatives until CR falls","Multiply all judgments by 0.76"],1,
+        "CR above ~0.10 says the judgments in that matrix contradict each other enough that the priorities are unreliable. The fix is at the source: re-examine the most inconsistent comparisons (often one reversed or rushed judgment), not the arithmetic.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      var lastSol=null;
+      function rebuild(){renderPairwise(app,P);setHash("pairwise",P)}
+      function critRow(c){
+        var d=document.createElement("div");d.style.cssText="border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px";
+        var inner='<div class="row2" style="grid-template-columns:1fr auto"><input type="text" class="ah-cname" value="'+esc(c.name)+'" aria-label="Criterion name"><button type="button" class="btn secondary small ah-cdel">✕</button></div>';
+        inner+='<div class="ah-subs" style="margin-top:6px">'+c.subs.map(function(s){
+          return '<div class="row2" style="grid-template-columns:1fr auto;margin-bottom:5px"><input type="text" class="ah-sname" data-sid="'+s.id+'" value="'+esc(s.name)+'" aria-label="Sub-criterion name"><button type="button" class="btn secondary small ah-sdel" data-sid="'+s.id+'">✕</button></div>'}).join("")+'</div>';
+        inner+='<button type="button" class="btn secondary small ah-addsub">+ Sub-criterion</button>';
+        d.innerHTML=inner;
+        $(".ah-cname",d).addEventListener("input",function(){c.name=this.value;refresh()});
+        $(".ah-cdel",d).addEventListener("click",function(){if(P.crits.length<=2)return;P.crits=P.crits.filter(function(x){return x.id!==c.id});rebuild()});
+        $$(".ah-sname",d).forEach(function(inp){inp.addEventListener("input",function(){var s=c.subs.filter(function(x){return x.id===inp.dataset.sid})[0];if(s){s.name=inp.value;refresh()}})});
+        $$(".ah-sdel",d).forEach(function(b){b.addEventListener("click",function(){c.subs=c.subs.filter(function(x){return x.id!==b.dataset.sid});rebuild()})});
+        $(".ah-addsub",d).addEventListener("click",function(){c.subs.push({id:nid("s"),name:"Sub-criterion "+(c.subs.length+1)});rebuild()});
+        return d;
+      }
+      function buildEditors(){
+        var cb=$("#ah-crits");cb.innerHTML="";P.crits.forEach(function(c){cb.appendChild(critRow(c))});
+        var ab=$("#ah-alts");ab.innerHTML=P.alts.map(function(a){
+          return '<div class="row2" style="grid-template-columns:1fr auto;margin-bottom:6px"><input type="text" class="ah-aname" data-aid="'+a.id+'" value="'+esc(a.name)+'" aria-label="Alternative name"><button type="button" class="btn secondary small ah-adel" data-aid="'+a.id+'">✕</button></div>'}).join("");
+        $$(".ah-aname",ab).forEach(function(inp){inp.addEventListener("input",function(){var a=P.alts.filter(function(x){return x.id===inp.dataset.aid})[0];if(a){a.name=inp.value;refresh()}})});
+        $$(".ah-adel",ab).forEach(function(b){b.addEventListener("click",function(){if(P.alts.length<=2)return;P.alts=P.alts.filter(function(x){return x.id!==b.dataset.aid});rebuild()})});
+        var sc=$("#ah-sens-c");sc.innerHTML=P.crits.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
+      }
+      function buildJudge(){
+        var S=ahpSolve(P),jb=$("#ah-judge");jb.innerHTML="";
+        S.sets.forEach(function(set){
+          var wrap=document.createElement("div");wrap.style.marginBottom="18px";
+          var pr=S.priors[set.key];
+          var hd='<h3 style="margin-bottom:4px">'+esc(set.title)+'</h3>';
+          hd+='<p class="hint" style="margin:0 0 6px">Priorities: '+set.items.map(function(it,i){return esc(it.name)+" <strong>"+fmt(pr.w[i],3)+"</strong>"}).join(" · ")+' · CR <strong>'+fmt(pr.cr,3)+'</strong>'+(pr.cr<0.1?' <span class="tag ok">consistent</span>':' <span class="tag bad">revise</span>')+'</p>';
+          var tb='<div style="overflow-x:auto"><table class="data mtx"><thead><tr><th></th>'+set.items.map(function(it){return '<th>'+esc(it.name)+'</th>'}).join("")+'</tr></thead><tbody>';
+          set.items.forEach(function(ri,i){
+            tb+='<tr><th>'+esc(ri.name)+'</th>';
+            set.items.forEach(function(cj,j){
+              if(i===j)tb+='<td class="num">1</td>';
+              else if(i<j){var cur=(P.J[set.key]&&P.J[set.key][ri.id+">"+cj.id])||1;
+                tb+='<td><select data-set="'+esc(set.key)+'" data-i="'+ri.id+'" data-j="'+cj.id+'" aria-label="'+esc(ri.name)+' versus '+esc(cj.name)+'">'+SAATY.map(function(v){return '<option value="'+v+'"'+(Math.abs(v-cur)<1e-12?" selected":"")+'>'+saatyLabel(v)+'</option>'}).join("")+'</select></td>'}
+              else{var up=(P.J[set.key]&&P.J[set.key][cj.id+">"+ri.id])||1;tb+='<td class="num">'+(up===1?"1":(up>1?"1/"+up:Math.round(1/up)))+'</td>'}
+            });
+            tb+='</tr>';
+          });
+          tb+='</tbody></table></div>';
+          wrap.innerHTML=hd+tb;jb.appendChild(wrap);
+        });
+        $$("select[data-set]",jb).forEach(function(sel){sel.addEventListener("change",function(){
+          if(!P.J[sel.dataset.set])P.J[sel.dataset.set]={};
+          P.J[sel.dataset.set][sel.dataset.i+">"+sel.dataset.j]=parseFloat(sel.value);
+          buildJudge();refresh();
+        })});
+      }
+      function refresh(){
+        P.goal=$("#ah-goal").value;
+        setHash("pairwise",P);
+        var S=ahpSolve(P);lastSol=S;
+        /* consistency */
+        var rows=S.sets.map(function(set){var pr=S.priors[set.key];
+          return '<tr><td>'+esc(set.title)+'</td><td class="num">'+set.items.length+'</td><td class="num">'+fmt(pr.lam,3)+'</td><td class="num">'+fmt(pr.ci,3)+'</td><td class="num">'+fmt(pr.cr,3)+'</td><td>'+(pr.cr<0.1?'<span class="tag ok">OK</span>':'<span class="tag bad">Revise</span>')+'</td></tr>'}).join("");
+        var worst=Math.max.apply(null,S.sets.map(function(s){return S.priors[s.key].cr}));
+        $("#ah-cons").innerHTML='<table class="data"><thead><tr><th>Matrix</th><th class="num">n</th><th class="num">λmax</th><th class="num">CI</th><th class="num">CR</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>'+
+          (worst<0.1?'<div class="banner good" style="margin-bottom:0">Every matrix is acceptably consistent (worst CR '+fmt(worst,3)+' &lt; 0.10). The priorities below are safe to interpret.</div>':'<div class="banner bad" style="margin-bottom:0">At least one matrix has CR ≥ 0.10 (worst '+fmt(worst,3)+'). Reconsider the judgments in the flagged matrix before trusting the ranking.</div>');
+        /* scores */
+        var ranked=S.scores.slice().sort(function(a,b){return b.score-a.score});
+        var maxS=Math.max.apply(null,S.scores.map(function(s){return s.score}))||1;
+        var bars=ranked.map(function(s,i){
+          return '<div class="trow"><span>'+(i+1)+'. '+esc(s.name)+'</span><div class="tbar"><i style="left:0;width:'+(100*s.score/maxS)+'%"></i></div><span class="tv">'+fmt(s.score,3)+'</span></div>'}).join("");
+        $("#ah-scores").innerHTML='<p class="readout" style="margin-top:0">Goal: <strong>'+esc(P.goal)+'</strong>. Recommended: <strong>'+esc(ranked[0].name)+'</strong> with a global priority of '+fmt(ranked[0].score,3)+'.</p><div class="tornado">'+bars+'</div>';
+        var tw='<h3>Where the scores come from</h3><div style="overflow-x:auto"><table class="data"><thead><tr><th>Terminal criterion</th><th class="num">Global weight</th>'+P.alts.map(function(a){return '<th class="num">'+esc(a.name)+'</th>'}).join("")+'</tr></thead><tbody>';
+        S.terminal.forEach(function(t){var pr=S.priors[t.setKey];
+          tw+='<tr><td>'+esc(t.label)+'</td><td class="num">'+fmt(t.gw,3)+'</td>'+(pr?P.alts.map(function(a,i){return '<td class="num">'+fmt(pr.w[i],3)+'</td>'}).join(""):"")+'</tr>'});
+        tw+='<tr class="hl"><td>Global score</td><td class="num">1.000</td>'+S.scores.map(function(s){return '<td class="num">'+fmt(s.score,3)+'</td>'}).join("")+'</tr></tbody></table></div>';
+        tw+='<p class="hint">Criteria weights: '+P.crits.map(function(c){return esc(c.name)+" <strong>"+fmt(S.critW[c.id]||0,3)+"</strong>"}).join(" · ")+'.</p>';
+        $("#ah-weights").innerHTML=tw;
+        drawSens();
+      }
+      function drawSens(){
+        var cid=$("#ah-sens-c").value||(P.crits[0]&&P.crits[0].id);if(!cid)return;
+        var pct=+$("#ah-sens-v").value;$("#ah-sens-lab").textContent=pct+"%";
+        var mult={};mult[cid]=pct/100;
+        var S=ahpSolve(P,mult),base=lastSol||ahpSolve(P);
+        var bRank=base.scores.slice().sort(function(a,b){return b.score-a.score})[0];
+        var sRank=S.scores.slice().sort(function(a,b){return b.score-a.score})[0];
+        /* scan for flip */
+        var flip=null;
+        for(var m=0;m<=300;m+=2){var mm={};mm[cid]=m/100;var SS=ahpSolve(P,mm);
+          var top=SS.scores.slice().sort(function(a,b){return b.score-a.score})[0];
+          if(top.name!==bRank.name){flip=m;break}}
+        $("#ah-sens-out").innerHTML='With <strong>'+esc((P.crits.filter(function(c){return c.id===cid})[0]||{}).name||"")+'</strong> scaled to '+pct+'% of its judged weight (now '+fmt(S.critW[cid],3)+' of the total): winner <strong>'+esc(sRank.name)+'</strong> ('+fmt(sRank.score,3)+'). '+
+          S.scores.map(function(s){return esc(s.name)+" "+fmt(s.score,3)}).join(" · ")+'.<br>'+
+          (flip===null?'<strong>No flip:</strong> '+esc(bRank.name)+' stays on top across the whole 0–300% range — a robust winner on this criterion.':'<strong>Flip point:</strong> the winner changes at about '+flip+'% of the judged weight for this criterion. Near the judged weight, treat the ranking as fragile.');
+      }
+      $("#ah-goal").addEventListener("input",refresh);
+      $("#ah-addcrit").addEventListener("click",function(){P.crits.push({id:nid("c"),name:"Criterion "+(P.crits.length+1),subs:[]});rebuild()});
+      $("#ah-addalt").addEventListener("click",function(){P.alts.push({id:nid("a"),name:"Alternative "+(P.alts.length+1)});rebuild()});
+      $("#ah-reset").addEventListener("click",function(){renderPairwise(app,null)});
+      $("#ah-sens-c").addEventListener("change",drawSens);
+      $("#ah-sens-v").addEventListener("input",drawSens);
+      $("#ah-dl").addEventListener("click",function(){
+        var S=lastSol||ahpSolve(P);
+        var ranked=S.scores.slice().sort(function(a,b){return b.score-a.score});
+        var t="PairWise — AHP decision summary\nGoal: "+P.goal+"\n\nCriteria weights:\n";
+        P.crits.forEach(function(c){t+="  "+c.name+": "+fmt(S.critW[c.id]||0,4)+"\n"});
+        t+="\nConsistency:\n";
+        S.sets.forEach(function(set){var pr=S.priors[set.key];t+="  "+set.title+": lambda-max "+fmt(pr.lam,3)+", CI "+fmt(pr.ci,3)+", CR "+fmt(pr.cr,3)+(pr.cr<0.1?" (OK)":" (REVISE)")+"\n"});
+        t+="\nGlobal scores:\n";
+        ranked.forEach(function(s,i){t+="  "+(i+1)+". "+s.name+": "+fmt(s.score,4)+"\n"});
+        t+="\nRecommendation: "+ranked[0].name+"\n";
+        dl("pairwise-summary.txt",t);
+      });
+      buildEditors();buildJudge();refresh();
+    }
+
+    /* ================= NEXT IN LINE (queue simulation) ================= */
+    function nilSimulate(S){
+      var rnd=mulberry32(S.seed>>>0);
+      function expV(rate){return -Math.log(1-rnd())/rate}
+      var lam=S.lam,mu=S.mu,s=S.s,dur=S.dur,warm=S.warm;
+      var t=0,nextArr=expV(lam),arrCount=0;
+      var servers=[],srvCust=[];for(var i0=0;i0<s;i0++){servers.push(0);srvCust.push(null)}
+      var queue=[],cust=[],snaps=[];
+      var area=0,areaQ=0,lastT=0,nSys=0,nQ=0;
+      function advance(toT){if(toT>warm){var from=Math.max(lastT,warm);if(toT>from){area+=nSys*(toT-from);areaQ+=nQ*(toT-from)}}lastT=toT}
+      function snap(type,desc){
+        snaps.push({t:t,type:type,desc:desc,n:nSys,nq:nQ,
+          srv:srvCust.map(function(c){return c?{id:c.id,start:c.start,end:c.end}:null}),
+          q:queue.map(function(c){return c.id})});
+      }
+      snap("start","Doors open — the post office is empty.");
+      var guard=0;
+      while(guard++<400000){
+        var nextDep=Infinity,depSrv=-1,i2;
+        for(i2=0;i2<s;i2++)if(servers[i2]>0&&servers[i2]<nextDep){nextDep=servers[i2];depSrv=i2}
+        if(nextArr===Infinity&&nextDep===Infinity)break;
+        if(nextArr<=nextDep){
+          t=nextArr;
+          if(t>dur){nextArr=Infinity;continue}
+          advance(t);arrCount++;
+          var rec={id:arrCount,arr:t,start:null,end:null,srv:0};
+          cust.push(rec);nSys++;
+          var free=-1;for(var j=0;j<s;j++)if(servers[j]<=t){free=j;break}
+          if(free>=0){rec.start=t;rec.srv=free+1;rec.end=t+expV(mu);servers[free]=rec.end;srvCust[free]=rec;
+            snap("begin","C"+rec.id+" arrives and goes straight to station "+(free+1)+".")}
+          else{queue.push(rec);nQ++;
+            snap("arrive","C"+rec.id+" arrives and joins the line ("+nQ+" waiting).")}
+          nextArr=t+expV(lam);
+        }else{
+          t=nextDep;advance(t);nSys--;
+          var doneRec=srvCust[depSrv];
+          if(queue.length){var nx=queue.shift();nQ--;nx.start=t;nx.srv=depSrv+1;nx.end=t+expV(mu);servers[depSrv]=nx.end;srvCust[depSrv]=nx;
+            snap("depart","C"+(doneRec?doneRec.id:"?")+" leaves; C"+nx.id+" starts at station "+(depSrv+1)+".")}
+          else{servers[depSrv]=0;srvCust[depSrv]=null;
+            snap("depart","C"+(doneRec?doneRec.id:"?")+" leaves station "+(depSrv+1)+".")}
+        }
+        if(t>dur&&nextArr===Infinity&&queue.length===0){var allFree=true;for(var k=0;k<s;k++)if(servers[k]>t)allFree=false;if(allFree)break}
+      }
+      var obs=Math.max(1,dur-warm);
+      var done=cust.filter(function(c){return c.end!==null&&c.arr>=warm});
+      var allDone=cust.filter(function(c){return c.end!==null});
+      function avg(a,f){return a.length?a.reduce(function(sm,c){return sm+f(c)},0)/a.length:NaN}
+      return{snaps:snaps,cust:cust,
+        L:area/obs,Lq:areaQ/obs,
+        W:avg(done,function(c){return c.end-c.arr}),Wq:avg(done,function(c){return c.start-c.arr}),
+        nMeasured:done.length,nArr:cust.length,nDone:allDone.length};
+    }
+    function renderNextInLine(app,state){
+      var S=Object.assign({lam:0.8,mu:1.0,s:1,dur:5000,warm:500,seed:42},state||{});
+      var h=toolHead("Decision Analysis","Next in Line — Queue Simulation",
+        "The Queuing Lab gives you steady-state formulas; this lab <em>watches them happen</em>. A neighborhood post office: one shared first-come, first-served line, s clerk stations, Poisson arrivals and exponential service from a seeded random stream — so your run is exactly reproducible. Measure the averages after warm-up and hold them up against the M/M/s formulas.",
+        "Run a discrete-event simulation of a queue, explain why warm-up is discarded before measuring, and judge how closely simulated averages approach steady-state theory — and why they never match exactly.",
+        "The Queuing Lab's measures (ρ, L, Lq, W, Wq) and Little's law. Rates here are per minute, times in minutes.","About 20 minutes.");
+      h+=teachBox("Step 1 · Predict","Before the doors open",
+        "The post office opens empty. You start measuring L from the very first minute, with no warm-up. Compared with the true steady-state L, your measured average will most likely be:",
+        ["Too high — the opening rush overwhelms the clerks","Too low — the system starts empty, so early minutes drag the average down","Exactly right — averages wash everything out","Unpredictable in either direction, equally likely"],1,
+        "An empty start is a lucky start: the first customers find no line, and the system needs time to build to its typical congestion. Measuring from minute zero mixes that easy opening into the average and biases L (and W) downward. Warm-up — measuring only after the pattern has developed — is the standard fix, and this lab shades it so you can see the effect.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Simulation setup</h2>'+
+        '<label class="fl" for="nl-lam">Arrival rate λ <span class="hint">customers per minute</span></label><input type="number" id="nl-lam" step="any" min="0.01">'+
+        '<label class="fl" for="nl-mu">Service rate μ <span class="hint">per station, per minute</span></label><input type="number" id="nl-mu" step="any" min="0.01">'+
+        '<label class="fl" for="nl-s">Service stations s</label><input type="number" id="nl-s" step="1" min="1" max="8">'+
+        '<label class="fl" for="nl-dur">Run duration <span class="hint">minutes</span></label><input type="number" id="nl-dur" step="50" min="100">'+
+        '<label class="fl" for="nl-warm">Warm-up <span class="hint">minutes excluded from measurement</span></label><input type="number" id="nl-warm" step="50" min="0">'+
+        '<label class="fl" for="nl-seed">Random seed <span class="hint">same seed + settings = same run</span></label><input type="number" id="nl-seed" step="1">'+
+        '<div class="btnrow"><button type="button" class="btn small" id="nl-run">Run simulation</button><button type="button" class="btn secondary small" id="nl-csv">Export CSV</button></div>'+
+        '<div id="nl-warn"></div></section>';
+      h+='<section class="panel"><h2>Measured vs. theory</h2><div id="nl-stats" aria-live="polite"></div>'+
+        '<p class="hint">Theory is the steady-state M/M/s result for the same λ, μ, s. The simulation measures only after warm-up. Sampling variation is real: at the defaults (5,000 minutes, seed 42) the measured L lands within about 5% of theory; shorter runs wander further. Try seed 7 or a 500-minute run and watch the gap grow.</p></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>The floor</h2><div class="simstage"><canvas class="chart" id="nl-stage" data-ratio="0.42" role="img" aria-label="Animated view of the service stations and the waiting line"></canvas>'+
+        '<div class="btnrow" style="align-items:center"><button type="button" class="btn small" id="nl-play">Play</button><button type="button" class="btn secondary small" id="nl-step">Next event →</button><button type="button" class="btn secondary small" id="nl-rew">↺ Start</button>'+
+        '<label class="fl" style="margin:0">Speed <select id="nl-speed" style="width:auto;padding:5px 8px"><option value="10">10 min/s</option><option value="60">60 min/s</option><option value="240" selected>240 min/s</option><option value="900">900 min/s</option></select></label></div>'+
+        '<label class="fl" for="nl-scrub">Simulation time: <strong id="nl-clock">0 min</strong></label><input type="range" id="nl-scrub" min="0" max="100" step="0.5" value="0">'+
+        '<p class="readout" id="nl-event" aria-live="polite">Run the simulation, then press Play.</p></div></section>';
+      h+='<section class="panel"><h2>Arrivals over time</h2><canvas class="chart" id="nl-arr" data-ratio="0.16" role="img" aria-label="Dot plot of customer arrival times; the warm-up period is shaded"></canvas><p class="hint">One dot per customer, at the minute they arrived. The gaps between dots are the interarrival times — exponential, so clusters and droughts are normal, not a pattern to explain.</p></section>';
+      h+='<section class="panel"><h2>How many are here?</h2><canvas class="chart" id="nl-chart" data-ratio="0.5" role="img" aria-label="Step chart of the number of customers in the system over time, warm-up shaded, with measured and theoretical average lines"></canvas><p class="hint">The number in the system, minute by minute. Warm-up is shaded and excluded from the measured average. The queue keeps moving after warm-up ends — steady state is a settled <em>pattern</em>, not a stopped queue.</p></section>';
+      h+='<section class="panel"><h2>Customer records <span class="hint">(first 40 — export the CSV for all)</span></h2><div id="nl-table" style="overflow-x:auto"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "You rerun with the same settings but a different seed, and measured L changes from 4.17 to 3.61 while theory stays 4.00. What should you conclude?",
+        ["The simulator is broken — a correct simulation would hit 4.00","Nothing is broken: each run is one random sample of a noisy process, and only longer runs (or averaging many runs) pin the estimate down","The theory value must be wrong for this seed","Warm-up should have fixed this, so warm-up is useless"],1,
+        "Simulation output is a statistic, with sampling error like any other. A single run estimates steady state; it does not reproduce it. The professional habits are longer runs, several seeds, and reporting the spread — exactly what the seed control is for.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      ["lam","mu","s","dur","warm","seed"].forEach(function(k){$("#nl-"+k).value=S[k]});
+      var R=null,curT=0,playing=false,rafId=null,snapIdx=0;
+      function readInputs(){
+        S={lam:Math.max(0.01,parseFloat($("#nl-lam").value)||0.8),mu:Math.max(0.01,parseFloat($("#nl-mu").value)||1),
+           s:Math.min(8,Math.max(1,parseInt($("#nl-s").value)||1)),dur:Math.min(60000,Math.max(100,parseInt($("#nl-dur").value)||5000)),
+           warm:Math.max(0,parseInt($("#nl-warm").value)||0),seed:parseInt($("#nl-seed").value)||42};
+        if(S.warm>=S.dur)S.warm=Math.floor(S.dur/2);
+        setHash("nextinline",S);
+      }
+      function theory(){return queueCompute({model:S.s===1?"mm1":"mms",lam:S.lam,mu:S.mu,s:S.s,K:12,meanSvc:1/S.mu,sdSvc:1/S.mu})}
+      function run(){
+        readInputs();stopPlay();R=nilSimulate(S);curT=0;snapIdx=0;
+        $("#nl-scrub").max=S.dur;$("#nl-scrub").value=0;
+        var T=theory();
+        $("#nl-warn").innerHTML=T.ok?"":'<div class="banner bad"><strong>Unstable settings.</strong> ρ = λ/(sμ) = '+fmt(S.lam/(S.s*S.mu),2)+' ≥ 1: arrivals outpace the stations, so no steady state exists and the line grows all run. The simulation still plays — watch it grow — but the theory column has nothing to compare against.</div>';
+        var rows=[["L — in system",R.L,T.ok?T.L:null],["Lq — in queue",R.Lq,T.ok?T.Lq:null],["W — time in system (min)",R.W,T.ok?T.W:null],["Wq — wait in queue (min)",R.Wq,T.ok?T.Wq:null]];
+        $("#nl-stats").innerHTML='<p class="readout" style="margin-top:0">'+R.nArr+' customers arrived; '+R.nDone+' completed service; averages use the '+R.nMeasured+' who arrived after the '+fmt0(S.warm)+'-minute warm-up and finished.</p>'+
+          '<table class="data"><thead><tr><th>Measure</th><th class="num">Simulated</th><th class="num">Theory</th><th class="num">Difference</th></tr></thead><tbody>'+
+          rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="num">'+fmt(r[1],3)+'</td><td class="num">'+(r[2]===null?"—":fmt(r[2],3))+'</td><td class="num">'+(r[2]===null?"—":((r[1]-r[2])>=0?"+":"")+fmt(r[1]-r[2],3)+' ('+fmt(100*(r[1]-r[2])/r[2],1)+'%)')+'</td></tr>'}).join("")+
+          '</tbody></table>';
+        var tb='<table class="data"><thead><tr><th>Customer</th><th class="num">Arrives</th><th class="num">Service starts</th><th class="num">Leaves</th><th class="num">Wait</th><th class="num">In system</th><th class="num">Station</th></tr></thead><tbody>';
+        R.cust.slice(0,40).forEach(function(c){tb+='<tr><td>C'+c.id+'</td><td class="num">'+fmt(c.arr,1)+'</td><td class="num">'+(c.start===null?"—":fmt(c.start,1))+'</td><td class="num">'+(c.end===null?"—":fmt(c.end,1))+'</td><td class="num">'+(c.start===null?"—":fmt(c.start-c.arr,1))+'</td><td class="num">'+(c.end===null?"—":fmt(c.end-c.arr,1))+'</td><td class="num">'+(c.srv||"—")+'</td></tr>'});
+        tb+='</tbody></table>';
+        $("#nl-table").innerHTML=tb;
+        drawArr();drawChart();drawStage();
+      }
+      function snapAt(t){
+        var sn=R.snaps,lo=0,hi=sn.length-1,ans=0;
+        while(lo<=hi){var mid=(lo+hi)>>1;if(sn[mid].t<=t){ans=mid;lo=mid+1}else hi=mid-1}
+        return ans;
+      }
+      function drawStage(){
+        var cv=$("#nl-stage");if(!cv||!R)return;
+        var idx=snapAt(curT);snapIdx=idx;var sn=R.snaps[idx];
+        $("#nl-clock").textContent=fmt(curT,0)+" min"+(curT<S.warm?" (warm-up)":"");
+        $("#nl-event").textContent="t = "+fmt(sn.t,1)+" min — "+sn.desc;
+        if(document.activeElement!==$("#nl-scrub"))$("#nl-scrub").value=curT;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var ink=cssVar("--ink"),ink2=cssVar("--ink2"),acc=cssVar("--accent"),accSoft=cssVar("--accent-soft"),line=cssVar("--line2"),surf=cssVar("--surface"),amb=cssVar("--amber");
+        ctx.clearRect(0,0,W,H);
+        ctx.font="bold 12px system-ui";ctx.fillStyle=ink2;ctx.textAlign="left";
+        ctx.fillText("SERVICE STATIONS",10,18);
+        var bw=Math.min(118,(W-20-(S.s-1)*10)/S.s),bh=56;
+        for(var i=0;i<S.s;i++){
+          var x=10+i*(bw+10),y=26;
+          ctx.strokeStyle=line;ctx.lineWidth=1.4;ctx.fillStyle=surf;
+          ctx.beginPath();ctx.rect(x,y,bw,bh);ctx.fill();ctx.stroke();
+          ctx.fillStyle=ink2;ctx.font="11px system-ui";ctx.fillText("Station "+(i+1),x+8,y+15);
+          var occ=sn.srv[i];
+          if(occ){ctx.fillStyle=acc;ctx.beginPath();ctx.arc(x+16,y+36,9,0,7);ctx.fill();
+            ctx.fillStyle=ink;ctx.font="bold 12px system-ui";ctx.fillText("C"+occ.id,x+30,y+40);
+            var pr=Math.min(1,Math.max(0,(curT-occ.start)/Math.max(0.0001,occ.end-occ.start)));
+            ctx.fillStyle=accSoft;ctx.fillRect(x+8,y+bh-9,bw-16,4);
+            ctx.fillStyle=amb;ctx.fillRect(x+8,y+bh-9,(bw-16)*pr,4);
+          }else{ctx.fillStyle=ink2;ctx.font="12px system-ui";ctx.fillText("free",x+8,y+40)}
+        }
+        var qy=104;
+        ctx.fillStyle=ink2;ctx.font="bold 12px system-ui";ctx.fillText("THE LINE — first in, first out ("+sn.nq+" waiting)",10,qy);
+        var maxDots=Math.floor((W-20)/26);
+        sn.q.slice(0,maxDots).forEach(function(id,k){
+          var x=10+k*26,y2=qy+10;
+          ctx.fillStyle=amb;ctx.beginPath();ctx.arc(x+10,y2+10,10,0,7);ctx.fill();
+          ctx.fillStyle="#fff";ctx.font="bold 9.5px system-ui";ctx.textAlign="center";ctx.fillText(id,x+10,y2+13.5);ctx.textAlign="left";
+        });
+        if(sn.q.length>maxDots){ctx.fillStyle=ink;ctx.font="bold 12px system-ui";ctx.fillText("+"+(sn.q.length-maxDots)+" more",16+maxDots*26,qy+24)}
+        if(!sn.q.length){ctx.fillStyle=ink2;ctx.font="12px system-ui";ctx.fillText("Nobody is waiting.",10,qy+24)}
+        var busy=sn.srv.filter(function(x){return x}).length;
+        var completed=R.cust.filter(function(c){return c.end!==null&&c.end<=curT}).length;
+        ctx.fillStyle=ink;ctx.font="13px system-ui";
+        ctx.fillText("In system: "+sn.n+"    Waiting: "+sn.nq+"    In service: "+busy+"    Completed: "+completed,10,H-10);
+        cv.setAttribute("aria-label","At minute "+fmt(curT,0)+": "+sn.n+" customers in the system, "+sn.nq+" waiting, "+busy+" in service. Last event: "+sn.desc);
+      }
+      function drawArr(){
+        var cv=$("#nl-arr");if(!cv||!R)return;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var axis=cssVar("--chart-axis"),acc=cssVar("--accent"),amb=cssVar("--amber");
+        ctx.clearRect(0,0,W,H);
+        var padL=8,padR=8,pw=W-padL-padR;
+        if(S.warm>0){ctx.fillStyle=amb;ctx.globalAlpha=.16;ctx.fillRect(padL,4,pw*S.warm/S.dur,H-8);ctx.globalAlpha=1}
+        ctx.fillStyle=acc;
+        R.cust.forEach(function(c){var x=padL+pw*c.arr/S.dur;var y=8+(c.id%5)*((H-16)/5);ctx.fillRect(x,y,2.4,2.4)});
+        ctx.fillStyle=axis;ctx.font="10.5px ui-monospace,monospace";ctx.textAlign="left";ctx.fillText("0",padL,H-1);ctx.textAlign="right";ctx.fillText(fmt0(S.dur)+" min",W-padR,H-1);
+      }
+      function drawChart(){
+        var cv=$("#nl-chart");if(!cv||!R)return;
+        var T=theory();
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),acc=cssVar("--accent"),amb=cssVar("--amber"),red=cssVar("--red");
+        var padL=40,padR=12,padT=14,padB=28,pw=W-padL-padR,ph=H-padT-padB;
+        var maxN=2;R.snaps.forEach(function(sn){if(sn.n>maxN)maxN=sn.n});maxN=Math.ceil(maxN*1.1);
+        function X(t){return padL+pw*t/S.dur} function Y(n){return padT+ph-ph*n/maxN}
+        ctx.clearRect(0,0,W,H);
+        if(S.warm>0){ctx.fillStyle=amb;ctx.globalAlpha=.14;ctx.fillRect(padL,padT,pw*S.warm/S.dur,ph);ctx.globalAlpha=1;
+          ctx.fillStyle=axis;ctx.font="10.5px system-ui";ctx.textAlign="left";ctx.fillText("warm-up",padL+5,padT+12)}
+        ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;
+        for(var g=0;g<=4;g++){var nv=maxN*g/4,y=Y(nv);ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(nv,0),padL-6,y+4)}
+        ctx.textAlign="center";ctx.fillText("time (min) →",padL+pw/2,H-4);
+        ctx.strokeStyle=acc;ctx.lineWidth=1.3;ctx.beginPath();
+        R.snaps.forEach(function(sn,i){var x=X(sn.t),y=Y(sn.n);if(i===0)ctx.moveTo(x,y);else{ctx.lineTo(x,Y(R.snaps[i-1].n));ctx.lineTo(x,y)}});
+        ctx.lineTo(X(S.dur),Y(R.snaps[R.snaps.length-1].n));ctx.stroke();
+        ctx.strokeStyle=red;ctx.lineWidth=1.6;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(padL,Y(R.L));ctx.lineTo(padL+pw,Y(R.L));ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=red;ctx.font="bold 11px system-ui";ctx.textAlign="right";ctx.fillText("measured L = "+fmt(R.L,2),padL+pw-4,Y(R.L)-5);
+        if(T.ok){ctx.strokeStyle=amb;ctx.lineWidth=1.6;ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(padL,Y(T.L));ctx.lineTo(padL+pw,Y(T.L));ctx.stroke();ctx.setLineDash([]);
+          ctx.fillStyle=amb;ctx.textAlign="left";ctx.fillText("theory L = "+fmt(T.L,2),padL+4,Y(T.L)+15)}
+        ctx.font="11px ui-monospace,monospace";
+      }
+      function stopPlay(){playing=false;if(rafId)cancelAnimationFrame(rafId);rafId=null;$("#nl-play").textContent="Play"}
+      function playLoop(lastTs){
+        if(!playing)return;
+        rafId=requestAnimationFrame(function(ts){
+          if(!playing)return;
+          var dt=Math.min(0.1,(ts-(lastTs||ts))/1000);
+          curT+=dt*(+$("#nl-speed").value);
+          if(curT>=S.dur){curT=S.dur;drawStage();stopPlay();return}
+          drawStage();playLoop(ts);
+        });
+      }
+      $("#nl-play").addEventListener("click",function(){
+        if(!R)return;
+        if(playing){stopPlay();return}
+        if(curT>=S.dur)curT=0;
+        playing=true;$("#nl-play").textContent="Pause";playLoop(null);
+      });
+      $("#nl-step").addEventListener("click",function(){if(!R)return;stopPlay();var i=snapAt(curT);if(R.snaps[i]&&R.snaps[i].t<=curT)i++;if(i<R.snaps.length){curT=R.snaps[i].t;drawStage()}});
+      $("#nl-rew").addEventListener("click",function(){if(!R)return;stopPlay();curT=0;drawStage()});
+      $("#nl-scrub").addEventListener("input",function(){if(!R)return;stopPlay();curT=+this.value;drawStage()});
+      $("#nl-run").addEventListener("click",run);
+      $("#nl-csv").addEventListener("click",function(){
+        if(!R)return;
+        var T=theory();
+        var t="Next in Line — queue simulation summary\n";
+        t+="lambda (per min),"+S.lam+"\nmu (per min),"+S.mu+"\nstations,"+S.s+"\nduration (min),"+S.dur+"\nwarm-up (min),"+S.warm+"\nseed,"+S.seed+"\n";
+        t+="measured L,"+fmt(R.L,4)+"\nmeasured Lq,"+fmt(R.Lq,4)+"\nmeasured W,"+fmt(R.W,4)+"\nmeasured Wq,"+fmt(R.Wq,4)+"\n";
+        if(T.ok)t+="theory L,"+fmt(T.L,4)+"\ntheory Lq,"+fmt(T.Lq,4)+"\ntheory W,"+fmt(T.W,4)+"\ntheory Wq,"+fmt(T.Wq,4)+"\n";
+        t+="\ncustomer,arrival,service_start,service_end,waiting,time_in_system,station\n";
+        R.cust.forEach(function(c){t+="C"+c.id+","+fmt(c.arr,3)+","+(c.start===null?"":fmt(c.start,3))+","+(c.end===null?"":fmt(c.end,3))+","+(c.start===null?"":fmt(c.start-c.arr,3))+","+(c.end===null?"":fmt(c.end-c.arr,3))+","+(c.srv||"")+"\n"});
+        dl("next-in-line.csv",t);
+      });
+      run();
+      window.addEventListener("resize",function(){if(document.getElementById("nl-chart")&&R){drawChart();drawArr();drawStage()}});
+    }
+
+    /* ================= LEVEL CURVES ================= */
+    var LC_PRESETS={
+      hill:{name:"The Hill — z = 12 − (x² + y²)/3",f:function(x,y){return 12-(x*x+y*y)/3},g:function(x,y){return[-2*x/3,-2*y/3]},x0:-6,x1:6,y0:-6,y1:6,levels:[0,1.5,3,4.5,6,7.5,9,10.5],hiMin:0,hiMax:12,hiStep:0.5,
+        note:"Concentric circles: a round hill looks the same from every side. The circles crowd together where the slope is steep and spread out where it flattens — spacing is steepness, drawn on paper."},
+      saddle:{name:"The Saddle — z = (x² − y²)/3",f:function(x,y){return(x*x-y*y)/3},g:function(x,y){return[2*x/3,-2*y/3]},x0:-6,x1:6,y0:-6,y1:6,levels:[-10,-8,-6,-4,-2,0,2,4,6,8,10],hiMin:-12,hiMax:12,hiStep:1,
+        note:"Hyperbolas. Along the x-axis the surface climbs; along the y-axis it falls. The level 0 curves cross at the saddle point — the pass between two valleys and two ridges."},
+      gauss:{name:"The Bell Hill — z = 10·e^(−(x²+y²)/8)",f:function(x,y){return 10*Math.exp(-(x*x+y*y)/8)},g:function(x,y){var v=10*Math.exp(-(x*x+y*y)/8);return[-v*x/4,-v*y/4]},x0:-6,x1:6,y0:-6,y1:6,levels:[0.5,1,2,3.5,5,7,8.5,9.5],hiMin:0,hiMax:10,hiStep:0.25,
+        note:"Circles again, but the spacing tells a different story: wide near the top (gentle dome), tight in the middle ring (steepest), wide again at the skirt. Same shape family as the normal density."},
+      peaks:{name:"Two Peaks",f:function(x,y){return 8*Math.exp(-((x-2)*(x-2)+(y-1)*(y-1))/5)+7*Math.exp(-((x+2.5)*(x+2.5)+(y+2)*(y+2))/6)},g:function(x,y){var a=8*Math.exp(-((x-2)*(x-2)+(y-1)*(y-1))/5),b=7*Math.exp(-((x+2.5)*(x+2.5)+(y+2)*(y+2))/6);return[-a*2*(x-2)/5-b*2*(x+2.5)/6,-a*2*(y-1)/5-b*2*(y+2)/6]},x0:-7,x1:7,y0:-7,y1:7,levels:[0.5,1,2,3,4,5,6,7],hiMin:0,hiMax:8,hiStep:0.25,
+        note:"Two summits with a pass between them. A climber who only ever walks uphill can summit the smaller peak and never learn the taller one exists — the local-versus-global problem, drawn as a map."},
+      okto:{name:"The Profit Plane — z = 4x + 3y over the Okto region (÷100)",f:function(x,y){return 4*x+3*y},g:function(x,y){return[4,3]},x0:0,x1:10,y0:0,y1:10,levels:[0,5,10,15,20,25,30,35,40],hiMin:0,hiMax:40,hiStep:1,okto:true,
+        note:"A linear function has straight, evenly spaced, parallel level lines — no curves at all. Slide the highlighted level upward: the line keeps touching the feasible region until z = 32.6, where its last touch is the single corner (4.4, 5.0). Past that, the line misses the region entirely. That last touch is the LP optimum — this is the whole graphical method in one picture."}
+    };
+    function renderLevelCurves(app,state){
+      var S=Object.assign({preset:"hill",hi:6,px:2,py:1},state||{});
+      var h=toolHead("Optimization","Let Me See the Level Curves!",
+        "Our challenge: a mountain rises above the x–y plane, but a map is a flat sheet of paper. Level curves are the answer — slice the surface at a height, project the slice onto the ground, and label it. This lab draws those slices for five surfaces, shows the gradient at any point you click, and ends with the picture that explains linear programming.",
+        "Read a contour map — height from labels, steepness from spacing — and explain why the optimum of a linear objective over a feasible region is the last point a level line touches.",
+        "Functions of two variables; the LP Explorer's feasible region and corner points.","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you look",
+        "On the Hill preset, the level curves are concentric circles. The circles are packed tightly near the rim of the map and widely spaced near the center. That spacing means:",
+        ["The hill is steepest near the center","The hill is steepest near the rim — close curves mean the height changes fast over a short walk","Spacing is decoration; steepness cannot be read from a flat map","The hill is equally steep everywhere — it is the same hill"],1,
+        "A level curve is a set of points at one height. Walking a short distance and crossing many curves means your height changed a lot: that is steepness. Near the top of this hill the surface flattens, so you can walk far and cross few curves.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Choose the surface</h2>'+
+        '<label class="fl" for="lc-preset">Surface</label><select id="lc-preset">'+Object.keys(LC_PRESETS).map(function(k){return '<option value="'+k+'">'+esc(LC_PRESETS[k].name)+'</option>'}).join("")+'</select>'+
+        '<label class="fl" for="lc-hi">Highlight level z = <strong id="lc-hilab"></strong></label><input type="range" id="lc-hi">'+
+        '<p class="hint">The highlighted curve is drawn in amber, thicker than the rest. For the Profit Plane preset, raise it slowly and watch where it stops touching the shaded region.</p>'+
+        '<div id="lc-note" class="readout"></div></section>';
+      h+='<section class="panel"><h2>Point inspection</h2><div id="lc-insp" class="readout" aria-live="polite">Click anywhere on the map to inspect that point.</div>'+
+        '<p class="hint">The amber arrow is the gradient ∇z at the point — it points in the direction of steepest ascent and sits at right angles to the level curve through the point. Check: gradients and level curves are always perpendicular.</p></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>The map</h2><canvas class="chart" id="lc-cv" data-ratio="0.82" role="img" aria-label="Contour map of the selected surface"></canvas>'+
+        '<p class="hint">Labels on the curves are heights z. The red marker (Profit Plane only) is the LP optimum in scaled coordinates.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "Why must the gradient be perpendicular to the level curve through its point?",
+        ["It is a drawing convention","Walking along a level curve, the height does not change — so the direction of greatest increase can have no component along the curve; it must point squarely across it","Because the gradient is defined as a rotated level curve","Only for circles, not for other shapes"],1,
+        "Move along the curve and z is constant, so the directional derivative along the curve is zero — the gradient is orthogonal to that direction. This is why, at a constrained optimum, the gradient ends up parallel to the binding constraint's normal (the geometry behind Lagrange multipliers and LP duality).");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#lc-preset").value=S.preset;
+      var cv=$("#lc-cv");
+      function cur(){return LC_PRESETS[S.preset]}
+      function syncHi(){$("#lc-hilab").textContent=fmt(S.hi,2)}
+      function drawAll(){
+        var P=cur();
+        var poly=null,opt=null;
+        if(P.okto){var Ps=oktoCopy();Ps.cons.forEach(function(c){c.rhs=c.rhs/100});
+          poly=feasiblePolygon(Ps,10,10).map(function(p){return[p.x,p.y]});opt=[4.4,5.0,"optimum (4.4, 5.0), z = 32.6"]}
+        var lv=P.levels.slice();
+        if(lv.indexOf(S.hi)<0)lv.push(S.hi);
+        drawContourPlot(cv,P.f,{x0:P.x0,x1:P.x1,y0:P.y0,y1:P.y1,levels:lv,hiLevel:S.hi,poly:poly,optMark:opt});
+        $("#lc-note").innerHTML="<p>"+esc(P.note)+"</p>";
+        syncHi();
+      }
+      function inspect(){
+        var P=cur(),z=P.f(S.px,S.py),g=P.g(S.px,S.py),mag=Math.hypot(g[0],g[1]);
+        var extra="";
+        if(P.okto){
+          if(z>32.6+1e-9)extra=" This level line has already left the feasible region — no feasible point reaches z = "+fmt(z,1)+". The best achievable is 32.6.";
+          else if(Math.abs(z-32.6)<1e-9)extra=" This is the optimum level: the line's last touch of the region.";
+          else extra=" This level line still cuts through the region — a higher level is feasible.";
+        }
+        $("#lc-insp").innerHTML='Point <strong>('+fmt(S.px,2)+', '+fmt(S.py,2)+')</strong><br>Height z = <strong>'+fmt(z,3)+'</strong><br>Gradient ∇z = <strong>('+fmt(g[0],3)+', '+fmt(g[1],3)+')</strong>, steepness |∇z| = <strong>'+fmt(mag,3)+'</strong> per unit walked in the gradient direction.'+extra+
+          '<br><span class="hint">Steepest descent points the opposite way: ('+fmt(-g[0],3)+', '+fmt(-g[1],3)+').</span>';
+        drawHighlightPoint();
+      }
+      function drawHighlightPoint(){
+        var P=cur();
+        var poly=null,opt=null;
+        if(P.okto){var Ps=oktoCopy();Ps.cons.forEach(function(c){c.rhs=c.rhs/100});
+          poly=feasiblePolygon(Ps,10,10).map(function(p){return[p.x,p.y]});opt=[4.4,5.0,"optimum (4.4, 5.0), z = 32.6"]}
+        var lv=P.levels.slice(),z=P.f(S.px,S.py);
+        if(lv.indexOf(S.hi)<0)lv.push(S.hi);
+        if(lv.indexOf(z)<0)lv.push(z);
+        drawContourPlot(cv,P.f,{x0:P.x0,x1:P.x1,y0:P.y0,y1:P.y1,levels:lv,hiLevel:z,poly:poly,optMark:opt,point:[S.px,S.py],arrow:{x:S.px,y:S.py,dx:P.g(S.px,S.py)[0],dy:P.g(S.px,S.py)[1]}});
+      }
+      $("#lc-preset").addEventListener("change",function(){S.preset=this.value;var P=cur();S.hi=(P.hiMin+P.hiMax)/2;var r=$("#lc-hi");r.min=P.hiMin;r.max=P.hiMax;r.step=P.hiStep;r.value=S.hi;setHash("levelcurves",S);drawAll();inspect()});
+      $("#lc-hi").addEventListener("input",function(){S.hi=+this.value;syncHi();setHash("levelcurves",S);drawHighlightPoint()});
+      cv.addEventListener("pointerdown",function(e){
+        if(!cv._map)return;var r=cv.getBoundingClientRect();
+        var x=cv._map.invX(e.clientX-r.left),y=cv._map.invY(e.clientY-r.top);
+        S.px=Math.min(cur().x1,Math.max(cur().x0,x));S.py=Math.min(cur().y1,Math.max(cur().y0,y));
+        setHash("levelcurves",S);inspect();
+      });
+      (function(){var P=cur();var r=$("#lc-hi");r.min=P.hiMin;r.max=P.hiMax;r.step=P.hiStep;r.value=S.hi})();
+      drawAll();inspect();
+      window.addEventListener("resize",function(){if(document.getElementById("lc-cv"))inspect()});
+    }
+
+    /* ================= THE HIKER ================= */
+    var HK_PRESETS={
+      flat:{name:"The Flat Mountain",f:function(x,y){var r2=x*x+y*y;return r2<=9?10:Math.max(-8,10-(r2-9)/2.5)},g:function(x,y){var r2=x*x+y*y;if(r2<=9)return[0,0];return[-0.8*x,-0.8*y]},levels:[-6,-4,-2,0,2,4,6,8,9.6],
+        note:"The top is a plateau: every point with x² + y² ≤ 9 sits at exactly z = 10. Inside it the gradient is (0, 0) — no direction is uphill, because locally there is no up."},
+      hill:{name:"The Smooth Hill",f:function(x,y){return 12-(x*x+y*y)/3},g:function(x,y){return[-2*x/3,-2*y/3]},levels:[0,2,4,6,8,10,11],
+        note:"A friendly dome. The gradient always points straight at the summit and grows stronger the farther out you stand — steepest-ascent steps home in quickly."},
+      saddle:{name:"The Pass",f:function(x,y){return 6+(x*x-y*y)/3},g:function(x,y){return[2*x/3,-2*y/3]},levels:[-6,-3,0,3,6,9,12,15],
+        note:"A mountain pass: uphill runs east–west, downhill north–south. At the exact center the gradient is (0, 0) too — a saddle is the other place steepest ascent stalls."}
+    };
+    function renderHiker(app,state){
+      var S=Object.assign({preset:"flat",hx:-5.2,hy:-2.6,step:1.1},state||{});
+      var R2=6.5, trail=[[S.hx,S.hy]];
+      var h=toolHead("Optimization","The Hiker on the Flat Mountain",
+        "Can you find the highest feasible point? A hiker stands on a landscape inside a circular park boundary. At her feet sits the gradient — the direction of steepest ascent and how steep it is. Step along it, again and again, and you climb. Until, on the flat mountain, the gradient reads (0, 0) and there is no uphill left to follow — even though the boundary fence is still far away.",
+        "Use the gradient as a local climbing rule, take steepest-ascent steps, and explain the two ways the rule stalls: a flat optimum (plateau) and a saddle point.",
+        "The Level Curves lab (spacing = steepness, gradient ⊥ level curve).","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you step",
+        "The hiker stands on the flat top, where ∇z = (0, 0). She takes a 'steepest-ascent step'. What happens?",
+        ["She walks toward the summit — the gradient always finds it","The step is undefined in direction: with zero gradient there is no steepest direction, so a gradient climber stops here","She slides downhill instead","She teleports to the boundary"],1,
+        "Steepest ascent follows the gradient's direction; a zero vector has no direction. On a plateau every nearby point has the same height, so no local information can rank them. Gradient methods stop at flat spots — which may be the optimum (here it is) or may not (a flat shelf partway up).");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>The landscape</h2>'+
+        '<label class="fl" for="hk-preset">Mountain</label><select id="hk-preset">'+Object.keys(HK_PRESETS).map(function(k){return '<option value="'+k+'">'+esc(HK_PRESETS[k].name)+'</option>'}).join("")+'</select>'+
+        '<div id="hk-note" class="readout"></div>'+
+        '<h3>The hiker</h3>'+
+        '<div class="row2"><div><label class="fl" for="hk-x">x position</label><input type="number" id="hk-x" step="0.1" min="-6.5" max="6.5"></div>'+
+        '<div><label class="fl" for="hk-y">y position</label><input type="number" id="hk-y" step="0.1" min="-6.5" max="6.5"></div></div>'+
+        '<label class="fl" for="hk-step">Step length: <strong id="hk-steplab"></strong></label><input type="range" id="hk-step" min="0.25" max="2.5" step="0.05">'+
+        '<div class="btnrow"><button type="button" class="btn small" id="hk-go">Step uphill</button><button type="button" class="btn secondary small" id="hk-walk">Walk to the top</button><button type="button" class="btn secondary small" id="hk-reset">Reset hiker</button></div>'+
+        '<p class="hint">Or click anywhere on the map to move her there. The dashed circle is the park boundary — the feasible region; steps that would cross it stop at the fence.</p></section>';
+      h+='<section class="panel"><h2>Under her boots</h2><div id="hk-out" class="readout" aria-live="polite"></div><div id="hk-msg"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>The map</h2><canvas class="chart" id="hk-cv" data-ratio="0.82" role="img" aria-label="Contour map with the hiker position, gradient arrow, and her trail"></canvas>'+
+        '<p class="hint">The amber arrow is the gradient at the hiker (its length grows with steepness, capped for readability). Red dots trace her path. On the flat top there is no arrow at all — that absence is the lesson.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "On the Smooth Hill, the hiker at (3, 0) reads ∇z = (−2, 0). She steps 1.5 units uphill. Where does she land, roughly?",
+        ["(4.5, 0) — the arrow points away from the summit","(1.5, 0) — straight toward the summit at the origin","(3, 1.5) — uphill is always north","She cannot move; the gradient is negative"],1,
+        "The gradient (−2, 0) points in the −x direction: toward the origin, where the dome peaks. A unit step in that direction is (−1, 0), so 1.5 units lands at (1.5, 0). Negative components are directions, not errors.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#hk-preset").value=S.preset;$("#hk-step").value=S.step;
+      var cv=$("#hk-cv");
+      function P(){return HK_PRESETS[S.preset]}
+      function clampPos(){
+        var r=Math.hypot(S.hx,S.hy);
+        if(r>R2){S.hx*=R2/r;S.hy*=R2/r}
+      }
+      function draw(){
+        clampPos();
+        if(document.activeElement!==$("#hk-x"))$("#hk-x").value=fmt(S.hx,2);
+        if(document.activeElement!==$("#hk-y"))$("#hk-y").value=fmt(S.hy,2);
+        $("#hk-steplab").textContent=fmt(S.step,2);
+        $("#hk-note").innerHTML="<p>"+esc(P().note)+"</p>";
+        var z=P().f(S.hx,S.hy),g=P().g(S.hx,S.hy),mag=Math.hypot(g[0],g[1]);
+        var m=drawContourPlot(cv,P().f,{x0:-7,x1:7,y0:-7,y1:7,levels:P().levels,hiLevel:z,point:[S.hx,S.hy],trail:trail,arrow:mag>1e-12?{x:S.hx,y:S.hy,dx:g[0],dy:g[1]}:null});
+        var ctx=cv.getContext("2d");
+        ctx.strokeStyle=cssVar("--chart-axis");ctx.lineWidth=1.4;ctx.setLineDash([5,4]);
+        ctx.beginPath();ctx.arc(m.X(0),m.Y(0),Math.abs(m.X(R2)-m.X(0)),0,7);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=cssVar("--chart-axis");ctx.font="11px system-ui";ctx.textAlign="left";ctx.fillText("park boundary",m.X(0)+Math.abs(m.X(R2)-m.X(0))*0.72,m.Y(0)-Math.abs(m.X(R2)-m.X(0))*0.72);
+        var ang=mag>1e-12?fmt((Math.atan2(g[1],g[0])*180/Math.PI+360)%360,0)+"° from east":"—";
+        $("#hk-out").innerHTML='Position <strong>('+fmt(S.hx,2)+', '+fmt(S.hy,2)+')</strong> · altitude z = <strong>'+fmt(z,3)+'</strong><br>'+
+          'Gradient ∇z = <strong>('+fmt(g[0],3)+', '+fmt(g[1],3)+')</strong><br>Steepness |∇z| = <strong>'+fmt(mag,3)+'</strong> · direction of steepest ascent: <strong>'+ang+'</strong>';
+        var msg="";
+        if(S.preset==="flat"&&S.hx*S.hx+S.hy*S.hy<=9)msg='<div class="banner warn"><strong>She is on the flat top.</strong> The gradient is (0, 0): every direction is equally (un)promising, and the steepest-ascent rule has nothing to say. She is at the maximum height, z = 10 — but only the map, not the gradient, can confirm the fence is not hiding higher ground. (Here it is not: outside the plateau, the mountain only falls.)</div>';
+        else if(mag<1e-9)msg='<div class="banner warn"><strong>A stall point.</strong> The gradient is (0, 0) here — at the pass, uphill and downhill balance exactly. A gradient climber stops, at a point that is not a peak at all.</div>';
+        else if(z>=9.999&&S.preset!=="flat")msg='<div class="banner good"><strong>Summit.</strong> The gradient has shrunk to zero at the top — the climb is done, and the rule itself told her so.</div>';
+        $("#hk-msg").innerHTML=msg;
+        cv.setAttribute("aria-label","Contour map, "+P().name+". Hiker at ("+fmt(S.hx,1)+", "+fmt(S.hy,1)+"), altitude "+fmt(z,2)+", gradient ("+fmt(g[0],2)+", "+fmt(g[1],2)+").");
+        setHash("hiker",S);
+      }
+      function stepOnce(){
+        var g=P().g(S.hx,S.hy),mag=Math.hypot(g[0],g[1]);
+        if(mag<1e-12)return false;
+        var z0=P().f(S.hx,S.hy);
+        var nx=S.hx+S.step*g[0]/mag,ny=S.hy+S.step*g[1]/mag;
+        var r=Math.hypot(nx,ny);
+        if(r>R2){nx*=R2/r;ny*=R2/r}
+        S.hx=nx;S.hy=ny;trail.push([nx,ny]);
+        return P().f(nx,ny)>z0+1e-12;
+      }
+      $("#hk-go").addEventListener("click",function(){stepOnce();draw()});
+      $("#hk-walk").addEventListener("click",function(){
+        for(var i=0;i<80;i++){var g=P().g(S.hx,S.hy);if(Math.hypot(g[0],g[1])<0.02)break;if(!stepOnce())break}
+        draw();
+      });
+      $("#hk-reset").addEventListener("click",function(){S.hx=-5.2;S.hy=-2.6;trail=[[S.hx,S.hy]];draw()});
+      $("#hk-preset").addEventListener("change",function(){S.preset=this.value;trail=[[S.hx,S.hy]];draw()});
+      $("#hk-step").addEventListener("input",function(){S.step=+this.value;draw()});
+      $("#hk-x").addEventListener("input",function(){S.hx=parseFloat(this.value)||0;trail=[[S.hx,S.hy]];draw()});
+      $("#hk-y").addEventListener("input",function(){S.hy=parseFloat(this.value)||0;trail=[[S.hx,S.hy]];draw()});
+      cv.addEventListener("pointerdown",function(e){
+        if(!cv._map)return;var r=cv.getBoundingClientRect();
+        S.hx=cv._map.invX(e.clientX-r.left);S.hy=cv._map.invY(e.clientY-r.top);
+        trail=[[S.hx,S.hy]];draw();
+      });
+      draw();
+      window.addEventListener("resize",function(){if(document.getElementById("hk-cv"))draw()});
+    }
+
+    /* ================= THAT'S WHAT LINEAR IS ALL ABOUT ================= */
+    function renderLinear(app,state){
+      var base=oktoCopy();
+      var CS=base.cons.map(function(c,i){return{a:c.a,b:c.b,op:c.op,rhs:c.rhs,name:c.name,on:true,shade:i===1}});
+      if(state&&state.rhs){state.rhs.forEach(function(v,i){if(CS[i])CS[i].rhs=+v});
+        if(state.on)state.on.forEach(function(v,i){if(CS[i])CS[i].on=!!v});
+        if(state.shade)state.shade.forEach(function(v,i){if(CS[i])CS[i].shade=!!v});
+        if(state.cx!==undefined){base.cx=+state.cx;base.cy=+state.cy}}
+      var h=toolHead("Optimization","That's What Linear Is All About!",
+        "Linearity, taken apart piece by piece. Each constraint is a straight line and a half-plane — the side that satisfies it. Shade the half-planes, switch constraints off and on, slide a right-hand side, and the feasible region is simply what is left: a polygon whose corners carry the optimum.",
+        "Explain a feasible region as the intersection of half-planes, predict how it changes when a constraint is relaxed, tightened, or removed, and locate the corners where an optimum can live.",
+        "Graphing a line and testing which side satisfies an inequality.","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you touch a slider",
+        "Labor (C2) currently reads 2.5 Xv + Xp ≤ 1600 and binds at the optimum. You raise its right-hand side to 2300 — much more labor. What happens to the feasible region and the optimum?",
+        ["The region shrinks; the optimum stays","The region grows toward the upper right, but the optimum stops moving once Fabric (C3) becomes the only binding limit — extra labor beyond that adds nothing","The optimum grows without bound","Nothing: right-hand sides do not affect the region"],1,
+        "Relaxing a constraint can only grow (or keep) the feasible region. But the optimum moves only until another constraint takes over as the binding one. Past that point more labor is worthless — its shadow price falls to zero. Watch the corner slide along the Fabric line as you drag.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Objective</h2>'+
+        '<div class="row2"><div><label class="fl" for="ln-cx">Profit per OktoValve (x)</label><input type="number" id="ln-cx" step="any" value="'+base.cx+'"></div>'+
+        '<div><label class="fl" for="ln-cy">Profit per OktoPrint (y)</label><input type="number" id="ln-cy" step="any" value="'+base.cy+'"></div></div>'+
+        '<p class="hint">Maximize z = cx·x + cy·y, with x, y ≥ 0 always in force.</p></section>';
+      h+='<section class="panel"><h2>Constraints — the pieces</h2><div id="ln-cons"></div>'+
+        '<p class="hint"><strong>On</strong> includes the constraint in the region. <strong>Shade</strong> paints the forbidden side of its line — the half-plane it throws away. The feasible region is the part of the plane no constraint throws away.</p></section>';
+      h+='<section class="panel"><h2>Corner points</h2><div id="ln-out" aria-live="polite"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>The region, assembled</h2><canvas class="chart" id="ln-cv" data-ratio="0.8" role="img" aria-label="Feasible region built from constraint half-planes, with corner points and optimum"></canvas>'+
+        '<p class="hint">Teal: the feasible polygon. Colored washes: forbidden half-planes of the shaded constraints. Dashed amber lines through the optimum: objective level lines.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "You switch C5 (minimum commitment, Xv + Xp ≥ 100) off. Which corner of the region disappears?",
+        ["None — C5 touches nothing","The corner(s) on the line Xv + Xp = 100 near the origin: without C5 the region extends down to include the origin side","The optimal corner (440, 500)","Every corner with x = 0"],1,
+        "C5 is a ≥ constraint: it cuts away the triangle near the origin where total production is under 100. Removing it restores that triangle, so the region gains the segment of the axes it had excluded. The far corner (440, 500) never touched C5, so it is unchanged.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      var box=$("#ln-cons");
+      function eqText(c){return (c.a+" x + "+c.b+" y "+(c.op==="<="?"≤":"≥")+" "+trimNum(c.rhs)).replace(/\+ -/g,"− ")}
+      CS.forEach(function(c,i){
+        var d=document.createElement("div");d.className="sensctl";
+        d.innerHTML='<div class="lab"><b><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:'+CONCOLS[i%6]+';margin-right:7px"></span>'+esc(c.name)+'</b>'+
+          '<span><button type="button" class="btn secondary small ln-on" aria-pressed="'+c.on+'">On</button> <button type="button" class="btn secondary small ln-sh" aria-pressed="'+c.shade+'">Shade</button></span></div>'+
+          '<div class="mono" style="font-size:13.5px;margin:2px 0 4px">'+esc(eqText(c))+'</div>'+
+          '<div class="pair" style="display:grid;grid-template-columns:1fr 92px;gap:10px;align-items:center"><input type="range" class="ln-rhs" min="0" max="'+Math.max(100,Math.round(base.cons[i].rhs*2))+'" step="'+Math.max(1,Math.round(base.cons[i].rhs/50))+'" value="'+c.rhs+'" aria-label="Right-hand side of '+esc(c.name)+'"><input type="number" class="ln-rhsn" step="any" value="'+c.rhs+'" aria-label="Right-hand side value"></div>';
+        $(".ln-on",d).addEventListener("click",function(){c.on=!c.on;this.setAttribute("aria-pressed",c.on);sync()});
+        $(".ln-sh",d).addEventListener("click",function(){c.shade=!c.shade;this.setAttribute("aria-pressed",c.shade);sync()});
+        $(".ln-rhs",d).addEventListener("input",function(){c.rhs=+this.value;$(".ln-rhsn",d).value=c.rhs;sync()});
+        $(".ln-rhsn",d).addEventListener("input",function(){c.rhs=parseFloat(this.value)||0;$(".ln-rhs",d).value=c.rhs;sync()});
+        box.appendChild(d);
+      });
+      function problem(){return{cx:base.cx,cy:base.cy,sense:"max",xname:"x",yname:"y",cons:CS.filter(function(c){return c.on}).map(function(c){return{a:c.a,b:c.b,op:c.op,rhs:c.rhs,name:c.name}})}}
+      function sync(){
+        base.cx=parseFloat($("#ln-cx").value)||0;base.cy=parseFloat($("#ln-cy").value)||0;
+        setHash("linear",{rhs:CS.map(function(c){return c.rhs}),on:CS.map(function(c){return c.on}),shade:CS.map(function(c){return c.shade}),cx:base.cx,cy:base.cy});
+        draw();
+      }
+      function clipPoly(poly,f){
+        var out=[];for(var i=0;i<poly.length;i++){var cur=poly[i],prv=poly[(i+poly.length-1)%poly.length];var fc=f(cur),fp=f(prv);
+          if(fc>=0&&fp<0){var t=fp/(fp-fc);out.push({x:prv.x+t*(cur.x-prv.x),y:prv.y+t*(cur.y-prv.y)});out.push(cur)}
+          else if(fc>=0)out.push(cur);else if(fp>=0){var t2=fp/(fp-fc);out.push({x:prv.x+t2*(cur.x-prv.x),y:prv.y+t2*(cur.y-prv.y)})}}
+        return out;
+      }
+      function draw(){
+        var P=problem(),sol=solveLP(P),cv=$("#ln-cv");
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),ink=cssVar("--ink"),acc=cssVar("--accent"),amb=cssVar("--amber"),red=cssVar("--red");
+        var xmax=10,ymax=10;
+        CS.forEach(function(c){if(c.a>0)xmax=Math.max(xmax,c.rhs/c.a*1.15);if(c.b>0)ymax=Math.max(ymax,c.rhs/c.b*1.15)});
+        sol.vertices.forEach(function(v){xmax=Math.max(xmax,v.x*1.2);ymax=Math.max(ymax,v.y*1.2)});
+        xmax=Math.min(xmax,1e7);ymax=Math.min(ymax,1e7);
+        var padL=54,padR=14,padT=12,padB=34,pw=W-padL-padR,ph=H-padT-padB;
+        function X(x){return padL+pw*x/xmax} function Y(y){return padT+ph-ph*y/ymax}
+        ctx.clearRect(0,0,W,H);
+        ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;ctx.lineWidth=1;
+        function niceStep(m){var p=Math.pow(10,Math.floor(Math.log10(m)));var s=m/p;return(s<=1?1:s<=2?2:s<=2.5?2.5:s<=5?5:10)*p}
+        var sx=niceStep(xmax/5),sy=niceStep(ymax/5),v;
+        ctx.textAlign="center";for(v=0;v<=xmax;v+=sx){ctx.beginPath();ctx.moveTo(X(v),padT);ctx.lineTo(X(v),padT+ph);ctx.stroke();ctx.fillText(fmt(v,v<10&&v%1?1:0),X(v),H-18)}
+        ctx.textAlign="right";for(v=0;v<=ymax;v+=sy){ctx.beginPath();ctx.moveTo(padL,Y(v));ctx.lineTo(padL+pw,Y(v));ctx.stroke();ctx.fillText(fmt(v,v<10&&v%1?1:0),padL-6,Y(v)+4)}
+        ctx.fillText("x →",W-16,H-18);
+        var boxPoly=[{x:0,y:0},{x:xmax,y:0},{x:xmax,y:ymax},{x:0,y:ymax}];
+        /* forbidden half-planes */
+        CS.forEach(function(c,i){
+          if(!c.on||!c.shade)return;
+          var forb=c.op==="<="?clipPoly(boxPoly,function(p){return c.a*p.x+c.b*p.y-c.rhs}):clipPoly(boxPoly,function(p){return c.rhs-(c.a*p.x+c.b*p.y)});
+          if(forb.length>2){ctx.beginPath();forb.forEach(function(p,k){if(k===0)ctx.moveTo(X(p.x),Y(p.y));else ctx.lineTo(X(p.x),Y(p.y))});ctx.closePath();ctx.fillStyle=CONCOLS[i%6];ctx.globalAlpha=.13;ctx.fill();ctx.globalAlpha=1}
+        });
+        /* feasible polygon */
+        var poly=feasiblePolygon(P,xmax,ymax);
+        if(poly.length>2){ctx.beginPath();poly.forEach(function(p,k){if(k===0)ctx.moveTo(X(p.x),Y(p.y));else ctx.lineTo(X(p.x),Y(p.y))});ctx.closePath();ctx.fillStyle=acc;ctx.globalAlpha=.22;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=acc;ctx.lineWidth=1.8;ctx.stroke()}
+        /* constraint lines */
+        CS.forEach(function(c,i){
+          ctx.strokeStyle=CONCOLS[i%6];ctx.lineWidth=c.on?1.7:1;ctx.globalAlpha=c.on?1:0.3;ctx.setLineDash(c.on?[]:[3,4]);
+          var p1,p2;
+          if(Math.abs(c.b)>1e-12){p1={x:0,y:c.rhs/c.b};p2={x:xmax,y:(c.rhs-c.a*xmax)/c.b}}
+          else{p1={x:c.rhs/c.a,y:0};p2={x:c.rhs/c.a,y:ymax}}
+          ctx.beginPath();ctx.moveTo(X(p1.x),Y(p1.y));ctx.lineTo(X(p2.x),Y(p2.y));ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+          ctx.fillStyle=CONCOLS[i%6];ctx.font="bold 11px system-ui";ctx.textAlign="left";
+          var lx=Math.min(p2.x,xmax*0.97),ly=Math.abs(c.b)>1e-12?(c.rhs-c.a*lx)/c.b:ymax*0.9;
+          if(ly>=0&&ly<=ymax)ctx.fillText("C"+(i+1),X(lx)+4,Y(ly)-4);ctx.font="11px ui-monospace,monospace";
+        });
+        /* objective level lines + corners + optimum */
+        if(sol.status==="optimal"){
+          ctx.strokeStyle=amb;ctx.lineWidth=1.2;ctx.setLineDash([3,4]);
+          [0.5,0.75,1].forEach(function(fr){var z=sol.opt.z*fr;ctx.beginPath();
+            if(Math.abs(P.cy)>1e-12){ctx.moveTo(X(0),Y(z/P.cy));ctx.lineTo(X(xmax),Y((z-P.cx*xmax)/P.cy))}
+            else if(Math.abs(P.cx)>1e-12){ctx.moveTo(X(z/P.cx),Y(0));ctx.lineTo(X(z/P.cx),Y(ymax))}
+            ctx.stroke()});ctx.setLineDash([]);
+        }
+        sol.vertices.forEach(function(vv){ctx.beginPath();ctx.arc(X(vv.x),Y(vv.y),4,0,7);ctx.fillStyle=ink;ctx.fill()});
+        if(sol.opt){ctx.beginPath();ctx.arc(X(sol.opt.x),Y(sol.opt.y),8,0,7);ctx.strokeStyle=red;ctx.lineWidth=2.4;ctx.stroke();
+          ctx.beginPath();ctx.arc(X(sol.opt.x),Y(sol.opt.y),4.5,0,7);ctx.fillStyle=red;ctx.fill();
+          ctx.fillStyle=red;ctx.font="bold 12px system-ui";ctx.textAlign="left";ctx.fillText("optimum ("+fmt(sol.opt.x,sol.opt.x%1?1:0)+", "+fmt(sol.opt.y,sol.opt.y%1?1:0)+")",X(sol.opt.x)+11,Y(sol.opt.y)-8)}
+        var out=$("#ln-out");
+        if(sol.status==="infeasible")out.innerHTML='<div class="banner bad" style="margin:0"><strong>No feasible region.</strong> The half-planes that are switched on have no overlap — every point breaks at least one rule. Shade the half-planes to see which ones refuse to share ground.</div>';
+        else if(sol.status==="unbounded")out.innerHTML='<div class="banner warn" style="margin:0"><strong>Unbounded.</strong> With these constraints on, the region runs off to infinity in a direction that improves the objective — there are corners, but no best one. Switch more constraints on.</div>';
+        else{
+          var rows=sol.vertices.slice().sort(function(a,b){return b.z-a.z}).map(function(vv){
+            var isO=Math.hypot(vv.x-sol.opt.x,vv.y-sol.opt.y)<1e-6;
+            return '<tr'+(isO?' class="hl"':"")+'><td class="num">('+fmt(vv.x,vv.x%1?2:0)+', '+fmt(vv.y,vv.y%1?2:0)+')</td><td class="num">'+fmt(vv.z)+'</td><td>'+(isO?"optimal":"")+'</td></tr>'}).join("");
+          out.innerHTML='<p style="margin-top:0">With <strong>'+P.cons.length+' of '+CS.length+'</strong> constraints on, the region has <strong>'+sol.vertices.length+' corners</strong>. Best: <strong>z = '+fmt(sol.opt.z)+'</strong> at ('+fmt(sol.opt.x)+', '+fmt(sol.opt.y)+').</p><table class="data"><thead><tr><th>Corner (x, y)</th><th class="num">z</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+        }
+        cv.setAttribute("aria-label","Feasible region with "+P.cons.length+" constraints active. Status: "+sol.status+(sol.opt?(", optimum z = "+fmt(sol.opt.z)+" at ("+fmt(sol.opt.x)+", "+fmt(sol.opt.y)+")"):"")+".");
+      }
+      ["ln-cx","ln-cy"].forEach(function(id){$("#"+id).addEventListener("input",sync)});
+      sync();
+      window.addEventListener("resize",function(){if(document.getElementById("ln-cv"))draw()});
+    }
+
+    /* ================= PROBABILITY DISTRIBUTIONS ================= */
+    var DIST_FAMS={
+      normal:{label:"Normal(μ, σ)",persona:"The Prom Queen",kind:"cont",
+        blurb:"The symmetric bell: perfectly balanced around μ, billowing wider or tighter with σ. Heights, measurement errors, and averages of almost anything end up here — the CLT is her escort.",
+        use:"Test scores, heights, errors, sample means.",
+        params:[{k:"mu",label:"Mean μ",def:0,step:"0.1"},{k:"sd",label:"Standard deviation σ",def:1,step:"0.1",min:0.01}],
+        pdf:function(x,p){return normPdf(x,p.mu,p.sd)},cdf:function(x,p){return normCdf((x-p.mu)/p.sd)},
+        mean:function(p){return p.mu},sd:function(p){return p.sd},median:function(p){return p.mu},
+        dom:function(p){return[p.mu-4*p.sd,p.mu+4*p.sd]}},
+      uniform:{label:"Uniform(a, b)",persona:"The Even Line",kind:"cont",
+        blurb:"Every value between a and b gets exactly the same height — a flat, democratic rectangle. No favorites, no tails.",
+        use:"Random-number generators, arrival minute within the hour, rounding errors.",
+        params:[{k:"a",label:"Minimum a",def:0,step:"0.5"},{k:"b",label:"Maximum b",def:10,step:"0.5"}],
+        pdf:function(x,p){return(x>=p.a&&x<=p.b)?1/(p.b-p.a):0},cdf:function(x,p){return x<=p.a?0:x>=p.b?1:(x-p.a)/(p.b-p.a)},
+        mean:function(p){return(p.a+p.b)/2},sd:function(p){return(p.b-p.a)/Math.sqrt(12)},median:function(p){return(p.a+p.b)/2},
+        dom:function(p){var m=(p.b-p.a)*0.15;return[p.a-m,p.b+m]}},
+      exponential:{label:"Exponential(λ)",persona:"The Waiting Solo",kind:"cont",
+        blurb:"The gap until the next event. Tallest at zero and forever decaying: short waits are common, long waits rare but never impossible. Memoryless — however long you have waited, the remaining wait looks the same.",
+        use:"Time between arrivals, between failures, between phone calls.",
+        params:[{k:"lam",label:"Rate λ (events per unit time)",def:0.5,step:"0.05",min:0.01}],
+        pdf:function(x,p){return x<0?0:p.lam*Math.exp(-p.lam*x)},cdf:function(x,p){return expCDF(p.lam,x)},
+        mean:function(p){return 1/p.lam},sd:function(p){return 1/p.lam},median:function(p){return Math.LN2/p.lam},
+        dom:function(p){return[0,Math.log(1000)/p.lam]}},
+      binomial:{label:"Binomial(n, p)",persona:"The Coin-Flip Crew",kind:"disc",
+        blurb:"A crew of n independent tries, each succeeding with probability p; the distribution counts how many succeed. Bars, not a curve — the count is a whole number.",
+        use:"Defects in a batch, conversions in n visitors, wins in n games.",
+        params:[{k:"n",label:"Trials n",def:10,step:"1",min:1},{k:"p",label:"Success probability p",def:0.5,step:"0.05",min:0,max:1}],
+        pmf:function(k,p){return binomPMF(Math.round(p.n),p.p,k)},cdf:function(x,p){return binomCDF(Math.round(p.n),p.p,Math.floor(x))},
+        mean:function(p){return p.n*p.p},sd:function(p){return Math.sqrt(p.n*p.p*(1-p.p))},
+        median:function(p){var n=Math.round(p.n);for(var k=0;k<=n;k++)if(binomCDF(n,p.p,k)>=0.5)return k;return n},
+        dom:function(p){return[-0.6,Math.round(p.n)+0.6]}},
+      poisson:{label:"Poisson(λ)",persona:"The Firefly Counter",kind:"disc",
+        blurb:"Counts of events landing in a fixed window when they arrive at a steady average rate λ — the arrival process from the Queuing Lab, counted instead of timed.",
+        use:"Calls per hour, arrivals per minute, typos per page.",
+        params:[{k:"lam",label:"Average count λ",def:4,step:"0.25",min:0.05}],
+        pmf:function(k,p){return poisPMF(p.lam,k)},cdf:function(x,p){return poisCDF(p.lam,Math.floor(x))},
+        mean:function(p){return p.lam},sd:function(p){return Math.sqrt(p.lam)},
+        median:function(p){var K=Math.ceil(p.lam+5*Math.sqrt(p.lam))+2;for(var k=0;k<=K;k++)if(poisCDF(p.lam,k)>=0.5)return k;return K},
+        dom:function(p){return[-0.6,Math.ceil(p.lam+5*Math.sqrt(p.lam))+2.6]}}
+    };
+    function renderDistributions(app,state){
+      var S=Object.assign({fam:"normal",params:{},q:"between",a:-1,b:1},state||{});
+      var h=toolHead("Probability & Statistics","Probability Distributions — The Prom Dance",
+        "Five distribution families take the floor, each with its own silhouette. Pick a dancer, tune the parameters and watch the shape answer, then ask the only question that matters — what is the probability of a value in this range? — and get it computed exactly: the normal by the error function, the discrete families by direct summation.",
+        "Connect a distribution's parameters to its shape, center, and spread, and compute interval and point probabilities from the density or mass function.",
+        "What a probability density is (area, not height); the Queuing Lab's Poisson/exponential pair if you have done it.","About 20 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you compute",
+        "For the standard normal, P(−1 ≤ X ≤ 1) is one of the most famous numbers in statistics. It is:",
+        ["About 0.50 — one sigma, half the area","About 0.68 — roughly two-thirds of the values fall within one standard deviation of the mean","About 0.95","About 0.997"],1,
+        "The 68–95–99.7 rule: within one σ, ≈ 68%; two σ, ≈ 95%; three σ, ≈ 99.7%. The default view below is exactly this case — the shaded area reads 0.6827. Change σ and watch the same x-range capture less: the rule is about σ units, not raw units.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Choose your dancer</h2>'+
+        '<label class="fl" for="pd-fam">Distribution family</label><select id="pd-fam">'+Object.keys(DIST_FAMS).map(function(k){return '<option value="'+k+'">'+esc(DIST_FAMS[k].label)+' — '+esc(DIST_FAMS[k].persona)+'</option>'}).join("")+'</select>'+
+        '<div id="pd-blurb" class="readout" style="margin-top:8px"></div><div id="pd-params"></div></section>';
+      h+='<section class="panel"><h2>Ask a probability question</h2>'+
+        '<label class="fl" for="pd-q">Question</label><select id="pd-q"><option value="between">P(a ≤ X ≤ b) — between</option><option value="below">P(X ≤ b) — at or below</option><option value="above">P(X ≥ a) — at or above</option><option value="exact">P(X = k) — exactly (discrete)</option></select>'+
+        '<div class="row2"><div id="pd-aw"><label class="fl" for="pd-a">a</label><input type="number" id="pd-a" step="any"></div><div id="pd-bw"><label class="fl" for="pd-b">b</label><input type="number" id="pd-b" step="any"></div></div>'+
+        '<div id="pd-res" class="readout" aria-live="polite" style="margin-top:10px"></div></section>';
+      h+='<section class="panel"><h2>The numbers</h2><div id="pd-stats"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2 id="pd-chart-title">Density</h2><canvas class="chart" id="pd-cv" data-ratio="0.62" role="img" aria-label="Probability density or mass chart with the queried region shaded"></canvas>'+
+        '<p class="hint" id="pd-chart-hint"></p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "For the exponential family the mean and the standard deviation are always equal (both 1/λ), yet the median (0.693/λ) is smaller than the mean. Why?",
+        ["A bug — median should equal mean","The distribution is right-skewed: a minority of very long waits pulls the mean up, while half of all waits finish before 0.693/λ","The median formula is only approximate","Because λ is a rate, not a time"],1,
+        "Skew separates the center measures: the median counts values (half above, half below), the mean counts total time, and the long right tail contributes time out of proportion to its count. Mean = median is a symmetry property — the normal and uniform have it, the exponential does not.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#pd-fam").value=S.fam;$("#pd-q").value=S.q;$("#pd-a").value=S.a;$("#pd-b").value=S.b;
+      function curFam(){return DIST_FAMS[S.fam]}
+      function getParams(){
+        var F=curFam(),p={};
+        F.params.forEach(function(pr){
+          var v=S.params[S.fam+":"+pr.k];
+          p[pr.k]=(v===undefined?pr.def:v);
+        });
+        return p;
+      }
+      function buildParams(){
+        var F=curFam(),p=getParams();
+        $("#pd-blurb").innerHTML="<strong>"+esc(F.persona)+" — "+esc(F.label)+".</strong> "+esc(F.blurb)+"<br><span class='hint'>Where you meet her: "+esc(F.use)+"</span>";
+        $("#pd-params").innerHTML=F.params.map(function(pr){
+          return '<label class="fl" for="pd-p-'+pr.k+'">'+esc(pr.label)+'</label><input type="number" id="pd-p-'+pr.k+'" step="'+pr.step+'" value="'+p[pr.k]+'">';
+        }).join("");
+        F.params.forEach(function(pr){
+          $("#pd-p-"+pr.k).addEventListener("input",function(){
+            var v=parseFloat(this.value);if(!isFinite(v))return;
+            if(pr.min!==undefined)v=Math.max(pr.min,v);if(pr.max!==undefined)v=Math.min(pr.max,v);
+            S.params[S.fam+":"+pr.k]=v;sync();
+          });
+        });
+        $("#pd-chart-title").textContent=F.kind==="disc"?"Probability mass function":"Probability density function";
+        $("#pd-chart-hint").textContent=F.kind==="disc"?"Bars are probabilities themselves — they sum to 1. Highlighted bars are inside your query.":"The total area under the curve is 1; the shaded area is your probability. The height of the curve alone is not a probability.";
+        var ex=$('option[value="exact"]',$("#pd-q"));if(ex)ex.disabled=F.kind!=="disc";
+        if(F.kind!=="disc"&&S.q==="exact"){S.q="between";$("#pd-q").value="between"}
+      }
+      function queryProb(p){
+        var F=curFam(),a=S.a,b=S.b;
+        if(S.q==="between")return{txt:"P("+fmt(a,2)+" ≤ X ≤ "+fmt(b,2)+")",v:Math.max(0,F.cdf(b,p)-F.cdf(a,p)+(F.kind==="disc"?F.pmf(Math.round(a),p):0)),lo:a,hi:b};
+        if(S.q==="below")return{txt:"P(X ≤ "+fmt(b,2)+")",v:F.cdf(b,p),lo:null,hi:b};
+        if(S.q==="above")return{txt:"P(X ≥ "+fmt(a,2)+")",v:1-F.cdf(a,p)+(F.kind==="disc"?F.pmf(a,p):0),lo:a,hi:null};
+        return{txt:"P(X = "+fmt(a,0)+")",v:F.pmf(Math.round(a),p),lo:a,hi:a};
+      }
+      function sync(){
+        S.q=$("#pd-q").value;S.a=parseFloat($("#pd-a").value)||0;S.b=parseFloat($("#pd-b").value)||0;
+        $("#pd-aw").style.display=(S.q==="below")?"none":"";
+        $("#pd-bw").style.display=(S.q==="above"||S.q==="exact")?"none":"";
+        setHash("distributions",S);
+        var F=curFam(),p=getParams();
+        if(S.fam==="uniform"&&p.b<=p.a){$("#pd-res").innerHTML="<strong>Check the parameters:</strong> b must exceed a.";return}
+        var q=queryProb(p);
+        $("#pd-res").innerHTML='<div class="bigstat"><div><div class="v">'+fmt(q.v,4)+'</div><div class="k">'+esc(q.txt)+'</div></div><div><div class="v">'+fmt(100*q.v,1)+'%</div><div class="k">As a percentage</div></div></div>';
+        $("#pd-stats").innerHTML='<div class="statgrid">'+
+          '<div><div class="v">'+fmt(F.mean(p),3)+'</div><div class="k">Mean</div></div>'+
+          '<div><div class="v">'+fmt(F.sd(p),3)+'</div><div class="k">Std deviation</div></div>'+
+          '<div><div class="v">'+fmt(F.median(p),3)+'</div><div class="k">Median</div></div></div>'+
+          (F.kind==="disc"?'<p class="hint">Discrete: probabilities are exact sums of the mass function.</p>':'<p class="hint">Continuous: probabilities are areas under the density, computed from the CDF.</p>');
+        draw(q,p);
+      }
+      function draw(q,p){
+        var F=curFam(),cv=$("#pd-cv"),f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),acc=cssVar("--accent"),amb=cssVar("--amber");
+        var dom=F.dom(p),x0=dom[0],x1=dom[1];
+        var padL=46,padR=12,padT=12,padB=32,pw=W-padL-padR,ph=H-padT-padB;
+        function X(x){return padL+pw*(x-x0)/(x1-x0)}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;
+        var i,x,y;
+        if(F.kind==="disc"){
+          var K=Math.floor(x1-0.6+0.001),maxP=0,vals=[];
+          for(i=0;i<=K;i++){var v=F.pmf(i,p);vals.push(v);if(v>maxP)maxP=v}
+          maxP*=1.15;
+          function Y2(v){return padT+ph-ph*v/maxP}
+          ctx.strokeStyle=grid;for(var g=0;g<=4;g++){var gy=maxP*g/4,y3=Y2(gy);ctx.beginPath();ctx.moveTo(padL,y3);ctx.lineTo(padL+pw,y3);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(gy,2),padL-6,y3+4)}
+          var bw=pw/(K+1);
+          vals.forEach(function(v,k){
+            var inside=(q.lo===null||k>=q.lo)&&(q.hi===null||k<=q.hi);
+            ctx.fillStyle=inside?acc:axis;ctx.globalAlpha=inside?1:0.35;
+            ctx.fillRect(X(k)-bw*0.32,Y2(v),bw*0.64,ph-(Y2(v)-padT));
+            ctx.globalAlpha=1;ctx.fillStyle=axis;ctx.textAlign="center";if(K<=30||k%2===0)ctx.fillText(k,X(k),H-16);
+          });
+          ctx.fillText("x — number of events / successes →",padL+pw/2,H-2);
+          cv.setAttribute("aria-label","Probability mass chart. The queried probability is "+fmt(q.v,4)+".");
+        }else{
+          var N=220,maxD=0,dens=[];
+          for(i=0;i<=N;i++){x=x0+(x1-x0)*i/N;var d=F.pdf(x,p);dens.push([x,d]);if(d>maxD)maxD=d}
+          maxD*=1.12||1;
+          function Y(d){return padT+ph-ph*d/maxD}
+          ctx.strokeStyle=grid;for(var g2=0;g2<=4;g2++){var gy2=maxD*g2/4,y4=Y(gy2);ctx.beginPath();ctx.moveTo(padL,y4);ctx.lineTo(padL+pw,y4);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(gy2,2),padL-6,y4+4)}
+          /* shaded query region */
+          var lo=q.lo===null?x0:Math.max(x0,q.lo),hi=q.hi===null?x1:Math.min(x1,q.hi);
+          if(hi>lo){ctx.beginPath();ctx.moveTo(X(lo),Y(0));
+            for(i=0;i<=N;i++){x=x0+(x1-x0)*i/N;if(x<lo||x>hi)continue;ctx.lineTo(X(x),Y(F.pdf(x,p)))}
+            ctx.lineTo(X(hi),Y(0));ctx.closePath();ctx.fillStyle=amb;ctx.globalAlpha=.4;ctx.fill();ctx.globalAlpha=1}
+          ctx.strokeStyle=acc;ctx.lineWidth=2;ctx.beginPath();
+          dens.forEach(function(pr,i2){if(i2===0)ctx.moveTo(X(pr[0]),Y(pr[1]));else ctx.lineTo(X(pr[0]),Y(pr[1]))});ctx.stroke();ctx.lineWidth=1;
+          ctx.fillStyle=axis;ctx.textAlign="center";
+          for(var gx=0;gx<=4;gx++){var xv=x0+(x1-x0)*gx/4;ctx.fillText(fmt(xv,Math.abs(xv%1)>1e-9?1:0),X(xv),H-16)}
+          ctx.fillText("x →",padL+pw/2,H-2);
+          var mn=F.mean(p);ctx.strokeStyle=cssVar("--red");ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(X(mn),padT);ctx.lineTo(X(mn),padT+ph);ctx.stroke();ctx.setLineDash([]);
+          ctx.fillStyle=cssVar("--red");ctx.textAlign="left";ctx.fillText("mean",X(mn)+4,padT+11);
+          cv.setAttribute("aria-label","Density chart for "+F.label+". Mean "+fmt(F.mean(p),2)+", standard deviation "+fmt(F.sd(p),2)+". The queried probability is "+fmt(q.v,4)+".");
+        }
+      }
+      $("#pd-fam").addEventListener("change",function(){S.fam=this.value;buildParams();sync()});
+      $("#pd-q").addEventListener("change",sync);
+      $("#pd-a").addEventListener("input",sync);
+      $("#pd-b").addEventListener("input",sync);
+      buildParams();sync();
+      window.addEventListener("resize",function(){if(document.getElementById("pd-cv"))sync()});
+    }
+
+    /* ================= LINEAR REGRESSION LAB ================= */
+    function regSample(n,seed){
+      var rnd=mulberry32(seed>>>0),pts=[];
+      function gauss(){var u=0,v=0;while(!u)u=rnd();while(!v)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+      for(var i=0;i<n;i++){var pt=15+60*rnd();pts.push({x:pt,y:10+0.9*pt+11*gauss()})}
+      return pts;
+    }
+    function renderRegression(app,state){
+      var S=Object.assign({mode:"pop",n:50,seed:7,custom:"1, 2\n2, 3\n3, 5\n4, 4\n5, 6",pred:45},state||{});
+      var h=toolHead("Probability & Statistics","Linear Regression Lab",
+        "A football analytics group built an Attacking Threat Index (ATI, usually 0–100) and asks whether Possession Time (PT, minutes) is related to it. In this lab the population truth is known — ATI = 10 + 0.90·PT + ε, ε ~ N(0, 11²), PT ~ Uniform(15, 75) — and your sample's least-squares line estimates it. Or switch to your own data and fit any paired numbers, with residuals and prediction.",
+        "Fit a least-squares line, interpret slope, intercept, r and R², predict from the line, and describe how the estimated slope varies from sample to sample around the truth.",
+        "Scatterplots; means and standard deviations; the idea of a line ŷ = a + bx.","About 20 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you sample",
+        "You draw a sample of just n = 10 matches and fit the line. Its slope comes out 1.25, well above the true 0.90. The most likely explanation:",
+        ["The population relationship must be stronger than stated","Small samples produce wobbly lines — the slope estimate has a large standard error at n = 10, and 1.25 is an ordinary draw","The sample was rigged","Regression does not work below n = 30, by definition"],1,
+        "The sampling distribution of the slope (bottom panel) is centered on the truth but wide at small n: its standard error falls like 1/√n. Quadrupling the sample only halves the wobble — that √n is why precision is expensive. Watch the histogram tighten as n grows.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Data</h2>'+
+        '<label class="fl" for="rg-mode">Source</label><select id="rg-mode"><option value="pop">Sample from the ATI population</option><option value="custom">Your own data</option></select>'+
+        '<div id="rg-pop">'+
+        '<label class="fl" for="rg-n">Sample size n</label><select id="rg-n"><option>10</option><option>25</option><option>50</option><option>100</option><option>300</option></select>'+
+        '<label class="fl" for="rg-seed">Seed</label><input type="number" id="rg-seed" step="1">'+
+        '<div class="btnrow"><button type="button" class="btn small" id="rg-new">Draw new sample</button></div>'+
+        '<p class="hint">Population truth: ATI = 10 + 0.90·PT + ε. Same seed + same n reproduces the same sample.</p></div>'+
+        '<div id="rg-custom" hidden><label class="fl" for="rg-data">Your data — one “x, y” pair per line</label><textarea id="rg-data" rows="8" style="width:100%;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit"></textarea>'+
+        '<p class="hint">The starter set is small enough to check by hand: slope 0.90, intercept 1.30, r = 0.90, R² = 0.81.</p></div></section>';
+      h+='<section class="panel"><h2>Fit &amp; predict</h2><div id="rg-stats" aria-live="polite"></div>'+
+        '<label class="fl" for="rg-pred">Predict y at x = </label><input type="number" id="rg-pred" step="any"><div id="rg-predout" class="readout" style="margin-top:6px"></div></section>';
+      h+='<section class="panel" id="rg-samp-panel"><h2>Sampling distribution of the slope</h2>'+
+        '<p class="hint">Draw many samples of the same size and keep only their slopes. The histogram is the sampling distribution — centered near the true 0.90, with a spread the standard error formula predicts.</p>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="rg-many">Draw 200 samples</button></div>'+
+        '<canvas class="chart" id="rg-hist" data-ratio="0.5" role="img" aria-label="Histogram of estimated slopes across 200 samples"></canvas><div id="rg-samp-out" class="readout"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Scatter &amp; fitted line</h2><canvas class="chart" id="rg-cv" data-ratio="0.68" role="img" aria-label="Scatterplot of the data with the least-squares line"></canvas>'+
+        '<p class="hint">Solid teal: the least-squares line for this data. Dashed amber (population mode): the true line ATI = 10 + 0.90·PT. The red ring is your prediction point.</p></section>';
+      h+='<section class="panel"><h2>Residuals</h2><canvas class="chart" id="rg-res" data-ratio="0.45" role="img" aria-label="Residual plot: residuals against x"></canvas>'+
+        '<p class="hint">Residual = actual − predicted, plotted against x. A healthy fit leaves a patternless band around zero; a curve here means the straight line is the wrong shape, whatever R² says.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "Your fit reports r = 0.90 and R² = 0.81. A classmate says “ATI causes 81% of possession.” Untangle it:",
+        ["They are right — R² is the causal share","R² = 0.81 means 81% of the variation in y is accounted for by the linear relationship with x in this data; r = 0.90 is the correlation itself (R² = r²), and neither number, alone, establishes causation","R² should be 0.90 and r = 0.81; the lab swapped them","Correlation near 1 does prove causation when the sample is large"],1,
+        "R² is a variance share for a fitted line through observed data. Causation needs a design argument (randomization, mechanism, ruling out confounders — maybe strong teams both hold the ball and threaten). The statistics describe association; the study design licenses cause.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#rg-mode").value=S.mode;$("#rg-n").value=String(S.n);$("#rg-seed").value=S.seed;$("#rg-data").value=S.custom;$("#rg-pred").value=S.pred;
+      var curFit=null,curPts=[];
+      function getPts(){
+        if(S.mode==="pop")return regSample(S.n,S.seed);
+        return parsePairs($("#rg-data").value);
+      }
+      function sync(){
+        S.mode=$("#rg-mode").value;S.n=+$("#rg-n").value;S.seed=parseInt($("#rg-seed").value)||7;
+        S.custom=$("#rg-data").value;S.pred=parseFloat($("#rg-pred").value);
+        $("#rg-pop").hidden=S.mode!=="pop";$("#rg-custom").hidden=S.mode!=="custom";
+        $("#rg-samp-panel").style.display=S.mode==="pop"?"":"none";
+        setHash("regression",S);
+        curPts=getPts();
+        var st=$("#rg-stats");
+        if(curPts.length<2){st.innerHTML="<p>Enter at least two points to fit a line.</p>";curFit=null;return}
+        var xs=curPts.map(function(p){return p.x}),ys=curPts.map(function(p){return p.y});
+        var fit=ols(xs,ys);curFit=fit;
+        var sse=0;curPts.forEach(function(p){var e=p.y-(fit.intercept+fit.slope*p.x);sse+=e*e});
+        var sErr=fit.n>2?Math.sqrt(sse/(fit.n-2)):0;
+        var sxx=0;xs.forEach(function(x){sxx+=(x-fit.mx)*(x-fit.mx)});
+        var seSlope=sxx>0?sErr/Math.sqrt(sxx):0;
+        st.innerHTML='<div class="statgrid">'+
+          '<div><div class="v">'+fmt(fit.slope,3)+'</div><div class="k">Slope b</div></div>'+
+          '<div><div class="v">'+fmt(fit.intercept,3)+'</div><div class="k">Intercept a</div></div>'+
+          '<div><div class="v">'+fmt(fit.r,3)+'</div><div class="k">Correlation r</div></div>'+
+          '<div><div class="v">'+fmt(fit.r2,3)+'</div><div class="k">R²</div></div>'+
+          '<div><div class="v">'+fit.n+'</div><div class="k">Points n</div></div>'+
+          '<div><div class="v">'+fmt(seSlope,3)+'</div><div class="k">SE of slope</div></div></div>'+
+          '<p class="readout" style="margin-top:8px">Fitted line: <strong>ŷ = '+fmt(fit.intercept,3)+' + '+fmt(fit.slope,3)+'·x</strong>. Read the slope as: one more unit of x goes with about '+fmt(fit.slope,3)+' more units of y, on average, in this data.'+(S.mode==="pop"?' True line: ATI = 10 + 0.90·PT — your slope is off by '+fmt(fit.slope-0.9,3)+'.':'')+'</p>';
+        predOut();drawScatter();drawResid();
+      }
+      function predOut(){
+        if(!curFit||!isFinite(S.pred)){$("#rg-predout").innerHTML="";return}
+        var y=curFit.intercept+curFit.slope*S.pred;
+        $("#rg-predout").innerHTML='At x = '+fmt(S.pred,2)+', the line predicts <strong>ŷ = '+fmt(y,3)+'</strong>. '+(S.mode==="pop"&&(S.pred<15||S.pred>75)?'<span style="color:var(--red);font-weight:700">Outside the sampled PT range (15–75) — an extrapolation; the line has no evidence out there.</span>':"");
+      }
+      function axes(ctx,W,H,x0,x1,y0,y1){
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis");
+        var padL=48,padR=14,padT=12,padB=32,pw=W-padL-padR,ph=H-padT-padB;
+        ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;ctx.lineWidth=1;
+        for(var i=0;i<=4;i++){var xv=x0+(x1-x0)*i/4,yv=y0+(y1-y0)*i/4;
+          ctx.beginPath();ctx.moveTo(padL+pw*i/4,padT);ctx.lineTo(padL+pw*i/4,padT+ph);ctx.stroke();
+          ctx.beginPath();ctx.moveTo(padL,padT+ph*i/4);ctx.lineTo(padL+pw,padT+ph*i/4);ctx.stroke();
+          ctx.textAlign="center";ctx.fillText(fmt(xv,Math.abs(xv%1)>1e-9?1:0),padL+pw*i/4,H-16);
+          ctx.textAlign="right";ctx.fillText(fmt(yv,Math.abs(yv%1)>1e-9?1:0),padL-6,padT+ph-ph*i/4+4)}
+        return{padL:padL,padT:padT,pw:pw,ph:ph,
+          X:function(x){return padL+pw*(x-x0)/(x1-x0)},Y:function(y){return padT+ph-ph*(y-y0)/(y1-y0)}};
+      }
+      function drawScatter(){
+        var cv=$("#rg-cv");if(!cv||!curFit)return;
+        var xs=curPts.map(function(p){return p.x}),ys=curPts.map(function(p){return p.y});
+        var x0=Math.min.apply(null,xs),x1=Math.max.apply(null,xs),y0=Math.min.apply(null,ys),y1=Math.max.apply(null,ys);
+        var dx=(x1-x0)*0.12||1,dy=(y1-y0)*0.15||1;x0-=dx;x1+=dx;y0-=dy;y1+=dy;
+        var f=fitCanvas(cv),ctx=f.ctx;
+        var acc=cssVar("--accent"),amb=cssVar("--amber"),ink=cssVar("--ink"),red=cssVar("--red");
+        ctx.clearRect(0,0,f.W,f.H);
+        var A=axes(ctx,f.W,f.H,x0,x1,y0,y1);
+        if(S.mode==="pop"){ctx.strokeStyle=amb;ctx.lineWidth=1.6;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(A.X(x0),A.Y(10+0.9*x0));ctx.lineTo(A.X(x1),A.Y(10+0.9*x1));ctx.stroke();ctx.setLineDash([])}
+        ctx.strokeStyle=acc;ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(A.X(x0),A.Y(curFit.intercept+curFit.slope*x0));ctx.lineTo(A.X(x1),A.Y(curFit.intercept+curFit.slope*x1));ctx.stroke();
+        ctx.fillStyle=ink;
+        curPts.forEach(function(p){ctx.beginPath();ctx.arc(A.X(p.x),A.Y(p.y),3.4,0,7);ctx.globalAlpha=.75;ctx.fill();ctx.globalAlpha=1});
+        if(isFinite(S.pred)){var py=curFit.intercept+curFit.slope*S.pred;
+          ctx.beginPath();ctx.arc(A.X(S.pred),A.Y(py),7,0,7);ctx.strokeStyle=red;ctx.lineWidth=2.2;ctx.stroke();
+          ctx.beginPath();ctx.arc(A.X(S.pred),A.Y(py),3,0,7);ctx.fillStyle=red;ctx.fill()}
+        cv.setAttribute("aria-label","Scatterplot with fitted line ŷ = "+fmt(curFit.intercept,2)+" + "+fmt(curFit.slope,2)+"x, r = "+fmt(curFit.r,2)+", based on "+curFit.n+" points.");
+      }
+      function drawResid(){
+        var cv=$("#rg-res");if(!cv||!curFit)return;
+        var res=curPts.map(function(p){return{x:p.x,e:p.y-(curFit.intercept+curFit.slope*p.x)}});
+        var x0=Math.min.apply(null,res.map(function(r){return r.x})),x1=Math.max.apply(null,res.map(function(r){return r.x}));
+        var e1=Math.max.apply(null,res.map(function(r){return Math.abs(r.e)}))*1.2||1;
+        var dx=(x1-x0)*0.1||1;x0-=dx;x1+=dx;
+        var f=fitCanvas(cv),ctx=f.ctx;
+        var ink=cssVar("--ink"),red=cssVar("--red");
+        ctx.clearRect(0,0,f.W,f.H);
+        var A=axes(ctx,f.W,f.H,x0,x1,-e1,e1);
+        ctx.strokeStyle=red;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(A.X(x0),A.Y(0));ctx.lineTo(A.X(x1),A.Y(0));ctx.stroke();
+        ctx.fillStyle=ink;
+        res.forEach(function(r){ctx.beginPath();ctx.arc(A.X(r.x),A.Y(r.e),3.4,0,7);ctx.globalAlpha=.8;ctx.fill();ctx.globalAlpha=1});
+      }
+      function drawHist(slopes){
+        var cv=$("#rg-hist");if(!cv)return;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),acc=cssVar("--accent"),amb=cssVar("--amber"),red=cssVar("--red");
+        var lo=Math.min.apply(null,slopes),hi=Math.max.apply(null,slopes);
+        lo=Math.min(lo,0.9)-0.05;hi=Math.max(hi,0.9)+0.05;
+        var bins=18,counts=[],i;for(i=0;i<bins;i++)counts.push(0);
+        slopes.forEach(function(s){var k=Math.min(bins-1,Math.floor((s-lo)/(hi-lo)*bins));counts[k]++});
+        var maxC=Math.max.apply(null,counts);
+        var padL=40,padR=12,padT=14,padB=30,pw=W-padL-padR,ph=H-padT-padB;
+        function X(x){return padL+pw*(x-lo)/(hi-lo)}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;
+        for(var g=0;g<=4;g++){var gy=maxC*g/4,y=padT+ph-ph*g/4;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(gy,0),padL-6,y+4)}
+        var bw=pw/bins;
+        counts.forEach(function(c,k){if(!c)return;var bh=ph*c/maxC;ctx.fillStyle=acc;ctx.fillRect(padL+k*bw+1,padT+ph-bh,bw-2,bh)});
+        ctx.strokeStyle=red;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X(0.9),padT);ctx.lineTo(X(0.9),padT+ph);ctx.stroke();
+        ctx.fillStyle=red;ctx.textAlign="left";ctx.fillText("true slope 0.90",X(0.9)+5,padT+11);
+        var ms=meanOf(slopes);
+        ctx.strokeStyle=amb;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(X(ms),padT);ctx.lineTo(X(ms),padT+ph);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=axis;ctx.textAlign="center";
+        for(var gx=0;gx<=4;gx++){var xv=lo+(hi-lo)*gx/4;ctx.fillText(fmt(xv,2),X(xv),H-14)}
+        ctx.fillText("estimated slope →",padL+pw/2,H-1);
+        var theoSE=11/((60/Math.sqrt(12))*Math.sqrt(S.n));
+        $("#rg-samp-out").innerHTML='Across 200 samples of n = '+S.n+': mean slope <strong>'+fmt(ms,3)+'</strong> (truth 0.90), standard deviation of slopes <strong>'+fmt(sdOf(slopes,true),3)+'</strong>. The formula prediction for that spread, σ/(s<sub>x</sub>√n) with σ = 11 and s<sub>x</sub> = 17.32, is <strong>'+fmt(theoSE,3)+'</strong> — simulation and theory agreeing is the point of the exercise.';
+      }
+      ["rg-mode","rg-n","rg-seed","rg-data"].forEach(function(id){$("#"+id).addEventListener("input",sync);$("#"+id).addEventListener("change",sync)});
+      $("#rg-pred").addEventListener("input",function(){S.pred=parseFloat(this.value);predOut();drawScatter()});
+      $("#rg-new").addEventListener("click",function(){S.seed=(parseInt($("#rg-seed").value)||7)+1;$("#rg-seed").value=S.seed;sync()});
+      $("#rg-many").addEventListener("click",function(){
+        var slopes=[];
+        for(var i=0;i<200;i++){var pts=regSample(S.n,S.seed*1000+i);var fit=ols(pts.map(function(p){return p.x}),pts.map(function(p){return p.y}));slopes.push(fit.slope)}
+        drawHist(slopes);
+      });
+      sync();
+      window.addEventListener("resize",function(){if(document.getElementById("rg-cv")&&curFit){drawScatter();drawResid()}});
+    }
+
+    /* ================= FORECASTING LAB ================= */
+    function fcCompute(series,k,alpha){
+      var n=series.length,i;
+      var ma=[],wma=[],es=[],trend=[];
+      var wsum=0;for(i=1;i<=k;i++)wsum+=i;
+      var S=series[0];es.push(null);
+      for(i=1;i<n;i++){S=alpha*series[i]+(1-alpha)*S;es.push(S)}
+      /* es[t] is the smoothed level after period t; the forecast FOR period t is es[t-1] — build forecast arrays aligned to period index */
+      var fMA=[],fWMA=[],fES=[],fTR=[];
+      var fit=ols(series.map(function(_,j){return j+1}),series);
+      for(i=0;i<n;i++){
+        fMA.push(i>=k?meanOf(series.slice(i-k,i)):null);
+        if(i>=k){var sw=0,sv=0;for(var j=0;j<k;j++){var w=j+1;sv+=w*series[i-k+j];sw+=w}fWMA.push(sv/sw)}else fWMA.push(null);
+        fES.push(i===0?null:(i===1?series[0]:es[i-1]));
+        fTR.push(fit.intercept+fit.slope*(i+1));
+      }
+      function errs(F){
+        var ae=0,se=0,ape=0,c=0;
+        for(var i2=0;i2<n;i2++){if(F[i2]===null)continue;var e=series[i2]-F[i2];ae+=Math.abs(e);se+=e*e;ape+=Math.abs(e/series[i2]);c++}
+        return c?{mad:ae/c,mse:se/c,mape:100*ape/c,n:c}:null;
+      }
+      var lastS=es[n-1];
+      var fut={ma:[],wma:[],es:[],trend:[]};
+      var lastK=series.slice(n-k),swm=0,svm=0;for(var j2=0;j2<k;j2++){svm+=(j2+1)*lastK[j2];swm+=j2+1}
+      for(var hh=1;hh<=3;hh++){fut.ma.push(meanOf(lastK));fut.wma.push(svm/swm);fut.es.push(lastS);fut.trend.push(fit.intercept+fit.slope*(n+hh))}
+      return{ma:fMA,wma:fWMA,es:fES,trend:fTR,errs:{ma:errs(fMA),wma:errs(fWMA),es:errs(fES),trend:errs(fTR)},fut:fut,trendFit:fit,lastS:lastS};
+    }
+    function renderForecasting(app,state){
+      var S=Object.assign({series:"112, 118, 125, 121, 130, 138, 142, 139, 148, 155, 160, 168",k:3,alpha:0.3,use:{ma:true,wma:false,es:true,trend:true}},state||{});
+      var h=toolHead("Probability & Statistics","Forecasting Lab",
+        "One series, four forecasting methods, and a scoreboard. Moving averages smooth, exponential smoothing adapts, trend projection extrapolates — and MAD, MSE, and MAPE keep them honest on the periods where the answer is already known. Edit the series to your own numbers and the whole lab follows.",
+        "Compute moving-average, weighted moving-average, exponential-smoothing, and trend forecasts by their recursions, and choose between methods using out-of-sample-style error measures.",
+        "Averages; the regression lab's least-squares line (trend projection is regression on time).","About 20 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you smooth",
+        "Exponential smoothing with α = 0.3 meets a sudden permanent jump in the series (demand steps from 100 to 140 and stays). The forecasts will:",
+        ["Jump to 140 next period — smoothing tracks instantly","Creep toward 140, closing about 30% of the remaining gap each period — fast at first, then asymptotic","Overshoot to about 152, then settle back","Never reach 140, by construction"],1,
+        "Each new forecast keeps (1 − α) of the old level: the remaining gap shrinks by a factor of 0.7 per period. After the jump the errors run 40, 28, 19.6, … — geometric decay. Larger α adapts faster but also chases noise harder; that trade-off is the whole art of choosing α.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>The series</h2>'+
+        '<label class="fl" for="fc-series">Values, oldest first (comma or space separated)</label><textarea id="fc-series" rows="4" style="width:100%;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit"></textarea>'+
+        '<p class="hint">Hand-check: enter “10, 12, 13” with α = 0.5 — the exponential-smoothing forecasts are 10, then 11, and the next-period forecast is exactly 12.</p></section>';
+      h+='<section class="panel"><h2>Methods</h2><div id="fc-methods">'+
+        '<div class="sensctl"><div class="lab"><b>Moving average</b><button type="button" class="btn secondary small" data-m="ma" aria-pressed="true">On</button></div><label class="fl" for="fc-k">Window k (also used by weighted MA)</label><input type="number" id="fc-k" min="2" max="8" step="1"></div>'+
+        '<div class="sensctl"><div class="lab"><b>Weighted moving average</b><button type="button" class="btn secondary small" data-m="wma" aria-pressed="false">On</button></div><p class="hint">Weights 1, 2, …, k from oldest to newest in the window — the most recent value counts k times the oldest.</p></div>'+
+        '<div class="sensctl"><div class="lab"><b>Exponential smoothing</b><button type="button" class="btn secondary small" data-m="es" aria-pressed="true">On</button></div><label class="fl" for="fc-alpha">α = <strong id="fc-alab"></strong></label><input type="range" id="fc-alpha" min="0.05" max="0.95" step="0.05"></div>'+
+        '<div class="sensctl"><div class="lab"><b>Trend projection</b><button type="button" class="btn secondary small" data-m="trend" aria-pressed="true">On</button></div><p class="hint">Least-squares line of value on time, extended forward. Powerful on a real trend; helpless at turning points.</p></div>'+
+        '</div></section>';
+      h+='<section class="panel"><h2>Scoreboard — error on known periods</h2><div id="fc-errs" aria-live="polite"></div>'+
+        '<p class="hint">MAD and MSE are in the units of the series; MAPE is a percentage. MSE punishes big misses quadratically, so a method can win MAD and lose MSE — read all three.</p></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Actual vs. forecast</h2><canvas class="chart" id="fc-cv" data-ratio="0.58" role="img" aria-label="Time series chart of actual values and forecasts from each method, extended three periods ahead"></canvas><div class="legend" id="fc-legend"></div>'+
+        '<p class="hint">Dashed extensions are the next three periods. Moving-average and exponential-smoothing forecasts are flat beyond one step by construction; the trend line keeps climbing.</p></section>';
+      h+='<section class="panel"><h2>Forecast table</h2><div id="fc-table" style="overflow-x:auto"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "On a series with a steady upward trend, the 3-period moving average's one-step forecasts are consistently below the actual values. Why?",
+        ["A bug in the averaging","A moving average of the past k values lags a trending series — it averages where the series was, not where it is; a trend method or a centered view corrects this","The window is too large to compute","The series must be non-stationary in a way no method can handle"],1,
+        "Every term in the average is at or below the current level on a rising series, so the forecast inherits the lag — roughly the trend-per-period times (k+1)/2 periods' worth. Exponential smoothing has the same lag in miniature. It is a bias with a formula, not noise: look for it in the error signs, not just their sizes.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#fc-series").value=S.series;$("#fc-k").value=S.k;$("#fc-alpha").value=S.alpha;
+      var MCOL={ma:"#0369a1",wma:"#7c3aed",es:"#c2410c",trend:"#15803d"};
+      var MNAME={ma:"Moving average",wma:"Weighted MA",es:"Exp. smoothing",trend:"Trend"};
+      function sync(){
+        S.series=$("#fc-series").value;S.k=Math.min(8,Math.max(2,parseInt($("#fc-k").value)||3));S.alpha=+$("#fc-alpha").value;
+        $("#fc-alab").textContent=fmt(S.alpha,2);
+        setHash("forecasting",S);
+        var series=parseNums(S.series);
+        var out=$("#fc-errs"),tb=$("#fc-table");
+        if(series.length<3){out.innerHTML="<p>Enter at least three values.</p>";tb.innerHTML="";return}
+        if(S.k>=series.length)S.k=series.length-1;
+        var R=fcCompute(series,S.k,S.alpha);
+        var erows=Object.keys(MNAME).filter(function(m){return S.use[m]}).map(function(m){
+          var e=R.errs[m];if(!e)return"";
+          return '<tr><td><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:'+MCOL[m]+';margin-right:7px"></span>'+MNAME[m]+'</td><td class="num">'+fmt(e.mad,3)+'</td><td class="num">'+fmt(e.mse,3)+'</td><td class="num">'+fmt(e.mape,2)+'%</td><td class="num">'+e.n+'</td></tr>'}).join("");
+        out.innerHTML='<table class="data"><thead><tr><th>Method</th><th class="num">MAD</th><th class="num">MSE</th><th class="num">MAPE</th><th class="num">Periods</th></tr></thead><tbody>'+erows+'</tbody></table>'+
+          '<p class="readout" style="margin-top:8px">Next-period forecast: '+Object.keys(MNAME).filter(function(m){return S.use[m]}).map(function(m){return MNAME[m]+" <strong>"+fmt(R.fut[m][0],2)+"</strong>"}).join(" · ")+'.</p>';
+        var cols=Object.keys(MNAME).filter(function(m){return S.use[m]});
+        var rows=series.map(function(v,i){
+          return '<tr><td class="num">'+(i+1)+'</td><td class="num">'+fmt(v,2)+'</td>'+cols.map(function(m){var F={ma:R.ma,wma:R.wma,es:R.es,trend:R.trend}[m][i];return '<td class="num">'+(F===null?"—":fmt(F,2))+'</td>'}).join("")+'</tr>'}).join("");
+        for(var hh=1;hh<=3;hh++){rows+='<tr><td class="num">'+(series.length+hh)+'</td><td class="num">?</td>'+cols.map(function(m){return '<td class="num">'+fmt(R.fut[m][hh-1],2)+'</td>'}).join("")+'</tr>'}
+        tb.innerHTML='<table class="data"><thead><tr><th class="num">Period</th><th class="num">Actual</th>'+cols.map(function(m){return '<th class="num">'+MNAME[m]+'</th>'}).join("")+'</tr></thead><tbody>'+rows+'</tbody></table>';
+        $("#fc-legend").innerHTML='<span class="lgi"><i style="background:var(--ink)"></i>Actual</span>'+cols.map(function(m){return '<span class="lgi"><i style="background:'+MCOL[m]+'"></i>'+MNAME[m]+'</span>'}).join("");
+        draw(series,R,cols);
+      }
+      function draw(series,R,cols){
+        var cv=$("#fc-cv");if(!cv)return;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),ink=cssVar("--ink");
+        var n=series.length,total=n+3;
+        var all=series.slice();cols.forEach(function(m){R.fut[m].forEach(function(v){all.push(v)})});
+        var y0=Math.min.apply(null,all),y1=Math.max.apply(null,all),dy=(y1-y0)*0.12||1;y0-=dy;y1+=dy;
+        var padL=48,padR=14,padT=12,padB=32,pw=W-padL-padR,ph=H-padT-padB;
+        function X(t){return padL+pw*(t-1)/(total-1)} function Y(v){return padT+ph-ph*(v-y0)/(y1-y0)}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;ctx.lineWidth=1;
+        for(var g=0;g<=4;g++){var yv=y0+(y1-y0)*g/4,y=Y(yv);ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(yv,Math.abs(yv%1)>1e-9?1:0),padL-6,y+4)}
+        ctx.textAlign="center";for(var t2=1;t2<=total;t2+=Math.ceil(total/12))ctx.fillText(t2,X(t2),H-16);
+        ctx.fillText("period →",padL+pw/2,H-2);
+        /* actual */
+        ctx.strokeStyle=ink;ctx.lineWidth=2.2;ctx.beginPath();
+        series.forEach(function(v,i){if(i===0)ctx.moveTo(X(1),Y(v));else ctx.lineTo(X(i+1),Y(v))});ctx.stroke();
+        series.forEach(function(v,i){ctx.beginPath();ctx.arc(X(i+1),Y(v),3,0,7);ctx.fillStyle=ink;ctx.fill()});
+        /* methods */
+        cols.forEach(function(m){
+          var F={ma:R.ma,wma:R.wma,es:R.es,trend:R.trend}[m];
+          ctx.strokeStyle=MCOL[m];ctx.lineWidth=1.7;ctx.beginPath();var started=false;
+          F.forEach(function(v,i){if(v===null)return;if(!started){ctx.moveTo(X(i+1),Y(v));started=true}else ctx.lineTo(X(i+1),Y(v))});
+          ctx.stroke();
+          ctx.setLineDash([5,4]);ctx.beginPath();
+          var lastV=F[n-1];
+          ctx.moveTo(X(n),Y(lastV===null?R.fut[m][0]:lastV));
+          R.fut[m].forEach(function(v,hh){ctx.lineTo(X(n+hh+1),Y(v))});
+          ctx.stroke();ctx.setLineDash([]);
+        });
+        cv.setAttribute("aria-label","Time series of "+n+" periods with forecasts. Next-period forecasts: "+cols.map(function(m){return MNAME[m]+" "+fmt(R.fut[m][0],1)}).join(", ")+".");
+      }
+      $$("#fc-methods [data-m]").forEach(function(b){b.setAttribute("aria-pressed",S.use[b.dataset.m]);
+        b.addEventListener("click",function(){S.use[b.dataset.m]=!S.use[b.dataset.m];this.setAttribute("aria-pressed",S.use[b.dataset.m]);sync()})});
+      ["fc-series","fc-k"].forEach(function(id){$("#"+id).addEventListener("input",sync)});
+      $("#fc-alpha").addEventListener("input",sync);
+      sync();
+      window.addEventListener("resize",function(){if(document.getElementById("fc-cv"))sync()});
+    }
+
+    /* ================= STATBALANCE ================= */
+    function renderStatBalance(app,state){
+      var S=Object.assign({vals:[2,3,3,7,10]},state||{});
+      if(!S.vals||!S.vals.length)S.vals=[2,3,3,7,10];
+      var h=toolHead("Probability & Statistics","StatBalance — Mean, Median, Mode",
+        "Three measures of center, one beam. The mean is the balance point of the data: put a fulcrum under it and the torques on the left exactly cancel the torques on the right. The median is the middle value in line; the mode is the value with the most company. Drag the weights, then drop in an outlier and watch which of the three chases it.",
+        "Define mean, median, and mode by what they do — balance point, middle rank, most frequent — and predict which measures an outlier will move and which it will not.",
+        "Averages as weighted sums; ordering numbers.","About 10 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you add the outlier",
+        "The values are 2, 3, 3, 7, 10 (mean 5, median 3, mode 3). You add one more value: 30. What happens?",
+        ["All three measures jump toward 30","The mean climbs to about 9.2; the median moves only to 5 (the new middle); the mode stays 3 — each measure answers a different question","The median climbs most, because it is in the middle","Nothing changes; one value cannot move a summary"],1,
+        "The mean must rebalance: the new torque of +25 on the right has to be absorbed by shifting the fulcrum, to (25 + 30)/6 ≈ 9.17. The median just recounts: with six values the middle falls between 3 and 7. The mode ignores size entirely — 30 appears once, 3 appears twice. That is the robustness hierarchy, in one move.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>The values</h2>'+
+        '<label class="fl" for="sb-vals">Data (comma or space separated)</label><textarea id="sb-vals" rows="3" style="width:100%;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit"></textarea>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="sb-outlier">Add an outlier (30)</button><button type="button" class="btn secondary small" id="sb-reset">Reset (2, 3, 3, 7, 10)</button></div>'+
+        '<p class="hint">Starter check: mean 5, median 3, mode 3, and the torques balance at 7 and 7. Dragging a weight on the beam rewrites the data.</p></section>';
+      h+='<section class="panel"><h2>The three centers</h2><div id="sb-stats" aria-live="polite"></div><div id="sb-torques" class="readout"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>The balance beam</h2><canvas class="chart" id="sb-beam" data-ratio="0.42" role="img" aria-label="Balance beam with a weight for each value and the fulcrum at the mean"></canvas>'+
+        '<p class="hint">Drag a weight left or right to change its value. The triangle is the fulcrum at the mean — the beam balances there because the torques cancel: Σ(x − mean) = 0, always, by construction of the mean.</p></section>';
+      h+='<section class="panel"><h2>Histogram with the centers marked</h2><canvas class="chart" id="sb-hist" data-ratio="0.5" role="img" aria-label="Histogram of the values with mean, median, and mode marked"></canvas><div class="legend" id="sb-legend"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "A neighborhood's household incomes are heavily right-skewed. A report quotes the mean income and a resident says 'most of us earn far less than that.' Both can be right because:",
+        ["The mean is pulled up by a few very large incomes; the median household earns less, and the resident is describing the typical case the median captures","The report must have used the wrong data","Incomes cannot be skewed","The median is always the larger of the two"],0,
+        "Skew drags the balance point toward the tail — the fulcrum must move right to counter the torque of a few huge values — while the median stays with the middle household. Choosing mean vs. median for a headline is choosing which story to tell; a careful report gives both.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#sb-vals").value=S.vals.join(", ");
+      var dragIdx=-1;
+      function modeOf(vals){
+        var counts={},best=[],bestN=0;
+        vals.forEach(function(v){var k=fmt(v,2);counts[k]=(counts[k]||0)+1;if(counts[k]>bestN){bestN=counts[k];best=[v]}else if(counts[k]===bestN&&best.indexOf(v)<0)best.push(v)});
+        return bestN<=1?[]:best;
+      }
+      function stats(){
+        var vals=S.vals,mn=meanOf(vals),md=medianOf(vals),mo=modeOf(vals);
+        return{mean:mn,median:md,modes:mo,
+          left:vals.reduce(function(s,v){return s+Math.max(0,mn-v)},0),
+          right:vals.reduce(function(s,v){return s+Math.max(0,v-mn)},0)};
+      }
+      function sync(fromText){
+        if(fromText){var v=parseNums($("#sb-vals").value);if(v.length)S.vals=v.slice(0,40)}
+        setHash("statbalance",{vals:S.vals});
+        var st=stats();
+        $("#sb-stats").innerHTML='<div class="statgrid">'+
+          '<div><div class="v">'+fmt(st.mean,2)+'</div><div class="k">Mean — balance point</div></div>'+
+          '<div><div class="v">'+fmt(st.median,2)+'</div><div class="k">Median — middle value</div></div>'+
+          '<div><div class="v">'+(st.modes.length?st.modes.map(function(m){return fmt(m,2)}).join(", "):"—")+'</div><div class="k">Mode — most frequent</div></div>'+
+          '<div><div class="v">'+S.vals.length+'</div><div class="k">Values</div></div></div>';
+        $("#sb-torques").innerHTML='<p style="margin-top:10px">Torque left of the mean: <strong>'+fmt(st.left,2)+'</strong> · torque right: <strong>'+fmt(st.right,2)+'</strong>. They match (to rounding) — that equality <em>is</em> the mean.</p>';
+        $("#sb-legend").innerHTML='<span class="lgi"><i style="background:var(--red)"></i>Mean '+fmt(st.mean,2)+'</span><span class="lgi"><i style="background:var(--amber)"></i>Median '+fmt(st.median,2)+'</span>'+(st.modes.length?'<span class="lgi"><i style="background:var(--accent)"></i>Mode '+st.modes.map(function(m){return fmt(m,2)}).join(", ")+'</span>':"");
+        drawBeam(st);drawHist(st);
+      }
+      function domain(){
+        var mn=Math.min.apply(null,S.vals),mx=Math.max.apply(null,S.vals);
+        return[Math.min(0,mn-2),Math.max(12,mx+2)];
+      }
+      function drawBeam(st){
+        var cv=$("#sb-beam");if(!cv)return;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var ink=cssVar("--ink"),ink2=cssVar("--ink2"),acc=cssVar("--accent"),red=cssVar("--red"),line=cssVar("--line2"),axis=cssVar("--chart-axis");
+        var dom=domain(),padL=26,padR=26,pw=W-padL-padR,beamY=H*0.52;
+        function X(v){return padL+pw*(v-dom[0])/(dom[1]-dom[0])}
+        function invX(px){return dom[0]+(px-padL)/pw*(dom[1]-dom[0])}
+        ctx.clearRect(0,0,W,H);
+        ctx.strokeStyle=axis;ctx.lineWidth=1;ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.textAlign="center";
+        for(var v=Math.ceil(dom[0]);v<=dom[1];v+=Math.ceil((dom[1]-dom[0])/12)){ctx.beginPath();ctx.moveTo(X(v),beamY+34);ctx.lineTo(X(v),beamY+40);ctx.stroke();ctx.fillText(v,X(v),beamY+54)}
+        /* beam */
+        ctx.strokeStyle=ink;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(padL-8,beamY);ctx.lineTo(padL+pw+8,beamY);ctx.stroke();
+        /* weights */
+        cv._sb={invX:invX,pts:[]};
+        S.vals.forEach(function(val,i){
+          var x=X(val);
+          cv._sb.pts.push({x:x,i:i});
+          ctx.fillStyle=acc;ctx.strokeStyle=cssVar("--surface");ctx.lineWidth=1.6;
+          ctx.beginPath();ctx.arc(x,beamY-13,11,0,7);ctx.fill();ctx.stroke();
+          ctx.fillStyle="#fff";ctx.font="bold 9.5px system-ui";ctx.fillText(fmt(val,Math.abs(val%1)>1e-9?1:0),x,beamY-9.5);ctx.font="11px ui-monospace,monospace";
+        });
+        /* fulcrum */
+        var fx=X(st.mean);
+        ctx.fillStyle=red;ctx.beginPath();ctx.moveTo(fx,beamY+3);ctx.lineTo(fx-13,beamY+30);ctx.lineTo(fx+13,beamY+30);ctx.closePath();ctx.fill();
+        ctx.font="bold 11.5px system-ui";ctx.textAlign="center";ctx.fillText("mean = "+fmt(st.mean,2),fx,beamY+46);
+        cv.setAttribute("aria-label","Balance beam. "+S.vals.length+" weights; the fulcrum at the mean, "+fmt(st.mean,2)+", balances torques of "+fmt(st.left,1)+" on each side. Median "+fmt(st.median,2)+".");
+      }
+      function drawHist(st){
+        var cv=$("#sb-hist");if(!cv)return;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),acc=cssVar("--accent"),amb=cssVar("--amber"),red=cssVar("--red");
+        var dom=domain(),bw=Math.max(1,Math.round((dom[1]-dom[0])/14));
+        var bins={},maxC=0;
+        S.vals.forEach(function(v){var b=Math.floor(v/bw)*bw;bins[b]=(bins[b]||0)+1;if(bins[b]>maxC)maxC=bins[b]});
+        var padL=36,padR=14,padT=14,padB=30,pw=W-padL-padR,ph=H-padT-padB;
+        function X(v){return padL+pw*(v-dom[0])/(dom[1]-dom[0])}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;
+        for(var g=0;g<=Math.max(1,maxC);g++){var y=padT+ph-ph*g/Math.max(1,maxC);ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.textAlign="right";ctx.fillText(g,padL-6,y+4)}
+        Object.keys(bins).forEach(function(b){var bb=+b,c=bins[b];ctx.fillStyle=acc;ctx.globalAlpha=.8;
+          ctx.fillRect(X(bb)+1,padT+ph-ph*c/Math.max(1,maxC),Math.max(2,X(bb+bw)-X(bb)-2),ph*c/Math.max(1,maxC));ctx.globalAlpha=1});
+        function mark(v,color,dash,label,dy){
+          ctx.strokeStyle=color;ctx.lineWidth=2.2;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(X(v),padT);ctx.lineTo(X(v),padT+ph);ctx.stroke();ctx.setLineDash([]);
+          ctx.fillStyle=color;ctx.font="bold 11px system-ui";ctx.textAlign="left";ctx.fillText(label,X(v)+4,padT+11+dy);ctx.font="11px ui-monospace,monospace";
+        }
+        mark(st.mean,red,[],"mean",0);
+        mark(st.median,amb,[5,4],"median",13);
+        st.modes.forEach(function(m){mark(m,acc,[2,3],"mode",26)});
+        ctx.fillStyle=axis;ctx.textAlign="center";ctx.fillText("value →",padL+pw/2,H-4);
+      }
+      var cvB=$("#sb-beam");
+      function ptrVal(e){var r=cvB.getBoundingClientRect();return cvB._sb?cvB._sb.invX(e.clientX-r.left):null}
+      cvB.addEventListener("pointerdown",function(e){
+        if(!cvB._sb)return;var r=cvB.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;
+        var best=-1,bd=1e9;
+        cvB._sb.pts.forEach(function(p){var d=Math.abs(p.x-px);if(d<bd){bd=d;best=p.i}});
+        if(best>=0&&bd<34){dragIdx=best;cvB.setPointerCapture(e.pointerId)}
+      });
+      cvB.addEventListener("pointermove",function(e){
+        if(dragIdx<0)return;var v=ptrVal(e);if(v===null)return;
+        S.vals[dragIdx]=Math.round(v*4)/4;
+        $("#sb-vals").value=S.vals.join(", ");
+        sync(false);
+      });
+      cvB.addEventListener("pointerup",function(){dragIdx=-1});
+      cvB.addEventListener("pointercancel",function(){dragIdx=-1});
+      $("#sb-vals").addEventListener("input",function(){sync(true)});
+      $("#sb-outlier").addEventListener("click",function(){S.vals.push(30);$("#sb-vals").value=S.vals.join(", ");sync(false)});
+      $("#sb-reset").addEventListener("click",function(){S.vals=[2,3,3,7,10];$("#sb-vals").value=S.vals.join(", ");sync(false)});
+      sync(false);
+      window.addEventListener("resize",function(){if(document.getElementById("sb-beam"))sync(false)});
+    }
+
+    /* ================= PLOT COMPASS ================= */
+    var PC_CHARTS=[
+      {id:"bar",name:"Bar chart",structs:["one-cat","cat-num","two-cat"],goals:["compare","ranking"],
+        use:"Compare a numeric summary (count, mean, total) across categories.",watch:"Truncated y-axes exaggerate differences; order categories by size unless they have a natural order.",
+        draw:function(ctx,W,H){var d=[8,13,6,11,9],cols=["#0369a1","#c2410c","#15803d","#7c3aed","#a16207"];var mx=14;d.forEach(function(v,i){ctx.fillStyle=cols[i];ctx.fillRect(14+i*(W-20)/5+3,H-14-(H-26)*v/mx,(W-20)/5-8,(H-26)*v/mx)});ctx.fillStyle=cssVar("--chart-axis");ctx.fillRect(8,H-12,W-16,1.4)}},
+      {id:"pie",name:"Pie / donut chart",structs:["one-cat"],goals:["composition"],
+        use:"Show parts of one whole when there are few categories and the shares themselves are the message.",watch:"Hard to compare similar slices; beyond ~5 parts, or when precise comparison matters, a bar chart wins.",
+        draw:function(ctx,W,H){var d=[0.42,0.27,0.18,0.13],cols=["#0369a1","#c2410c","#15803d","#a16207"],a=-Math.PI/2,cx=W/2,cy=H/2+2,r=Math.min(W,H)/2-8;d.forEach(function(v,i){ctx.fillStyle=cols[i];ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,a,a+v*2*Math.PI);ctx.closePath();ctx.fill();a+=v*2*Math.PI});ctx.fillStyle=cssVar("--surface");ctx.beginPath();ctx.arc(cx,cy,r*0.45,0,7);ctx.fill()}},
+      {id:"hist",name:"Histogram",structs:["one-num"],goals:["distribution"],
+        use:"Show the shape of one numeric variable: center, spread, skew, gaps, outliers.",watch:"Bin width changes the story — too wide hides structure, too narrow invents it. It is not a bar chart: the axis is continuous.",
+        draw:function(ctx,W,H){var d=[2,5,9,13,11,7,4,2],mx=14;d.forEach(function(v,i){ctx.fillStyle=cssVar("--accent");ctx.globalAlpha=.85;ctx.fillRect(12+i*(W-24)/8,H-14-(H-26)*v/mx,(W-24)/8-1.5,(H-26)*v/mx)});ctx.globalAlpha=1;ctx.fillStyle=cssVar("--chart-axis");ctx.fillRect(8,H-12,W-16,1.4)}},
+      {id:"box",name:"Box plot",structs:["one-num","cat-num"],goals:["distribution","compare"],
+        use:"Summarize a distribution (or one per group) by quartiles: median, IQR, whiskers, outliers.",watch:"Hides the shape inside the box — a bimodal distribution and a normal one can share a box plot.",
+        draw:function(ctx,W,H){var ink=cssVar("--ink");function boxplot(y,q1,med,q3,w0,w1){ctx.strokeStyle=ink;ctx.lineWidth=1.6;ctx.strokeRect(q1,y-11,q3-q1,22);ctx.beginPath();ctx.moveTo(med,y-11);ctx.lineTo(med,y+11);ctx.stroke();ctx.beginPath();ctx.moveTo(w0,y);ctx.lineTo(q1,y);ctx.moveTo(q3,y);ctx.lineTo(w1,y);ctx.stroke();ctx.beginPath();ctx.moveTo(w0,y-5);ctx.lineTo(w0,y+5);ctx.moveTo(w1,y-5);ctx.lineTo(w1,y+5);ctx.stroke()}
+          boxplot(H*0.32,W*0.25,W*0.45,W*0.68,W*0.1,W*0.9);boxplot(H*0.72,W*0.35,W*0.55,W*0.75,W*0.22,W*0.97);ctx.fillStyle=cssVar("--red");ctx.beginPath();ctx.arc(W*0.97,H*0.32,2.6,0,7);ctx.fill()}},
+      {id:"scatter",name:"Scatter plot",structs:["two-num"],goals:["relationship"],
+        use:"Show the relationship between two numeric variables — direction, strength, shape, outliers.",watch:"Correlation is not causation, and overplotting hides density when points pile up.",
+        draw:function(ctx,W,H){var rnd=mulberry32(5);ctx.fillStyle=cssVar("--ink");for(var i=0;i<42;i++){var x=14+rnd()*(W-28),y=H-16-(x/W)*(H-30)+ (rnd()-0.5)*22;ctx.globalAlpha=.8;ctx.beginPath();ctx.arc(x,Math.max(6,Math.min(H-16,y)),2.6,0,7);ctx.fill()}ctx.globalAlpha=1}},
+      {id:"line",name:"Line chart",structs:["time-num"],goals:["change"],
+        use:"Show how a numeric variable evolves over time — trend, cycles, turning points.",watch:"The aspect ratio and y-axis start steer the drama; smoothing can erase the event you care about.",
+        draw:function(ctx,W,H){var d=[0.3,0.38,0.34,0.5,0.46,0.62,0.58,0.74];ctx.strokeStyle=cssVar("--accent");ctx.lineWidth=2.2;ctx.beginPath();d.forEach(function(v,i){var x=12+i*(W-24)/7,y=H-14-(H-28)*v;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke();ctx.fillStyle=cssVar("--accent");d.forEach(function(v,i){ctx.beginPath();ctx.arc(12+i*(W-24)/7,H-14-(H-28)*v,2.6,0,7);ctx.fill()})}},
+      {id:"stacked",name:"Stacked bar chart",structs:["two-cat","one-cat"],goals:["composition","compare"],
+        use:"Compare totals across categories and show what each total is made of.",watch:"Only the bottom segment shares a baseline — comparing middle segments across bars is guesswork.",
+        draw:function(ctx,W,H){var parts=[[0.5,0.3,0.2],[0.35,0.4,0.25],[0.62,0.2,0.18]],cols=["#0369a1","#c2410c","#15803d"];parts.forEach(function(p,bi){var x=16+bi*(W-28)/3,y=H-14;p.forEach(function(v,si){var hh=(H-28)*v;ctx.fillStyle=cols[si];ctx.fillRect(x,y-hh,(W-28)/3-14,hh);y-=hh})});ctx.fillStyle=cssVar("--chart-axis");ctx.fillRect(8,H-12,W-16,1.4)}},
+      {id:"dot",name:"Dot plot",structs:["one-cat","cat-num"],goals:["ranking","compare"],
+        use:"Rank categories by a value with maximum legibility — position on a scale, no bar bulk.",watch:"Needs a clear zero or a labeled scale; with two values per category it becomes a dumbbell chart.",
+        draw:function(ctx,W,H){var d=[0.9,0.72,0.55,0.4,0.25];d.forEach(function(v,i){var y=12+i*(H-22)/5;ctx.strokeStyle=cssVar("--chart-grid");ctx.beginPath();ctx.moveTo(12,y);ctx.lineTo(W-12,y);ctx.stroke();ctx.fillStyle=cssVar("--amber");ctx.beginPath();ctx.arc(12+v*(W-40),y,4.4,0,7);ctx.fill()})}},
+      {id:"area",name:"Area chart",structs:["time-num"],goals:["change","composition"],
+        use:"Change over time where the accumulated volume matters, or stacked areas for composition over time.",watch:"The fill draws the eye to area, so a nonzero baseline badly distorts it.",
+        draw:function(ctx,W,H){var d=[0.25,0.35,0.32,0.48,0.55,0.5,0.66,0.72];ctx.fillStyle=cssVar("--accent");ctx.globalAlpha=.4;ctx.beginPath();ctx.moveTo(12,H-12);d.forEach(function(v,i){ctx.lineTo(12+i*(W-24)/7,H-14-(H-28)*v)});ctx.lineTo(W-12,H-12);ctx.closePath();ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=cssVar("--accent");ctx.lineWidth=2;ctx.beginPath();d.forEach(function(v,i){var x=12+i*(W-24)/7,y=H-14-(H-28)*v;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke()}},
+      {id:"heat",name:"Heatmap",structs:["two-cat","two-num"],goals:["relationship","compare"],
+        use:"A grid of two categorical variables (or binned numerics) where color intensity carries a third value.",watch:"Color scales are read approximately; label the cells when exact values matter.",
+        draw:function(ctx,W,H){var rnd=mulberry32(9);for(var r=0;r<4;r++)for(var c=0;c<6;c++){var v=rnd();ctx.fillStyle=cssVar("--accent");ctx.globalAlpha=0.12+0.85*v;ctx.fillRect(12+c*(W-24)/6+1,8+r*(H-18)/4+1,(W-24)/6-2,(H-18)/4-2)}ctx.globalAlpha=1}}
+    ];
+    function renderPlotCompass(app,state){
+      var S=Object.assign({struct:"cat-num",goal:"compare"},state||{});
+      var h=toolHead("Probability & Statistics","Plot Compass — Choose a Chart",
+        "Choose a chart with purpose: understand the structure of your variables, decide what the audience should notice, and the compass points. Below: the levels of measurement that constrain everything, a two-question recommender with live examples, and a chart atlas.",
+        "Match a dataset and a message to a chart type, using levels of measurement and intent — and name the failure mode of the chart you pick.",
+        "What categorical and numeric variables are; reading basic charts.","About 15 minutes.");
+      h+='<section class="panel" style="margin-top:4px"><h2>First: levels of measurement</h2><p class="hint">The level of a variable determines what mathematics — and therefore which charts — it can honestly support. The levels nest: each allows everything the previous one allows, plus more.</p>'+
+        '<div class="objbox" style="margin-bottom:0">'+
+        '<div><h3>Nominal</h3><p><strong>Labels only.</strong> Can be named, cannot be ordered. Allowed: counts, mode. <em>Eye color, ZIP code, drink type.</em></p></div>'+
+        '<div><h3>Ordinal</h3><p><strong>Labels with an order</strong>, but unknown spacing. Allowed: + median, percentiles. <em>Education level, sizes S/M/L, satisfaction ratings.</em></p></div>'+
+        '<div><h3>Interval</h3><p><strong>Evenly spaced, arbitrary zero</strong> — differences mean something, ratios do not. Allowed: + mean, standard deviation. <em>Calendar year, temperature in °C or °F.</em></p></div>'+
+        '<div><h3>Ratio</h3><p><strong>Evenly spaced, true zero</strong> — “twice as much” makes sense. Allowed: everything, including ratios. <em>Height, age, goals scored, wait time.</em></p></div>'+
+        '</div><p class="hint">Categorical variables name groups (nominal, ordinal); numeric variables count or measure (interval, ratio). Time is its own structure: it orders everything it touches.</p></section>';
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Answer two questions</h2>'+
+        '<label class="fl" for="pc-struct">1 · What kind of variables do you have?</label><select id="pc-struct">'+
+        '<option value="one-cat">One categorical variable</option><option value="one-num">One numeric variable</option><option value="two-num">Two numeric variables</option><option value="cat-num">Categorical + numeric</option><option value="two-cat">Two categorical variables</option><option value="time-num">Time + numeric</option></select>'+
+        '<label class="fl" for="pc-goal">2 · What should the audience notice?</label><select id="pc-goal">'+
+        '<option value="compare">Compare groups or categories</option><option value="distribution">The shape of a distribution</option><option value="relationship">A relationship</option><option value="change">Change over time</option><option value="composition">Parts of a whole</option><option value="ranking">A ranking, biggest to smallest</option></select>'+
+        '<p class="hint">How to read the results: <strong>Best match</strong> = the most direct mapping to your goal. <strong>Strong option</strong> = valid, with trade-offs. <strong>Option</strong> = works under specific conditions.</p></section>';
+      h+=teachBox("Step 2 · Check","Test the compass in your head",
+        "A café chain records, for 24 orders: drink (nominal), size (ordinal), satisfaction (ordinal), wait minutes (ratio), order total (ratio), and date. To show whether larger sizes are associated with higher satisfaction, the compass should point to:",
+        ["A pie chart of sizes","Grouped/stacked bars of size by satisfaction — two categorical variables, comparing composition","A histogram of wait minutes","A line chart over dates"],1,
+        "Size and satisfaction are both categorical (ordinal), and the question is how the satisfaction mix shifts across sizes — a two-categorical comparison. Bars (grouped or 100% stacked) put the mix side by side; none of the numeric tools apply because neither variable is numeric.");
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>The compass points to…</h2><div id="pc-recs" aria-live="polite"></div></section>';
+      h+='</div></div>';
+      h+='<section class="panel" style="margin-top:20px"><h2>Chart atlas — the visual vocabulary</h2><p class="hint">Every chart in the recommender, with a live miniature, its job, and its characteristic way of misleading you.</p><div class="atlas" id="pc-atlas"></div></section>';
+      app.innerHTML=h;
+      $("#pc-struct").value=S.struct;$("#pc-goal").value=S.goal;
+      function drawInto(cv,chart){
+        if(!cv)return;var f=fitCanvas(cv);f.ctx.clearRect(0,0,f.W,f.H);chart.draw(f.ctx,f.W,f.H);
+      }
+      function recs(){
+        S.struct=$("#pc-struct").value;S.goal=$("#pc-goal").value;setHash("plotcompass",S);
+        var scored=PC_CHARTS.map(function(c){
+          var sm=c.structs.indexOf(S.struct)>=0?2:0,gm=c.goals.indexOf(S.goal)>=0?2:0;
+          return{c:c,score:sm+gm+(sm&&gm?1:0)};
+        }).filter(function(x){return x.score>0}).sort(function(a,b){return b.score-a.score}).slice(0,3);
+        var labels=["Best match","Strong option","Option"];
+        if(!scored.length){$("#pc-recs").innerHTML="<p>No standard chart fits that pairing well — reconsider what the audience should notice, or split the question into two charts.</p>";return}
+        $("#pc-recs").innerHTML=scored.map(function(x,i){
+          return '<div style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:10px"><div class="panelhead"><h3 style="margin:0">'+esc(x.c.name)+'</h3><span class="tag '+(i===0?"ok":"bind")+'">'+labels[i]+'</span></div>'+
+          '<canvas class="chart pc-cv" data-ratio="0.42" role="img" aria-label="Example rendering of a '+esc(x.c.name)+'"></canvas>'+
+          '<p style="font-size:14px;margin:6px 0 2px"><b>Why:</b> '+esc(x.c.use)+'</p><p style="font-size:14px;margin:0"><b>Watch out:</b> '+esc(x.c.watch)+'</p></div>';
+        }).join("");
+        $$(".pc-cv").forEach(function(cv,i){drawInto(cv,scored[i].c)});
+      }
+      var atlas=$("#pc-atlas");
+      atlas.innerHTML=PC_CHARTS.map(function(c,i){
+        return '<div class="ac"><h3>'+esc(c.name)+'</h3><canvas class="chart pc-acv" data-ratio="0.45" role="img" aria-label="Miniature example of a '+esc(c.name)+'"></canvas><p><b>Use it for:</b> '+esc(c.use)+'</p><p><b>Watch out:</b> '+esc(c.watch)+'</p></div>';
+      }).join("");
+      $$(".pc-acv").forEach(function(cv,i){drawInto(cv,PC_CHARTS[i])});
+      $("#pc-struct").addEventListener("change",recs);
+      $("#pc-goal").addEventListener("change",recs);
+      recs();
+      window.addEventListener("resize",function(){if(document.getElementById("pc-recs")){recs()}});
+    }
+
+    /* ================= QUANTS ================= */
+    function renderQuants(app,state){
+      var S=Object.assign({data:"1, 2, 3, 4, 5, 6, 7, 8, 9, 10",p:90,method:"interp",mu:100,sd:15,np:97.5},state||{});
+      var h=toolHead("Probability & Statistics","Quants — Quantiles & Percentiles",
+        "A quantile answers the question backwards: not 'what is the probability below this value?' but 'which value cuts off this much of the distribution?' Two ways in — from your own data, with the position rule shown step by step and a box plot; and from a normal distribution, where the answer is μ + z·σ.",
+        "Compute a percentile from raw data under a stated position rule, read a box plot (quartiles, IQR, fences, outliers), and find normal quantiles from a cumulative probability.",
+        "Sorting data; the normal distribution from the Distributions lab.","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you compute",
+        "For the data 1, 2, …, 10, the first quartile Q1 (25th percentile, linear-interpolation rule) is:",
+        ["2.5 — a quarter of the way from 1 to 10 is 3.25, close enough","3.25 — position 1 + (10 − 1)(0.25) = 3.25, a quarter of the way from the 3rd value to the 4th","2.75","Exactly 3"],1,
+        "Position rules differ between textbooks and software, which is why the rule must be stated with the answer. The interpolation rule used here (the common 'type 7') puts Q1 at sorted position 3.25 → 3 + 0.25×(4 − 3) = 3.25. The nearest-rank rule on the same data gives 3 — same data, different convention, both 'correct'.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>From your data</h2>'+
+        '<label class="fl" for="qn-data">Data values</label><textarea id="qn-data" rows="3" style="width:100%;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit"></textarea>'+
+        '<div class="row2"><div><label class="fl" for="qn-p">Percentile p (0–100)</label><input type="number" id="qn-p" step="any" min="0" max="100"></div>'+
+        '<div><label class="fl" for="qn-method">Position rule</label><select id="qn-method"><option value="interp">Linear interpolation (type 7)</option><option value="nearest">Nearest rank</option></select></div></div>'+
+        '<div id="qn-steps" class="readout" aria-live="polite" style="margin-top:10px"></div></section>';
+      h+='<section class="panel"><h2>Five-number summary</h2><div id="qn-sum"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Box plot</h2><canvas class="chart" id="qn-box" data-ratio="0.34" role="img" aria-label="Horizontal box plot of the data with the requested percentile marked"></canvas>'+
+        '<p class="hint">The box spans Q1 to Q3 (the middle half of the data); the line inside is the median; whiskers reach the farthest values inside the 1.5·IQR fences; dots beyond the fences are flagged outliers. The amber diamond is your requested percentile.</p></section>';
+      h+='<section class="panel"><h2>From a normal distribution</h2>'+
+        '<div class="row3"><div><label class="fl" for="qn-mu">Mean μ</label><input type="number" id="qn-mu" step="any"></div>'+
+        '<div><label class="fl" for="qn-sd">Std dev σ</label><input type="number" id="qn-sd" step="any"></div>'+
+        '<div><label class="fl" for="qn-np">Probability p (%)</label><input type="number" id="qn-np" step="any" min="0.1" max="99.9"></div></div>'+
+        '<div id="qn-norm" class="readout" aria-live="polite" style="margin-top:8px"></div>'+
+        '<canvas class="chart" id="qn-ncv" data-ratio="0.5" role="img" aria-label="Normal density with the area up to the requested quantile shaded"></canvas>'+
+        '<p class="hint">Check it: μ = 100, σ = 15, p = 97.5% → z = 1.960 and the quantile is 129.40 — the top edge of the classic 95% range.</p></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "A student scores at the 90th percentile of a test. A classmate concludes 'she answered 90% of the questions correctly.' The error:",
+        ["None — percentile means percent correct","Percentile is a rank, not a score: she scored at or above 90% of the group. Her raw score could be 62% correct on a hard test — or 95% on an easy one","Percentiles only apply to normal data","The 90th percentile means 90 students beat her"],1,
+        "Percentiles locate a value inside a reference group; percent-correct locates it against the maximum possible score. The two coincide only by accident. This is also why percentile-based cutoffs (top 10% admitted) move with the group's strength while raw cutoffs do not.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#qn-data").value=S.data;$("#qn-p").value=S.p;$("#qn-method").value=S.method;
+      $("#qn-mu").value=S.mu;$("#qn-sd").value=S.sd;$("#qn-np").value=S.np;
+      function sync(){
+        S.data=$("#qn-data").value;S.p=Math.min(100,Math.max(0,parseFloat($("#qn-p").value)||0));S.method=$("#qn-method").value;
+        S.mu=parseFloat($("#qn-mu").value)||0;S.sd=Math.max(0.0001,parseFloat($("#qn-sd").value)||1);S.np=Math.min(99.9,Math.max(0.1,parseFloat($("#qn-np").value)||50));
+        setHash("quants",S);
+        var data=parseNums(S.data).sort(function(a,b){return a-b}),n=data.length;
+        var steps=$("#qn-steps"),sum=$("#qn-sum");
+        if(n<2){steps.innerHTML="Enter at least two values.";sum.innerHTML="";return}
+        var p01=S.p/100,val,pos,explain;
+        if(S.method==="interp"){
+          pos=1+(n-1)*p01;
+          val=quantile7(data,p01);
+          var loI=Math.floor(pos),frac=pos-loI;
+          explain='Sorted position = 1 + (n − 1)·p = 1 + '+(n-1)+' × '+fmt(p01,3)+' = <strong>'+fmt(pos,3)+'</strong>. '+(frac<1e-12||loI>=n?'That lands exactly on sorted value #'+Math.min(n,Math.round(pos))+'.':'That is '+fmt(frac*100,0)+'% of the way from sorted value #'+loI+' ('+fmt(data[loI-1],3)+') to #'+(loI+1)+' ('+fmt(data[loI],3)+').');
+        }else{
+          var rank=Math.max(1,Math.ceil(p01*n));val=data[rank-1];pos=rank;
+          explain='Rank = ⌈p · n⌉ = ⌈'+fmt(p01,3)+' × '+n+'⌉ = <strong>'+rank+'</strong>, so the percentile is the '+rank+'-th smallest value.';
+        }
+        steps.innerHTML='The <strong>'+fmt(S.p,1)+'th percentile</strong> of the '+n+' sorted values is <strong>'+fmt(val,4)+'</strong>.<br>'+explain;
+        var q1=quantile7(data,0.25),med=quantile7(data,0.5),q3=quantile7(data,0.75),iqr=q3-q1;
+        var loF=q1-1.5*iqr,hiF=q3+1.5*iqr;
+        var outs=data.filter(function(v){return v<loF||v>hiF});
+        sum.innerHTML='<div class="statgrid">'+
+          '<div><div class="v">'+fmt(data[0],2)+'</div><div class="k">Minimum</div></div>'+
+          '<div><div class="v">'+fmt(q1,2)+'</div><div class="k">Q1 (25th)</div></div>'+
+          '<div><div class="v">'+fmt(med,2)+'</div><div class="k">Median</div></div>'+
+          '<div><div class="v">'+fmt(q3,2)+'</div><div class="k">Q3 (75th)</div></div>'+
+          '<div><div class="v">'+fmt(data[n-1],2)+'</div><div class="k">Maximum</div></div>'+
+          '<div><div class="v">'+fmt(iqr,2)+'</div><div class="k">IQR</div></div></div>'+
+          '<p class="readout" style="margin-top:8px">Fences: ['+fmt(loF,2)+', '+fmt(hiF,2)+']. '+(outs.length?'Outliers beyond the fences: <strong>'+outs.map(function(v){return fmt(v,2)}).join(", ")+'</strong>.':'No outliers beyond the fences.')+' Starter-data check: Q1 = 3.25, median 5.5, Q3 = 7.75.</p>';
+        drawBox(data,q1,med,q3,loF,hiF,val);
+        drawNorm();
+      }
+      function drawBox(data,q1,med,q3,loF,hiF,pval){
+        var cv=$("#qn-box");if(!cv)return;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var ink=cssVar("--ink"),axis=cssVar("--chart-axis"),acc=cssVar("--accent"),amb=cssVar("--amber"),red=cssVar("--red");
+        var lo=Math.min(data[0],loF),hi=Math.max(data[data.length-1],hiF),pad=(hi-lo)*0.08||1;lo-=pad;hi+=pad;
+        var padL=30,padR=30,pw=W-padL-padR,cy=H/2;
+        function X(v){return padL+pw*(v-lo)/(hi-lo)}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;
+        var wLo=data.filter(function(v){return v>=loF})[0],wHi=data.filter(function(v){return v<=hiF}).pop();
+        ctx.strokeStyle=ink;ctx.lineWidth=1.6;
+        ctx.beginPath();ctx.moveTo(X(wLo),cy);ctx.lineTo(X(wHi),cy);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(X(wLo),cy-8);ctx.lineTo(X(wLo),cy+8);ctx.moveTo(X(wHi),cy-8);ctx.lineTo(X(wHi),cy+8);ctx.stroke();
+        ctx.fillStyle=acc;ctx.globalAlpha=.25;ctx.fillRect(X(q1),cy-22,X(q3)-X(q1),44);ctx.globalAlpha=1;
+        ctx.strokeRect(X(q1),cy-22,X(q3)-X(q1),44);
+        ctx.strokeStyle=red;ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(X(med),cy-22);ctx.lineTo(X(med),cy+22);ctx.stroke();ctx.lineWidth=1.6;
+        data.forEach(function(v){if(v<loF||v>hiF){ctx.fillStyle=red;ctx.beginPath();ctx.arc(X(v),cy,3.4,0,7);ctx.fill()}});
+        /* percentile diamond */
+        ctx.fillStyle=amb;ctx.beginPath();ctx.moveTo(X(pval),cy-34);ctx.lineTo(X(pval)+7,cy-26);ctx.lineTo(X(pval),cy-18);ctx.lineTo(X(pval)-7,cy-26);ctx.closePath();ctx.fill();
+        ctx.fillStyle=axis;ctx.textAlign="center";
+        [data[0],q1,med,q3,data[data.length-1]].forEach(function(v){ctx.fillText(fmt(v,Math.abs(v%1)>1e-9?1:0),X(v),H-8)});
+        ctx.textAlign="left";ctx.fillStyle=amb;ctx.font="bold 11px system-ui";ctx.fillText("p = "+fmt(S.p,0),X(pval)+9,cy-24);ctx.font="11px ui-monospace,monospace";
+        cv.setAttribute("aria-label","Box plot. Q1 "+fmt(q1,2)+", median "+fmt(med,2)+", Q3 "+fmt(q3,2)+", IQR "+fmt(q3-q1,2)+". The "+fmt(S.p,0)+"th percentile is "+fmt(pval,2)+".");
+      }
+      function drawNorm(){
+        var cv=$("#qn-ncv");if(!cv)return;
+        var z=normInv(S.np/100),val=S.mu+z*S.sd;
+        $("#qn-norm").innerHTML='z for p = '+fmt(S.np,1)+'% is <strong>'+fmt(z,3)+'</strong>, so the quantile is μ + zσ = '+fmt(S.mu,2)+' + '+fmt(z,3)+' × '+fmt(S.sd,2)+' = <strong>'+fmt(val,3)+'</strong>. In words: '+fmt(S.np,1)+'% of the distribution lies at or below '+fmt(val,3)+'.';
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),acc=cssVar("--accent"),amb=cssVar("--amber");
+        var x0=S.mu-4*S.sd,x1=S.mu+4*S.sd;
+        var padL=44,padR=12,padT=12,padB=30,pw=W-padL-padR,ph=H-padT-padB;
+        var maxD=normPdf(S.mu,S.mu,S.sd)*1.12;
+        function X(x){return padL+pw*(x-x0)/(x1-x0)} function Y(d){return padT+ph-ph*d/maxD}
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;
+        for(var g=0;g<=4;g++){var gy=maxD*g/4,y=Y(gy);ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(gy,2),padL-6,y+4)}
+        ctx.beginPath();ctx.moveTo(X(x0),Y(0));
+        for(var i=0;i<=200;i++){var x=x0+(x1-x0)*i/200;if(x>val)break;ctx.lineTo(X(x),Y(normPdf(x,S.mu,S.sd)))}
+        ctx.lineTo(X(Math.min(val,x1)),Y(0));ctx.closePath();ctx.fillStyle=amb;ctx.globalAlpha=.45;ctx.fill();ctx.globalAlpha=1;
+        ctx.strokeStyle=acc;ctx.lineWidth=2;ctx.beginPath();
+        for(var j=0;j<=200;j++){var x2=x0+(x1-x0)*j/200;if(j===0)ctx.moveTo(X(x2),Y(normPdf(x2,S.mu,S.sd)));else ctx.lineTo(X(x2),Y(normPdf(x2,S.mu,S.sd)))}
+        ctx.stroke();ctx.lineWidth=1;
+        ctx.strokeStyle=cssVar("--red");ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(X(val),padT);ctx.lineTo(X(val),padT+ph);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=axis;ctx.textAlign="center";
+        for(var gx=0;gx<=4;gx++){var xv=x0+(x1-x0)*gx/4;ctx.fillText(fmt(xv,Math.abs(xv%1)>1e-9?1:0),X(xv),H-14)}
+        ctx.fillText("value →",padL+pw/2,H-2);
+        cv.setAttribute("aria-label","Normal density with mean "+fmt(S.mu,1)+" and standard deviation "+fmt(S.sd,1)+". The area up to "+fmt(val,2)+" is "+fmt(S.np,1)+" percent.");
+      }
+      ["qn-data","qn-p","qn-method","qn-mu","qn-sd","qn-np"].forEach(function(id){$("#"+id).addEventListener("input",sync);$("#"+id).addEventListener("change",sync)});
+      sync();
+      window.addEventListener("resize",function(){if(document.getElementById("qn-box"))sync()});
+    }
+
+    /* ================= PROBLY ================= */
+    function renderProbly(app,state){
+      var S=Object.assign({p:0.5,label:"Coin flip — heads",trials:1000,ntries:4,seed:11},state||{});
+      var PRESETS=[
+        {label:"Coin flip — heads",p:0.5},{label:"One face of a die",p:1/6},{label:"Snake eyes (two dice)",p:1/36},
+        {label:"An ace from a full deck",p:4/52},{label:"Two dice sum to 7",p:6/36},{label:"Birthday match among 23 people",p:0.507297},
+        {label:"1 in 1,000",p:0.001},{label:"1 in 1,000,000",p:0.000001}
+      ];
+      var h=toolHead("Probability & Statistics","Probly — See the Odds",
+        "Probabilities are hard to feel. 0.1667 is a decimal; 'one face of a die' is an experience. Probly translates any probability three ways — as a field of dots you can count, as '1 in X', and as odds — then stress-tests it with simulated trials and answers the question everyone actually asks: how likely is at least one success if I try n times?",
+        "Translate fluently between probability, odds, and '1 in X'; use a frequency picture to judge a probability's size; and compute the chance of at least one success in n independent tries.",
+        "Fractions and percentages; independence of trials.","About 10 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you roll",
+        "You roll a fair die four times, hoping for at least one six. Your chance is:",
+        ["4 × 1/6 ≈ 67% — four tries, four chances","1 − (5/6)⁴ ≈ 51.8% — one minus the chance of missing every time","Exactly 50%","1/6 — each roll is the same, so the chance cannot grow"],1,
+        "Adding 1/6 four times double-counts the worlds where two sixes appear. The clean route is the complement: P(at least one) = 1 − P(none) = 1 − (5/6)⁴ = 1 − 0.4823 = 0.5177. Set Probly to a die face and n = 4 below and read it off.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Pick a probability</h2>'+
+        '<div class="btnrow" style="margin:0 0 10px" id="pb-presets">'+PRESETS.map(function(pr,i){return '<button type="button" class="chip" data-i="'+i+'" aria-pressed="'+(Math.abs(S.p-pr.p)<1e-15)+'">'+esc(pr.label)+'</button>'}).join("")+'</div>'+
+        '<label class="fl" for="pb-pct">Probability: <strong id="pb-pctlab"></strong></label><input type="range" id="pb-pct" min="0" max="100" step="0.1">'+
+        '<div class="row2"><div><label class="fl" for="pb-pctn">Percent (%)</label><input type="number" id="pb-pctn" step="any" min="0" max="100"></div>'+
+        '<div><label class="fl" for="pb-onein">Or “1 in X” — set X</label><input type="number" id="pb-onein" step="any" min="1"></div></div>'+
+        '<p class="hint">Tiny probabilities (below 0.1%) are easier to set with the 1-in-X box or a preset.</p></section>';
+      h+='<section class="panel"><h2>At least one success?</h2>'+
+        '<label class="fl" for="pb-n">Number of independent tries n</label><input type="number" id="pb-n" step="1" min="1">'+
+        '<div id="pb-atleast" class="readout" aria-live="polite"></div></section>';
+      h+='<section class="panel"><h2>Stress-test it — simulated trials</h2>'+
+        '<label class="fl" for="pb-trials">Trials to simulate</label><input type="number" id="pb-trials" step="100" min="10">'+
+        '<div class="btnrow"><button type="button" class="btn small" id="pb-sim">Run trials</button></div>'+
+        '<div id="pb-simout" class="readout" aria-live="polite" style="margin-top:8px">Not run yet. Simulation uses a seeded stream — the same seed replays the same trials, and each Run advances the seed.</div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>The same probability, four ways</h2><div id="pb-ways" aria-live="polite"></div></section>';
+      h+='<section class="panel"><h2>See it</h2><canvas class="chart" id="pb-cv" data-ratio="0.52" role="img" aria-label="Field of dots with the expected share highlighted"></canvas><div id="pb-cap" class="readout"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "An event has probability 1/6. A friend says 'the odds are 1 to 6.' Correct them:",
+        ["They are right; odds and probability are the same numbers","Odds compare success to failure: 1/6 probability means 1 success against 5 failures in the long run — odds of 1 : 5 in favor (5 : 1 against). '1 to 6' would be probability 1/7","Odds are always larger than probabilities","Odds only exist in gambling"],1,
+        "Probability = successes / all outcomes (1 of 6). Odds = successes : failures (1 : 5). Confusing them overstates the chance — and the confusion is profitable for whoever sets the payout, which is why the distinction survives every attempt to blur it.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      function fmtP(p){
+        if(p>=0.01)return fmt(100*p,2)+"%";
+        if(p>=0.0001)return fmt(100*p,4)+"%";
+        return fmt(100*p,6)+"%";
+      }
+      function sync(){
+        S.p=Math.min(1,Math.max(0,S.p));
+        setHash("probly",S);
+        $("#pb-pct").value=100*S.p;$("#pb-pctn").value=+((100*S.p).toFixed(6));
+        $("#pb-pctlab").textContent=fmtP(S.p);
+        $$("#pb-presets .chip").forEach(function(ch){var pr=PRESETS[+ch.dataset.i];ch.setAttribute("aria-pressed",Math.abs(S.p-pr.p)<1e-12)});
+        var oneIn=S.p>0?1/S.p:Infinity;
+        var oddsTxt;
+        if(S.p<=0)oddsTxt="0 : 1 — it cannot happen";
+        else if(S.p>=1)oddsTxt="certain — it cannot fail";
+        else{var of=S.p/(1-S.p);oddsTxt=of>=1?fmt(of,2)+" : 1 in favor":"1 : "+fmt(1/of,2)+" (i.e. "+fmt(1/of,2)+" : 1 against)"}
+        $("#pb-ways").innerHTML='<div class="statgrid">'+
+          '<div><div class="v">'+fmtP(S.p)+'</div><div class="k">Probability</div></div>'+
+          '<div><div class="v">'+(isFinite(oneIn)?"1 in "+(oneIn>=100?fmt(oneIn,0):fmt(oneIn,2)):"—")+'</div><div class="k">Frequency phrasing</div></div>'+
+          '<div><div class="v" style="font-size:16px;padding-top:4px">'+oddsTxt+'</div><div class="k">Odds</div></div>'+
+          '<div><div class="v">'+fmt(S.p,4)+'</div><div class="k">As a decimal</div></div></div>'+
+          '<p class="readout" style="margin-top:8px">Event: <strong>'+esc(S.label)+'</strong>. In 1,000 independent tries you would expect about <strong>'+fmt(1000*S.p,1000*S.p<10?1:0)+'</strong> successes — on average, not on schedule.</p>';
+        var n=Math.max(1,parseInt($("#pb-n").value)||1);S.ntries=n;
+        var pa=1-Math.pow(1-S.p,n);
+        $("#pb-atleast").innerHTML='<p style="margin:0">P(at least one success in '+n+' tries) = 1 − (1 − p)<sup>'+n+'</sup> = <strong>'+fmtP(pa)+'</strong>.</p>'+
+          '<div class="tbar" style="margin-top:8px;height:14px"><i style="left:0;width:'+(100*pa)+'%"></i></div>'+
+          (S.p>0&&pa<0.999?'<p class="hint">To reach a 50% chance of at least one success takes about '+Math.ceil(Math.log(0.5)/Math.log(1-S.p))+' tries at this probability.</p>':"");
+        drawWaffle();
+      }
+      function drawWaffle(){
+        var cv=$("#pb-cv");if(!cv)return;
+        var N=S.p>=0.004?100:1000;
+        var filled=Math.round(S.p*N);
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var acc=cssVar("--accent"),axis=cssVar("--chart-axis");
+        var cols=N===100?10:40,rows=N/cols;
+        var cell=Math.min((W-16)/cols,(H-16)/rows),r=cell*0.36;
+        var ox=(W-cell*cols)/2,oy=(H-cell*rows)/2;
+        ctx.clearRect(0,0,W,H);
+        for(var i=0;i<N;i++){
+          var cx=ox+cell*(i%cols)+cell/2,cyy=oy+cell*Math.floor(i/cols)+cell/2;
+          ctx.beginPath();ctx.arc(cx,cyy,r,0,7);
+          if(i<filled){ctx.fillStyle=acc;ctx.fill()}else{ctx.fillStyle=axis;ctx.globalAlpha=.3;ctx.fill();ctx.globalAlpha=1}
+        }
+        $("#pb-cap").innerHTML='<p style="margin:0">Each dot is one of <strong>'+N+'</strong> equally likely outcomes; <strong>'+filled+'</strong> are highlighted — the count is the probability times '+N+', rounded, so the picture is exact only when the probability divides the field evenly. The number above never rounds.</p>';
+        cv.setAttribute("aria-label","A field of "+N+" dots, "+filled+" highlighted, representing a probability of "+fmtP(S.p)+".");
+      }
+      $$("#pb-presets .chip").forEach(function(ch){ch.addEventListener("click",function(){var pr=PRESETS[+ch.dataset.i];S.p=pr.p;S.label=pr.label;sync()})});
+      $("#pb-pct").addEventListener("input",function(){S.p=+this.value/100;S.label="Custom probability";sync()});
+      $("#pb-pctn").addEventListener("input",function(){var v=parseFloat(this.value);if(isFinite(v)){S.p=v/100;S.label="Custom probability";sync()}});
+      $("#pb-onein").addEventListener("input",function(){var v=parseFloat(this.value);if(isFinite(v)&&v>=1){S.p=1/v;S.label="Custom probability (1 in "+fmt(v,0)+")";sync()}});
+      $("#pb-n").addEventListener("input",sync);
+      $("#pb-sim").addEventListener("click",function(){
+        var trials=Math.max(10,parseInt($("#pb-trials").value)||1000);S.trials=trials;S.seed=(S.seed||11)+1;
+        var rnd=mulberry32(S.seed>>>0),hits=0;
+        for(var i=0;i<trials;i++)if(rnd()<S.p)hits++;
+        var obs=hits/trials;
+        $("#pb-simout").innerHTML='Seed '+S.seed+': <strong>'+hits+'</strong> successes in '+trials+' trials — observed frequency <strong>'+fmtP(obs)+'</strong> against an expected '+fmt(trials*S.p,1)+' successes ('+fmtP(S.p)+'). '+(Math.abs(obs-S.p)<=2*Math.sqrt(S.p*(1-S.p)/trials)?'Well inside ordinary sampling noise (±2 standard errors ≈ ±'+fmtP(2*Math.sqrt(S.p*(1-S.p)/trials))+').':'A bit far out — possible, but worth another run to see it regress.')+' Run again to watch the frequency wander around the probability, closing in as trials grow.';
+        setHash("probly",S);
+      });
+      $("#pb-n").value=S.ntries;$("#pb-trials").value=S.trials;
+      sync();
+      window.addEventListener("resize",function(){if(document.getElementById("pb-cv"))drawWaffle()});
+    }
+
     /* ================= ROUTER ================= */
     function parseHash(){
       var h=location.hash.replace(/^#\/?/,"");var parts=h.split("?");var route=parts[0]||"";
@@ -1703,6 +3518,18 @@
       else if(r.route==="decision")renderDecision(app,r.state);
       else if(r.route==="tree")renderTree(app,r.state);
       else if(r.route==="queue")renderQueue(app,r.state);
+      else if(r.route==="pairwise")renderPairwise(app,r.state);
+      else if(r.route==="nextinline")renderNextInLine(app,r.state);
+      else if(r.route==="levelcurves")renderLevelCurves(app,r.state);
+      else if(r.route==="hiker")renderHiker(app,r.state);
+      else if(r.route==="linear")renderLinear(app,r.state);
+      else if(r.route==="distributions")renderDistributions(app,r.state);
+      else if(r.route==="regression")renderRegression(app,r.state);
+      else if(r.route==="forecasting")renderForecasting(app,r.state);
+      else if(r.route==="statbalance")renderStatBalance(app,r.state);
+      else if(r.route==="plotcompass")renderPlotCompass(app,r.state);
+      else if(r.route==="quants")renderQuants(app,r.state);
+      else if(r.route==="probly")renderProbly(app,r.state);
       else renderHub(app);
     }
     window.addEventListener("hashchange",route);
