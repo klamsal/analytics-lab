@@ -197,6 +197,16 @@
       .sens-grid>*{min-width:0}
       @media(max-width:900px){.report-grid{grid-template-columns:1fr}}
       .tscroll{overflow-x:auto}
+      .tree-wrap{overflow:auto;background:var(--surface2);border:1px solid var(--line);border-radius:8px;min-height:340px}
+      .tree-wrap svg{display:block;min-width:640px;width:100%;height:auto}
+      .tnode{cursor:pointer}
+      .tnode:focus{outline:none}
+      .tnode:focus .tnode-box{stroke:var(--accent);stroke-width:3}
+      .qchart-wrap{margin-top:6px}
+      .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:8px}
+      .statgrid>div{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+      .statgrid .v{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:20px;font-weight:700;color:var(--ink)}
+      .statgrid .k{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-top:2px}
       footer.note{margin-top:44px;border-top:1px solid var(--line);padding-top:14px;color:var(--ink3);font-size:13.5px;max-width:52em}
       .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
       @media print{.topbar,.btnrow,.hub-tools{display:none}}
@@ -209,8 +219,11 @@
         <nav class="topnav" aria-label="Tools">
           <a href="#/lp" data-nav="lp">LP Explorer</a>
           <a href="#/sensitivity" data-nav="sensitivity">LP Sensitivity</a>
+          <a href="#/lp3d" data-nav="lp3d">LP 3D</a>
           <a href="#/clt" data-nav="clt">CLT &amp; CI Lab</a>
           <a href="#/decision" data-nav="decision">Decision Lab</a>
+          <a href="#/tree" data-nav="tree">Decision Tree</a>
+          <a href="#/queue" data-nav="queue">Queuing Lab</a>
         </nav>
       </div>
     </div>
@@ -464,7 +477,10 @@
       {id:"lp",cat:"Optimization",title:"LP Explorer",desc:"Build your own two-variable linear program. Draw the feasible region, evaluate every corner point, and watch the optimum move as the objective changes.",meta:"Guided · Explore · Check",kw:"linear programming feasible region corner optimum constraints objective"},
       {id:"sensitivity",cat:"Optimization",title:"LP Sensitivity Lab",desc:"Start from the same LP and push one number at a time: objective coefficients and right-hand sides. See shadow prices, slack, and the ranges where the current optimum survives.",meta:"Guided · Explore · Check",kw:"sensitivity shadow price allowable range rhs objective coefficient what-if tornado"},
       {id:"clt",cat:"Probability & Statistics",title:"CLT & Confidence Interval Lab",desc:"Sample from a population you choose and watch the sampling distribution take shape — then check how often a 95% confidence interval actually captures the true mean.",meta:"Guided · Explore · Check",kw:"central limit theorem sampling distribution confidence interval coverage mean"},
-      {id:"decision",cat:"Decision Analysis",title:"Decision Lab",desc:"Compare alternatives under uncertainty with expected value, maximin, maximax, and regret — then find the probability where the best choice flips.",meta:"Guided · Explore · Check",kw:"decision expected value emv maximin maximax regret sensitivity probability states"}
+      {id:"decision",cat:"Decision Analysis",title:"Decision Lab",desc:"Compare alternatives under uncertainty with expected value, maximin, maximax, and regret — then find the probability where the best choice flips.",meta:"Guided · Explore · Check",kw:"decision expected value emv maximin maximax regret sensitivity probability states"},
+      {id:"lp3d",cat:"Optimization",title:"LP 3D Visualizer",desc:"The same Oktomasks problem lifted into three dimensions: the profit plane over the feasible region, every extreme point, and a Play sweep that raises the profit level to the optimum at (440, 500).",meta:"Guided · Explore · Check",kw:"lp 3d three dimensions profit plane extreme point vertex isoprofit level curve polytope"},
+      {id:"tree",cat:"Decision Analysis",title:"Decision Tree Builder",desc:"Build a decision tree node by node — decision, chance, and end nodes — then roll it back to expected values, see the best branch at each decision, the risk profile, and save or reopen your tree as a file.",meta:"Guided · Explore · Check",kw:"decision tree builder rollback expected value chance node risk profile fold back"},
+      {id:"queue",cat:"Decision Analysis",title:"Queuing Lab",desc:"Waiting-line models M/M/1, M/M/s, M/M/s with a finite queue, and M/G/1: utilization, L, Lq, W, Wq, and the probability the system is empty or an arrival has to wait.",meta:"Guided · Explore · Check",kw:"queuing queue waiting line mm1 mms mg1 little law utilization arrival service erlang"}
     ];
     function renderHub(app){
       var h='<div class="hero"><h1>Decision modeling, one idea at a time.</h1><p>Interactive labs for optimization, probability, and decision analysis. Every tool follows the same pattern — predict first, explore with your own numbers, then check yourself. Settings travel with the page address, so a link you send always opens the exact same problem.</p></div>';
@@ -473,8 +489,8 @@
       h+='<div class="cards" id="cards">';
       TOOLS.forEach(function(t){h+='<a class="card" href="#/'+t.id+'" data-cat="'+esc(t.cat)+'" data-kw="'+esc((t.title+" "+t.desc+" "+t.kw).toLowerCase())+'"><div class="cat">'+esc(t.cat)+'</div><h2>'+esc(t.title)+'</h2><p>'+esc(t.desc)+'</p><div class="meta"><span>'+esc(t.meta)+'</span><span class="go">Open →</span></div></a>'});
       h+='</div><p class="noresults" id="nores" hidden>No tool matches that search. Try a concept name, like “corner”, “interval”, or “expected value”.</p>';
-      h+='<section class="roadmap"><h2>On the way</h2><p>The platform is built so new labs plug into the same shell. Planned next, in course order:</p><ul><li>LP in three variables (3D feasible region)</li><li>Probability distributions explorer</li><li>Linear regression lab</li><li>Forecasting: moving averages &amp; exponential smoothing</li><li>Queuing lab</li><li>Decision tree builder</li></ul></section>';
-      h+='<footer class="note">The two LP tools share the Okto mask problem used in this course\'s decision-modeling materials; the code and all explanatory text in these labs are new. All computation runs in your browser; nothing is uploaded.</footer>';
+      h+='<section class="roadmap"><h2>On the way</h2><p>The platform is built so new labs plug into the same shell. Planned next, in course order:</p><ul><li>LP in three variables (3D feasible region)</li><li>Probability distributions explorer</li><li>Linear regression lab</li><li>Forecasting: moving averages &amp; exponential smoothing</li><li>Pairwise comparison (AHP)</li><li>Next in Line — games and challenges</li></ul></section>';
+      h+='<footer class="note">The three LP tools share the Okto mask problem used in this course\'s decision-modeling materials; the code and all explanatory text in these labs are new. All computation runs in your browser; nothing is uploaded.</footer>';
       app.innerHTML=h;
       var q=$("#hubq"),cat="All";
       function apply(){var term=q.value.trim().toLowerCase(),n=0;
@@ -1102,6 +1118,574 @@
       window.addEventListener("resize",function(){if(document.getElementById("dec-cv")&&lastCrit)drawSens(lastCrit)});
     }
 
+    /* ================= LP 3D VISUALIZER ================= */
+    function drawLP3D(cv,P,sol,view,sweepZ){
+      var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+      var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),ink=cssVar("--ink"),acc=cssVar("--accent"),red=cssVar("--red"),amb=cssVar("--amber"),surf2=cssVar("--surface2");
+      var XR=600,YR=700,i;
+      P.cons.forEach(function(c){if(c.a>0)XR=Math.max(XR,c.rhs/c.a);if(c.b>0)YR=Math.max(YR,c.rhs/c.b)});
+      sol.vertices.forEach(function(v){XR=Math.max(XR,v.x);YR=Math.max(YR,v.y)});
+      XR=Math.min(XR*1.1,1e6);YR=Math.min(YR*1.1,1e6);
+      var M=Math.max(XR,YR);
+      var zmax=3260;sol.vertices.forEach(function(v){zmax=Math.max(zmax,v.z)});
+      var zS=0.66*M/(zmax*1.1);
+      var ca=Math.cos(view.az),sa=Math.sin(view.az),ce=Math.cos(view.el),se=Math.sin(view.el);
+      var S=view.zoom*Math.min(W,H)/(1.62*M);
+      function pr(x,y,z){var X=x-XR/2,Y=y-YR/2,Z=z*zS;var x1=X*ca-Y*sa,y1=X*sa+Y*ca;var z2=Z*ce-y1*se;return{x:W/2+x1*S,y:H*0.60-z2*S}}
+      function line(a,b,style,w,dash){ctx.strokeStyle=style;ctx.lineWidth=w||1;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([])}
+      function dot(p,r,fill,stroke){ctx.beginPath();ctx.arc(p.x,p.y,r,0,7);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.6;ctx.stroke()}}
+      ctx.clearRect(0,0,W,H);
+      var f00=pr(0,0,0),f10=pr(XR,0,0),f11=pr(XR,YR,0),f01=pr(0,YR,0);
+      ctx.beginPath();ctx.moveTo(f00.x,f00.y);ctx.lineTo(f10.x,f10.y);ctx.lineTo(f11.x,f11.y);ctx.lineTo(f01.x,f01.y);ctx.closePath();
+      ctx.fillStyle=surf2;ctx.globalAlpha=.55;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=grid;ctx.lineWidth=1;ctx.stroke();
+      function niceStep(m){var p=Math.pow(10,Math.floor(Math.log10(m)));var s=m/p;return (s<=1?1:s<=2?2:s<=2.5?2.5:s<=5?5:10)*p}
+      var gx=niceStep(XR/4),gy=niceStep(YR/4),v;
+      for(v=gx;v<XR;v+=gx)line(pr(v,0,0),pr(v,YR,0),grid,1);
+      for(v=gy;v<YR;v+=gy)line(pr(0,v,0),pr(XR,v,0),grid,1);
+      line(pr(0,0,0),pr(XR,0,0),axis,1.6);line(pr(0,0,0),pr(0,YR,0),axis,1.6);line(pr(0,0,0),pr(0,0,zmax*1.1),axis,1.6);
+      ctx.fillStyle=axis;ctx.font="bold 12px system-ui";ctx.textAlign="left";
+      var lx=pr(XR,0,0);ctx.fillText("Xv",lx.x+5,lx.y+4);
+      var ly=pr(0,YR,0);ctx.fillText("Xp",ly.x-6,ly.y-7);
+      var lz=pr(0,0,zmax*1.1);ctx.fillText("Profit",lz.x-16,lz.y-8);
+      var poly=feasiblePolygon(P,XR,YR);
+      if(poly.length>2){ctx.beginPath();poly.forEach(function(p,i2){var q=pr(p.x,p.y,0);if(i2===0)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y)});ctx.closePath();ctx.fillStyle=acc;ctx.globalAlpha=.20;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=acc;ctx.lineWidth=1.6;ctx.stroke()}
+      function lineSeg(c){var pts=[];function add(x,y){if(x>=-1e-9&&x<=XR+1e-9&&y>=-1e-9&&y<=YR+1e-9){for(var k=0;k<pts.length;k++)if(Math.hypot(pts[k].x-x,pts[k].y-y)<1e-6)return;pts.push({x:Math.max(0,Math.min(XR,x)),y:Math.max(0,Math.min(YR,y))})}}
+        if(Math.abs(c.b)>1e-12){add(0,c.rhs/c.b);add(XR,(c.rhs-c.a*XR)/c.b)}
+        if(Math.abs(c.a)>1e-12){add(c.rhs/c.a,0);add((c.rhs-c.b*YR)/c.a,YR)}
+        return pts.length>=2?[pts[0],pts[1]]:null}
+      P.cons.forEach(function(c,i2){var sg=lineSeg(c);if(!sg)return;line(pr(sg[0].x,sg[0].y,0),pr(sg[1].x,sg[1].y,0),CONCOLS[i2%6],1.8);
+        var mx=(sg[0].x+sg[1].x)/2,my=(sg[0].y+sg[1].y)/2,lp=pr(mx,my,0);ctx.fillStyle=CONCOLS[i2%6];ctx.font="bold 11px system-ui";ctx.fillText("C"+(i2+1),lp.x+4,lp.y-4)});
+      /* full objective (profit) plane, faint */
+      var pc=[pr(0,0,0),pr(XR,0,P.cx*XR),pr(XR,YR,P.cx*XR+P.cy*YR),pr(0,YR,P.cy*YR)];
+      ctx.beginPath();ctx.moveTo(pc[0].x,pc[0].y);for(i=1;i<4;i++)ctx.lineTo(pc[i].x,pc[i].y);ctx.closePath();
+      ctx.fillStyle=acc;ctx.globalAlpha=.06;ctx.fill();ctx.globalAlpha=1;
+      /* profit surface over the feasible region */
+      if(poly.length>2){
+        var cen={x:0,y:0};poly.forEach(function(p){cen.x+=p.x/poly.length;cen.y+=p.y/poly.length});
+        var cTop=pr(cen.x,cen.y,objAt(P,cen.x,cen.y));
+        for(i=0;i<poly.length;i++){var q1=pr(poly[i].x,poly[i].y,objAt(P,poly[i].x,poly[i].y));var pn=poly[(i+1)%poly.length],q2=pr(pn.x,pn.y,objAt(P,pn.x,pn.y));
+          ctx.beginPath();ctx.moveTo(cTop.x,cTop.y);ctx.lineTo(q1.x,q1.y);ctx.lineTo(q2.x,q2.y);ctx.closePath();ctx.fillStyle=acc;ctx.globalAlpha=.30;ctx.fill();ctx.globalAlpha=1}
+        for(i=0;i<poly.length;i++){var pA=poly[i],pB=poly[(i+1)%poly.length],mx2=(pA.x+pB.x)/2,my2=(pA.y+pB.y)/2,ci2=-1;
+          P.cons.forEach(function(c,k){if(Math.abs(c.a*mx2+c.b*my2-c.rhs)<1e-4)ci2=k});
+          line(pr(pA.x,pA.y,objAt(P,pA.x,pA.y)),pr(pB.x,pB.y,objAt(P,pB.x,pB.y)),ci2>=0?CONCOLS[ci2%6]:acc,2)}
+      }
+      /* extreme points: floor dot, vertical line, surface dot */
+      sol.vertices.forEach(function(v2){var isOpt=sol.opt&&Math.hypot(v2.x-sol.opt.x,v2.y-sol.opt.y)<1e-6;
+        line(pr(v2.x,v2.y,0),pr(v2.x,v2.y,v2.z),isOpt?red:axis,isOpt?1.8:1.1,isOpt?[]:[4,3]);
+        dot(pr(v2.x,v2.y,0),2.6,ink);dot(pr(v2.x,v2.y,v2.z),isOpt?5.5:3,isOpt?red:ink)});
+      if(sol.opt){var o1=pr(sol.opt.x,sol.opt.y,sol.opt.z);ctx.fillStyle=red;ctx.font="bold 12px system-ui";ctx.fillText("optimum ("+trimNum(sol.opt.x)+", "+trimNum(sol.opt.y)+")",o1.x+9,o1.y-6)}
+      /* ---- sweep: horizontal profit-level plane + isoprofit line ---- */
+      if(sweepZ>0.5){
+        var sp=[pr(0,0,sweepZ),pr(XR,0,sweepZ),pr(XR,YR,sweepZ),pr(0,YR,sweepZ)];
+        ctx.beginPath();ctx.moveTo(sp[0].x,sp[0].y);for(i=1;i<4;i++)ctx.lineTo(sp[i].x,sp[i].y);ctx.closePath();
+        ctx.fillStyle=amb;ctx.globalAlpha=.13;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=amb;ctx.lineWidth=1.4;ctx.stroke();
+        /* isoprofit segment: cx*x + cy*y = sweepZ inside the floor box */
+        var iso=[];
+        function addIso(x,y){if(x>=-1e-6&&x<=XR+1e-6&&y>=-1e-6&&y<=YR+1e-6){for(var k=0;k<iso.length;k++)if(Math.hypot(iso[k].x-x,iso[k].y-y)<1e-4)return;iso.push({x:Math.max(0,Math.min(XR,x)),y:Math.max(0,Math.min(YR,y))})}}
+        if(Math.abs(P.cy)>1e-12){addIso(0,sweepZ/P.cy);addIso(XR,(sweepZ-P.cx*XR)/P.cy)}
+        if(Math.abs(P.cx)>1e-12){addIso(sweepZ/P.cx,0);addIso((sweepZ-P.cy*YR)/P.cx,YR)}
+        if(iso.length>=2){
+          line(pr(iso[0].x,iso[0].y,0),pr(iso[1].x,iso[1].y,0),amb,3.2);
+          line(pr(iso[0].x,iso[0].y,sweepZ),pr(iso[1].x,iso[1].y,sweepZ),amb,2);
+          line(pr(iso[0].x,iso[0].y,0),pr(iso[0].x,iso[0].y,sweepZ),amb,1,[3,3]);
+          line(pr(iso[1].x,iso[1].y,0),pr(iso[1].x,iso[1].y,sweepZ),amb,1,[3,3]);
+        }
+      }
+    }
+    function renderLP3D(app,state){
+      var P=oktoCopy();
+      var sol=solveLP(P);
+      var sweep=(state&&isFinite(+state.z))?Math.max(0,Math.min(sol.opt.z,+state.z)):sol.opt.z;
+      var view={az:-0.62,el:0.95,zoom:1};
+      var h=toolHead("Optimization","LP 3D Visualizer",
+        "The Oktomasks problem in three dimensions — the same problem as the LP Explorer and the Sensitivity Lab. The feasible region lies on the floor; above it floats the profit surface, Profit = 4 Xv + 3 Xp. Press Play and the profit level sweeps upward: the amber line on the floor is the isoprofit (level) curve for the current profit, and the sweep stops at the highest point of the surface — an extreme point.",
+        "Explain, geometrically, why the optimum of a linear program is attained at an extreme point (vertex) of the feasible region.",
+        "The 2D feasible region and corner points (LP Explorer); reading a level curve.","About 10 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you press Play",
+        "As the profit level sweeps up from $0, the isoprofit line slides across the feasible region. The last point of the region it touches — the point that sets the maximum profit of $3,260 — will be:",
+        ["The center of the feasible region, where there is the most room","A point in the middle of the Labor edge","An extreme point (corner) of the region: (440, 500)","It depends on how fast the sweep runs"],2,
+        "A level curve is a straight line, and the feasible region is a polygon: a line sliding in one direction leaves a polygon at a vertex (or along an edge, whose endpoints are vertices with the same value). Here the last touch is the corner (440, 500), where Labor and Fabric both bind.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Profit sweep</h2>'+
+        '<div class="bigstat"><div><div class="v" id="lp3-z">$'+trimNum(sweep)+'</div><div class="k">Current profit level</div></div></div>'+
+        '<label class="fl" for="lp3-slider">Profit level <span class="hint">0 to $3,260</span></label>'+
+        '<input type="range" id="lp3-slider" min="0" max="'+sol.opt.z+'" step="10" value="'+sweep+'" aria-label="Profit level">'+
+        '<div class="btnrow"><button type="button" class="btn" id="lp3-play">▶ Play sweep</button><button type="button" class="btn secondary" id="lp3-home">Home view</button></div>'+
+        '<p class="hint">Drag the 3D view to rotate · scroll or pinch to zoom · arrow keys rotate when the graph is focused. The formulation is the shared Oktomasks problem: Maximize 4 Xv + 3 Xp subject to 2 Xv ≤ 1000, 2.5 Xv + Xp ≤ 1600, 2.7 Xv + 3 Xp ≤ 2688, Xp − Xv ≤ 200, Xv + Xp ≥ 100.</p>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="lp3-dl">Download summary (.txt)</button><a class="btn secondary small" href="#/sensitivity">Open in Sensitivity Lab →</a></div></section>';
+      h+='<section class="panel"><h2>Extreme points</h2><div id="lp3-table"></div>'+
+        '<p class="readout" style="margin-top:8px"><strong>Extreme-point theorem:</strong> if a linear program has an optimal solution, it has one at an extreme point of the feasible region. That is why checking these '+sol.vertices.length+' corners — and only these — is enough.</p></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><div class="panelhead"><h2>3D Geometry</h2></div>'+
+        '<canvas class="chart cv3d" id="lp3-cv" data-ratio="0.92" tabindex="0" role="img" aria-label="3D view of the Oktomasks problem: feasible region on the floor, profit surface above it, extreme points with vertical lines, and the sweeping profit level with its isoprofit line on the floor"></canvas>'+
+        '<div class="legend">'+P.cons.map(function(c,i){return '<span class="lgi"><i style="background:'+CONCOLS[i%6]+'"></i>'+esc(c.name)+'</span>'}).join("")+'<span class="lgi"><i class="dot" style="background:var(--red)"></i>Optimum</span><span class="lgi"><i style="background:var(--amber)"></i>Isoprofit line at current profit</span></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "During the sweep, at profit $3,050 the isoprofit line passes through the extreme point (500, 350) — yet the sweep keeps going to $3,260. Why?",
+        ["Because (500, 350) is not feasible","Because a higher isoprofit line still touches the region — at (440, 500) — so $3,050 is not the last contact","Because the profit plane is curved","Because the sweep always runs to the largest axis value"],1,
+        "Touching a corner is not enough; the optimum is the highest level whose line still touches the region at all. Between $3,050 and $3,260 the line still clips the region near the Labor–Fabric corner, and at $3,260 its last contact is exactly (440, 500).");
+      h+='</div></div>';
+      app.innerHTML=h;
+      /* extreme points table in polygon order */
+      (function(){
+        var cen={x:0,y:0};sol.vertices.forEach(function(v){cen.x+=v.x/sol.vertices.length;cen.y+=v.y/sol.vertices.length});
+        var ordered=sol.vertices.slice().sort(function(a,b){return Math.atan2(a.y-cen.y,a.x-cen.x)-Math.atan2(b.y-cen.y,b.x-cen.x)});
+        var rows=ordered.map(function(v){var isOpt=Math.hypot(v.x-sol.opt.x,v.y-sol.opt.y)<1e-6;
+          return '<tr'+(isOpt?' class="hl"':"")+'><td class="num">'+trimNum(v.x)+'</td><td class="num">'+trimNum(v.y)+'</td><td class="num">'+trimNum(v.z)+'</td><td>'+(isOpt?"optimum":"")+'</td></tr>'}).join("");
+        $("#lp3-table").innerHTML='<table class="data"><thead><tr><th class="num">Xv</th><th class="num">Xp</th><th class="num">Profit</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+      })();
+      var cv=$("#lp3-cv"),playing=false,rafId=null,lastT=0;
+      function draw(){drawLP3D(cv,P,sol,view,sweep);$("#lp3-z").textContent="$"+trimNum(sweep);cv.setAttribute("aria-label","3D view of the Oktomasks problem. Profit level currently $"+trimNum(sweep)+"; the isoprofit line for that profit is drawn on the floor. Maximum profit is $3,260 at (440, 500). Drag or use arrow keys to rotate.")}
+      function stopPlay(){playing=false;if(rafId)cancelAnimationFrame(rafId);rafId=null;$("#lp3-play").textContent="▶ Play sweep"}
+      function tick(t){
+        if(!playing)return;
+        if(lastT)sweep+=(t-lastT)*0.85;
+        lastT=t;
+        if(sweep>=sol.opt.z){sweep=sol.opt.z;$("#lp3-slider").value=sweep;setHash("lp3d",{z:Math.round(sweep)});draw();stopPlay();return}
+        $("#lp3-slider").value=sweep;draw();
+        rafId=requestAnimationFrame(tick);
+      }
+      $("#lp3-play").addEventListener("click",function(){
+        if(playing){stopPlay();return}
+        if(sweep>=sol.opt.z-0.5)sweep=0;
+        playing=true;lastT=0;$("#lp3-play").textContent="❚❚ Pause";
+        rafId=requestAnimationFrame(tick);
+      });
+      $("#lp3-slider").addEventListener("input",function(){stopPlay();sweep=parseFloat(this.value)||0;setHash("lp3d",{z:Math.round(sweep)});draw()});
+      $("#lp3-home").addEventListener("click",function(){view={az:-0.62,el:0.95,zoom:1};draw()});
+      $("#lp3-dl").addEventListener("click",function(){
+        var t="LP 3D Visualizer — Oktomasks problem\nMaximize Profit = 4 Xv + 3 Xp\nConstraints: 2 Xv <= 1000; 2.5 Xv + Xp <= 1600; 2.7 Xv + 3 Xp <= 2688; Xp - Xv <= 200; Xv + Xp >= 100; Xv, Xp >= 0\n\nExtreme points (Xv, Xp, Profit):\n";
+        sol.vertices.forEach(function(v){t+="  ("+trimNum(v.x)+", "+trimNum(v.y)+") -> $"+trimNum(v.z)+(Math.hypot(v.x-sol.opt.x,v.y-sol.opt.y)<1e-6?"  (optimum)":"")+"\n"});
+        t+="Maximum profit $"+trimNum(sol.opt.z)+" at (440, 500), where Labor and Fabric bind.\n";
+        dl("lp3d-summary.txt",t);
+      });
+      var pointers={},lastPinch=0;
+      cv.addEventListener("pointerdown",function(e){cv.setPointerCapture(e.pointerId);pointers[e.pointerId]={x:e.clientX,y:e.clientY};
+        var ps=Object.keys(pointers).map(function(k){return pointers[k]});
+        if(ps.length===2)lastPinch=Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y)});
+      cv.addEventListener("pointermove",function(e){if(!pointers[e.pointerId])return;var prev=pointers[e.pointerId];pointers[e.pointerId]={x:e.clientX,y:e.clientY};
+        var ps=Object.keys(pointers).map(function(k){return pointers[k]});
+        if(ps.length===1){view.az+=(e.clientX-prev.x)*0.008;view.el=Math.max(0.15,Math.min(1.35,view.el+(e.clientY-prev.y)*0.006));draw()}
+        else if(ps.length===2){var d=Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y);if(lastPinch>0)view.zoom=Math.max(0.5,Math.min(2.6,view.zoom*d/lastPinch));lastPinch=d;draw()}
+      });
+      function endP(e){delete pointers[e.pointerId]}
+      cv.addEventListener("pointerup",endP);cv.addEventListener("pointercancel",endP);
+      cv.addEventListener("wheel",function(e){e.preventDefault();view.zoom=Math.max(0.5,Math.min(2.6,view.zoom*(e.deltaY<0?1.09:0.92)));draw()},{passive:false});
+      cv.addEventListener("keydown",function(e){
+        if(e.key==="ArrowLeft"){view.az-=0.12;draw();e.preventDefault()}
+        else if(e.key==="ArrowRight"){view.az+=0.12;draw();e.preventDefault()}
+        else if(e.key==="ArrowUp"){view.el=Math.min(1.35,view.el+0.08);draw();e.preventDefault()}
+        else if(e.key==="ArrowDown"){view.el=Math.max(0.15,view.el-0.08);draw();e.preventDefault()}
+      });
+      draw();
+      window.addEventListener("resize",function(){if(document.getElementById("lp3-cv"))draw()});
+    }
+
+    /* ================= DECISION TREE BUILDER ================= */
+    var TREE_UID=1;
+    function tNode(kind,name,payoff){
+      return{id:"n"+(TREE_UID++),kind:kind,name:name,payoff:(payoff===undefined?0:payoff),branches:[]};
+    }
+    function tBranch(label,prob,child){return{label:label,prob:prob,child:child}}
+    function defaultTree(){
+      TREE_UID=1;
+      var root=tNode("decision","Launch decision");
+      var launchChance=tNode("chance","Market response");
+      launchChance.branches=[
+        tBranch("Strong demand",0.4,tNode("terminal","Strong sales",120)),
+        tBranch("Moderate demand",0.4,tNode("terminal","Moderate sales",50)),
+        tBranch("Weak demand",0.2,tNode("terminal","Weak sales",-20))
+      ];
+      var pilotChance=tNode("chance","Pilot outcome");
+      pilotChance.branches=[
+        tBranch("Pilot succeeds",0.5,tNode("terminal","Pilot success",80)),
+        tBranch("Pilot fails",0.5,tNode("terminal","Pilot failure",20))
+      ];
+      root.branches=[
+        tBranch("Launch now",null,launchChance),
+        tBranch("Run a pilot first",null,pilotChance),
+        tBranch("Wait",null,tNode("terminal","Hold position",15))
+      ];
+      return root;
+    }
+    function treeClone(o){return JSON.parse(JSON.stringify(o))}
+    function treeFind(node,id){
+      if(node.id===id)return node;
+      for(var i=0;i<node.branches.length;i++){var r=treeFind(node.branches[i].child,id);if(r)return r}
+      return null;
+    }
+    function treeParentOf(node,id,parent,branch){
+      if(node.id===id)return{parent:parent,branch:branch||null};
+      for(var i=0;i<node.branches.length;i++){var r=treeParentOf(node.branches[i].child,id,node,node.branches[i]);if(r)return r}
+      return null;
+    }
+    function treeNewIds(node){
+      node.id="n"+(TREE_UID++);
+      node.branches.forEach(function(b){treeNewIds(b.child)});
+      return node;
+    }
+    /* rollback: returns {ev, bestIdx (for decisions), errors:[...]} and annotates node._ev */
+    function treeRollback(node,errors){
+      if(node.kind==="terminal"){node._ev=+node.payoff||0;return node._ev}
+      if(!node.branches.length){node._ev=0;errors.push("“"+node.name+"” has no branches yet.");return 0}
+      if(node.kind==="chance"){
+        var s=0;node.branches.forEach(function(b){s+=+b.prob||0});
+        if(Math.abs(s-1)>0.001)errors.push("Chance node “"+node.name+"”: branch probabilities sum to "+fmt(s,3)+", not 1.");
+        var ev=0;node.branches.forEach(function(b){ev+=(+b.prob||0)*treeRollback(b.child,errors)});
+        node._ev=ev;return ev;
+      }
+      /* decision */
+      var best=-Infinity,bi=0;
+      node.branches.forEach(function(b,i){var v=treeRollback(b.child,errors);b._ev=v;if(v>best){best=v;bi=i}});
+      node._best=bi;node._ev=best;return best;
+    }
+    /* distribution of terminal payoffs under the optimal policy, for one root branch */
+    function treeDist(node,prob,out){
+      if(node.kind==="terminal"){out.push({payoff:+node.payoff||0,prob:prob});return}
+      if(node.kind==="chance"){node.branches.forEach(function(b){treeDist(b.child,prob*(+b.prob||0),out)});return}
+      if(node.branches.length){var bi=(node._best!==undefined?node._best:0);treeDist(node.branches[bi].child,prob,out)}
+    }
+    function renderTree(app,state){
+      var root=(state&&state.root)?treeClone(state.root):defaultTree();
+      /* keep uid ahead of any loaded ids */
+      (function bump2(n){var m=/^n(\d+)$/.exec(n.id||"");if(m)TREE_UID=Math.max(TREE_UID,+m[1]+1);(n.branches||[]).forEach(function(b){bump2(b.child)})})(root);
+      var selId=root.id,clipboard=null,history=[],future=[];
+      var h=toolHead("Decision Analysis","Decision Tree Builder",
+        "A working tree editor: squares are decisions you control, circles are chance events you do not, triangles are end points with payoffs. Click any node to edit it, add branches, then press <strong>Calculate Payoffs</strong> to roll the tree back — expected values flow from the end nodes to the root, and the best branch at each decision is marked. Save your tree as a file and reopen it later.",
+        "Structure a sequential decision as a tree, fold it back with expected values, and read a risk profile for the recommended strategy.",
+        "Expected value (Decision Lab); probabilities on a chance node's branches sum to 1.","About 20 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you roll it back",
+        "The default tree offers three opening moves. “Launch now” can pay 120 but can also lose 20; “Run a pilot first” pays between 20 and 80; “Wait” pays a sure 15. Rolling the tree back by expected value, the recommended opening move will be:",
+        ["Wait — a sure 15 beats any gamble","Run a pilot first — it has no losing outcome","Launch now — its expected value (64) is the highest of the three","All three tie on expected value"],2,
+        "Launch: 0.4·120 + 0.4·50 + 0.2·(−20) = 48 + 20 − 4 = 64. Pilot: 0.5·80 + 0.5·20 = 50. Wait: 15. Expected value picks Launch now — while noting it is also the only move that can lose money. That tension is what the risk profile below is for.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Tree tools</h2>'+
+        '<div class="btnrow" style="margin-top:0"><button type="button" class="btn" id="tr-calc">Calculate Payoffs / Rollback</button></div>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="tr-undo">↩ Undo</button><button type="button" class="btn secondary small" id="tr-redo">↪ Redo</button><button type="button" class="btn secondary small" id="tr-reset">Reset example</button></div>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="tr-save">Save Tree (download)</button><label class="btn secondary small" for="tr-open" style="margin:0">Open Tree…</label><input type="file" id="tr-open" accept=".json,application/json" class="sr"></div>'+
+        '<div id="tr-errors" aria-live="polite"></div>'+
+        '<div id="tr-result" class="readout" aria-live="polite" style="margin-top:8px"></div></section>';
+      h+='<section class="panel"><h2>Selected node</h2><div id="tr-editor"></div></section>';
+      h+='<section class="panel"><h2>Risk profile</h2><p class="hint">Payoff distribution of the recommended strategy at the root (after rollback picks the best branch at each decision). Probabilities multiply along each path.</p><div id="tr-risk"></div><canvas class="chart" id="tr-riskcv" data-ratio="0.5" role="img" aria-label="Bar chart of the risk profile: terminal payoffs of the recommended strategy against their probabilities"></canvas></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Tree</h2><p class="hint">Click a node to select and edit it. Values in gold under a node are its rolled-back expected value; a gold branch leaving a decision node is the best choice there.</p><div class="tree-wrap" id="tr-wrap"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "A chance node's branches have probabilities 0.5, 0.3, and 0.3. Before any rollback numbers from that node can be trusted, you should:",
+        ["Proceed — small rounding differences do not matter","Fix the probabilities so they sum to 1 — as they stand they describe an impossible event set, and the expected value is inflated","Multiply every payoff by 1.1","Delete the smallest branch"],1,
+        "Chance branches must be mutually exclusive and exhaustive, so their probabilities sum to exactly 1. At 1.1 the “expected” value weights the outcomes 10% too heavily — the builder flags this in red and the rollback result should not be reported until it is fixed.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      function snapshot(){history.push(JSON.stringify(root));if(history.length>60)history.shift();future=[]}
+      function layout(){
+        var leaf=0,positions={};
+        (function walk(n,depth){
+          var x=70+depth*210;
+          if(!n.branches.length){positions[n.id]={x:x,y:46+leaf*86};leaf++;return positions[n.id].y}
+          var ys=n.branches.map(function(b){return walk(b.child,depth+1)});
+          var y=ys.reduce(function(a,b){return a+b},0)/ys.length;
+          positions[n.id]={x:x,y:y};return y;
+        })(root,0);
+        var depthMax=0;(function d(n,dep){depthMax=Math.max(depthMax,dep);n.branches.forEach(function(b){d(b.child,dep+1)})})(root,0);
+        return{pos:positions,W:70+(depthMax+1)*210+90,H:Math.max(200,46+leaf*86+30)};
+      }
+      function kindShape(n,p,selected){
+        var fill=n.kind==="decision"?"var(--accent-soft)":n.kind==="chance"?"var(--amber-soft)":"var(--surface)";
+        var stroke=selected?"var(--accent)":n.kind==="decision"?"var(--accent)":n.kind==="chance"?"var(--amber)":"var(--ink3)";
+        var sw=selected?3.4:2;
+        if(n.kind==="decision")return '<rect class="tnode-box" x="'+(p.x-17)+'" y="'+(p.y-17)+'" width="34" height="34" rx="4" style="fill:'+fill+';stroke:'+stroke+';stroke-width:'+sw+'"/>';
+        if(n.kind==="chance")return '<circle class="tnode-box" cx="'+p.x+'" cy="'+p.y+'" r="17" style="fill:'+fill+';stroke:'+stroke+';stroke-width:'+sw+'"/>';
+        return '<path class="tnode-box" d="M '+(p.x-18)+' '+(p.y+15)+' L '+(p.x+18)+' '+p.y+' L '+(p.x-18)+' '+(p.y-15)+' Z" style="fill:'+fill+';stroke:'+stroke+';stroke-width:'+sw+'"/>';
+      }
+      function draw(skipEd){
+        var L=layout();
+        var errs=[];var rootEv=treeRollback(root,errs);
+        var svg='<svg viewBox="0 0 '+L.W+' '+L.H+'" role="tree" aria-label="Decision tree diagram. Root expected value '+fmt(rootEv,1)+'">';
+        (function edges(n){
+          var p=L.pos[n.id];
+          n.branches.forEach(function(b,i){
+            var q=L.pos[b.child.id];
+            var isBest=n.kind==="decision"&&n._best===i;
+            svg+='<line x1="'+p.x+'" y1="'+p.y+'" x2="'+q.x+'" y2="'+q.y+'" style="stroke:'+(isBest?"var(--amber)":"var(--chart-axis)")+'" stroke-width="'+(isBest?4:1.8)+'"/>';
+            var mx=(p.x+q.x)/2,my=(p.y+q.y)/2;
+            var lab=b.label+(n.kind==="chance"?" · p="+trimNum(+b.prob||0):"");
+            svg+='<text x="'+mx+'" y="'+(my-7)+'" text-anchor="middle" font-size="12" style="fill:var(--ink2)">'+esc(lab)+'</text>';
+            edges(b.child);
+          });
+        })(root);
+        (function nodes(n){
+          var p=L.pos[n.id];
+          svg+='<g class="tnode" tabindex="0" role="treeitem" data-node="'+n.id+'" aria-label="'+esc(n.kind+" node "+n.name)+'">'+kindShape(n,p,n.id===selId)+
+            '<text x="'+p.x+'" y="'+(p.y+32)+'" text-anchor="middle" font-size="12.5" font-weight="600" style="fill:var(--ink)">'+esc(n.name.length>24?n.name.slice(0,23)+"…":n.name)+'</text>'+
+            '<text x="'+p.x+'" y="'+(p.y+47)+'" text-anchor="middle" font-size="12" style="fill:var(--amber)" font-weight="700">'+(n.kind==="terminal"?"payoff "+trimNum(+n.payoff||0):"EV "+trimNum(n._ev||0))+'</text></g>';
+          n.branches.forEach(function(b){nodes(b.child)});
+        })(root);
+        svg+='</svg>';
+        $("#tr-wrap").innerHTML=svg;
+        $$("#tr-wrap .tnode").forEach(function(g){
+          g.addEventListener("click",function(){selId=g.dataset.node;draw()});
+          g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){selId=g.dataset.node;draw();e.preventDefault()}});
+        });
+        /* errors + result */
+        var eb=$("#tr-errors");
+        if(errs.length)eb.innerHTML='<div class="banner bad" style="margin-bottom:0"><strong>Probability check failed.</strong><ul style="margin:6px 0 0;padding-left:18px">'+errs.map(function(e){return "<li>"+esc(e)+"</li>"}).join("")+'</ul></div>';
+        else eb.innerHTML="";
+        var rb=$("#tr-result");
+        if(root.kind==="decision"&&root.branches.length){
+          var bn=root.branches[root._best||0];
+          rb.innerHTML="Root expected value: <strong>"+trimNum(rootEv)+"</strong>. Best opening move: <strong>"+esc(bn?bn.label:"")+"</strong> (EV "+trimNum(bn?bn._ev:0)+").";
+        }else rb.innerHTML="Root expected value: <strong>"+trimNum(rootEv)+"</strong>.";
+        if(!skipEd)drawEditor(errs);
+        drawRisk();
+        setHash("tree",{root:root});
+      }
+      function drawRisk(){
+        var errs=[];treeRollback(root,errs);
+        var dist=[];treeDist(root,1,dist);
+        /* merge equal payoffs */
+        var merged={};dist.forEach(function(d){var k=trimNum(d.payoff);if(!merged[k])merged[k]={payoff:d.payoff,prob:0};merged[k].prob+=d.prob});
+        var rows=Object.keys(merged).map(function(k){return merged[k]}).sort(function(a,b){return a.payoff-b.payoff});
+        var cum=0;
+        $("#tr-risk").innerHTML='<table class="data"><thead><tr><th class="num">Payoff</th><th class="num">Probability</th><th class="num">Cumulative</th></tr></thead><tbody>'+
+          rows.map(function(r){cum+=r.prob;return '<tr><td class="num">'+trimNum(r.payoff)+'</td><td class="num">'+fmt(r.prob,3)+'</td><td class="num">'+fmt(Math.min(1,cum),3)+'</td></tr>'}).join("")+'</tbody></table>';
+        var cv=$("#tr-riskcv");if(!cv||!rows.length)return;
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),acc=cssVar("--accent");
+        var padL=44,padR=12,padT=12,padB=32,pw=W-padL-padR,ph=H-padT-padB;
+        var maxP=Math.max.apply(null,rows.map(function(r){return r.prob}));
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;
+        for(var g=0;g<=4;g++){var gy=maxP*g/4,y=padT+ph-ph*g/4;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(gy,2),padL-6,y+4)}
+        var bw=pw/rows.length;
+        rows.forEach(function(r,i){var bh=ph*r.prob/maxP;ctx.fillStyle=acc;ctx.fillRect(padL+i*bw+bw*0.2,padT+ph-bh,bw*0.6,bh);
+          ctx.fillStyle=axis;ctx.textAlign="center";ctx.fillText(trimNum(r.payoff),padL+i*bw+bw/2,H-16)});
+        ctx.textAlign="center";ctx.fillText("Payoff →",padL+pw/2,H-2);
+        cv.setAttribute("aria-label","Risk profile bars: "+rows.map(function(r){return "payoff "+trimNum(r.payoff)+" with probability "+fmt(r.prob,2)}).join("; ")+".");
+      }
+      function drawEditor(){
+        var n=treeFind(root,selId);if(!n){selId=root.id;n=root}
+        var ed=$("#tr-editor"),isRoot=n.id===root.id;
+        var hh='<label class="fl" for="tr-name">Node name</label><input type="text" id="tr-name" value="'+esc(n.name)+'">'+
+          '<label class="fl" for="tr-kind">Node type</label><select id="tr-kind" '+(isRoot?"disabled":"")+'><option value="decision" '+(n.kind==="decision"?"selected":"")+'>Decision (square)</option><option value="chance" '+(n.kind==="chance"?"selected":"")+'>Chance (circle)</option><option value="terminal" '+(n.kind==="terminal"?"selected":"")+'>End / terminal (triangle)</option></select>';
+        if(n.kind==="terminal")hh+='<label class="fl" for="tr-pay">Payoff</label><input type="number" id="tr-pay" step="any" value="'+(+n.payoff||0)+'">';
+        if(n.kind!=="terminal"){
+          hh+='<h3>Branches</h3><div id="tr-branches">'+
+            n.branches.map(function(b,i){
+              return '<div style="border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px">'+
+              '<label class="fl" style="margin-top:0">Branch label <input type="text" class="tb-lab" data-i="'+i+'" value="'+esc(b.label)+'"></label>'+
+              (n.kind==="chance"?'<label class="fl">Probability <input type="number" class="tb-prob" data-i="'+i+'" step="any" min="0" max="1" value="'+(+b.prob||0)+'"></label>':"")+
+              '<div class="readout">Leads to: <strong>'+esc(b.child.name)+'</strong> ('+b.child.kind+')</div>'+
+              '<div class="btnrow"><button type="button" class="btn secondary small tb-go" data-i="'+i+'">Select child</button><button type="button" class="btn secondary small tb-del" data-i="'+i+'">Remove branch</button></div></div>';
+            }).join("")+'</div>'+
+            '<div class="btnrow"><button type="button" class="btn secondary small" id="tr-add-dec">+ Decision branch</button><button type="button" class="btn secondary small" id="tr-add-ch">+ Chance branch</button><button type="button" class="btn secondary small" id="tr-add-term">+ End branch</button></div>';
+          if(n.kind==="chance"){var s=0;n.branches.forEach(function(b){s+=+b.prob||0});
+            hh+='<p class="readout" style="margin-top:8px">Branch probabilities sum to <strong>'+fmt(s,3)+'</strong>'+(Math.abs(s-1)>0.001?' — <span style="color:var(--red);font-weight:700">must equal 1</span>':" ✓")+'</p>'}
+        }
+        hh+='<h3>Node actions</h3><div class="btnrow"><button type="button" class="btn secondary small" id="tr-copy">Copy node</button><button type="button" class="btn secondary small" id="tr-paste" '+(clipboard?"":"disabled")+'>Paste as branch</button>'+(isRoot?"":'<button type="button" class="btn secondary small" id="tr-delnode">Delete node</button>')+'</div>';
+        ed.innerHTML=hh;
+        $("#tr-name").addEventListener("input",function(){snapshotSoft();n.name=this.value;redrawLight()});
+        var kindSel=$("#tr-kind");
+        if(kindSel)kindSel.addEventListener("change",function(){snapshot();n.kind=this.value;if(n.kind==="terminal")n.branches=[];draw()});
+        var pay=$("#tr-pay");if(pay)pay.addEventListener("input",function(){snapshotSoft();n.payoff=parseFloat(this.value)||0;redrawLight()});
+        $$(".tb-lab",ed).forEach(function(inp){inp.addEventListener("input",function(){snapshotSoft();n.branches[+inp.dataset.i].label=inp.value;redrawLight()})});
+        $$(".tb-prob",ed).forEach(function(inp){inp.addEventListener("input",function(){snapshotSoft();n.branches[+inp.dataset.i].prob=parseFloat(inp.value)||0;redrawLight()});inp.addEventListener("change",function(){draw()})});
+        $$(".tb-go",ed).forEach(function(b){b.addEventListener("click",function(){selId=n.branches[+b.dataset.i].child.id;draw()})});
+        $$(".tb-del",ed).forEach(function(b){b.addEventListener("click",function(){snapshot();n.branches.splice(+b.dataset.i,1);draw()})});
+        function addBranch(kind){
+          snapshot();
+          var child=tNode(kind,kind==="terminal"?"End point":kind==="chance"?"Chance event":"Sub-decision",kind==="terminal"?50:undefined);
+          if(kind!=="terminal")child.branches=[tBranch("Outcome",kind==="chance"?1: null,tNode("terminal","End point",50))];
+          if(kind==="chance"&&child.branches.length===1)child.branches[0].prob=1;
+          n.branches.push(tBranch("New branch",null,child));
+          if(n.kind==="chance"){var L=n.branches.length,each=Math.round(1000/L)/1000;
+            n.branches.forEach(function(b,i){b.prob=(i<L-1)?each:Math.round((1-each*(L-1))*1000)/1000})}
+          draw();
+        }
+        var ad=$("#tr-add-dec"),ac=$("#tr-add-ch"),at=$("#tr-add-term");
+        if(ad)ad.addEventListener("click",function(){addBranch("decision")});
+        if(ac)ac.addEventListener("click",function(){addBranch("chance")});
+        if(at)at.addEventListener("click",function(){addBranch("terminal")});
+        var cp=$("#tr-copy");if(cp)cp.addEventListener("click",function(){clipboard=treeClone(n);draw()});
+        var ps=$("#tr-paste");if(ps)ps.addEventListener("click",function(){if(!clipboard||n.kind==="terminal")return;snapshot();var c=treeNewIds(treeClone(clipboard));n.branches.push(tBranch(c.name,n.kind==="chance"?0:null,c));draw()});
+        var dn=$("#tr-delnode");if(dn)dn.addEventListener("click",function(){var loc=treeParentOf(root,selId,null,null);if(!loc||!loc.parent)return;snapshot();var idx=loc.parent.branches.indexOf(loc.branch);loc.parent.branches.splice(idx,1);selId=loc.parent.id;draw()});
+      }
+      var softTimer=null;
+      function snapshotSoft(){if(softTimer)return;history.push(JSON.stringify(root));if(history.length>60)history.shift();future=[];softTimer=setTimeout(function(){softTimer=null},800)}
+      function redrawLight(){draw(true)}
+      $("#tr-calc").addEventListener("click",function(){draw();var errs=[];var ev=treeRollback(root,errs);
+        $("#tr-result").innerHTML=errs.length?"<strong>Rollback ran, but fix the probability errors above before reporting these numbers.</strong>":"Rollback complete. Root expected value: <strong>"+trimNum(ev)+"</strong> — gold branches are the best choice at each decision node."});
+      $("#tr-undo").addEventListener("click",function(){if(!history.length)return;future.push(JSON.stringify(root));root=JSON.parse(history.pop());selId=root.id;draw()});
+      $("#tr-redo").addEventListener("click",function(){if(!future.length)return;history.push(JSON.stringify(root));root=JSON.parse(future.pop());selId=root.id;draw()});
+      $("#tr-reset").addEventListener("click",function(){snapshot();root=defaultTree();selId=root.id;draw()});
+      $("#tr-save").addEventListener("click",function(){dl("decision-tree.json",JSON.stringify({app:"Analytics Lab Decision Tree",root:root},null,2))});
+      $("#tr-open").addEventListener("change",function(){
+        var f=this.files&&this.files[0];if(!f)return;
+        var rd=new FileReader();
+        rd.onload=function(){try{var data=JSON.parse(rd.result);var r=data.root||data;if(!r||!r.kind||!r.branches)throw new Error("not a tree");
+          snapshot();root=r;selId=root.id;
+          (function bump2(n){var m=/^n(\d+)$/.exec(n.id||"");if(m)TREE_UID=Math.max(TREE_UID,+m[1]+1);(n.branches||[]).forEach(function(b){bump2(b.child)})})(root);
+          draw();
+        }catch(e){$("#tr-errors").innerHTML='<div class="banner bad">That file could not be read as a decision tree.</div>'}};
+        rd.readAsText(f);this.value="";
+      });
+      draw();
+      window.addEventListener("resize",function(){if(document.getElementById("tr-riskcv"))drawRisk()});
+    }
+
+    /* ================= QUEUING LAB ================= */
+    function fact(n){var r=1;for(var i=2;i<=n;i++)r*=i;return r}
+    function queueCompute(S){
+      var lam=S.lam,model=S.model,out={ok:false};
+      if(!(lam>0))return{ok:false,msg:"Arrival rate λ must be positive."};
+      if(model==="mg1"){
+        var mean=S.meanSvc,sd=S.sdSvc;
+        if(!(mean>0))return{ok:false,msg:"Average service time must be positive."};
+        if(sd<0)return{ok:false,msg:"Service-time standard deviation cannot be negative."};
+        var mu1=1/mean,rho1=lam*mean;
+        out.mu=mu1;out.rho=rho1;out.s=1;
+        if(rho1>=1)return{ok:false,unstable:true,rho:rho1,msg:"Unstable: ρ = λ · E[S] = "+fmt(rho1,3)+" ≥ 1. Arrivals outpace service, so the queue grows without bound and no steady state exists."};
+        var Lq=(lam*lam*sd*sd+rho1*rho1)/(2*(1-rho1));
+        var Wq=Lq/lam,W=Wq+mean,L=lam*W;
+        out.ok=true;out.L=L;out.Lq=Lq;out.W=W;out.Wq=Wq;out.P0=1-rho1;out.Pw=rho1;
+        out.dist=null;
+        out.notes="Pollaczek–Khinchine: Lq = (λ²σ² + ρ²) / (2(1 − ρ)). With σ = 0 this is a deterministic-service queue; as σ grows, the same average service time produces a longer wait — variability itself creates queues.";
+        return out;
+      }
+      var mu=S.mu,s=(model==="mm1")?1:Math.max(1,Math.round(S.s));
+      if(!(mu>0))return{ok:false,msg:"Service rate μ must be positive."};
+      var a=lam/mu,rho=a/s;
+      out.mu=mu;out.s=s;out.rho=rho;out.a=a;
+      if(model==="mmsk"){
+        var K=Math.max(s,Math.round(S.K));
+        out.K=K;
+        var w=[],sum=0,i,n;
+        for(n=0;n<=K;n++){var wn=n<=s?Math.pow(a,n)/fact(n):Math.pow(a,s)/fact(s)*Math.pow(a/s,n-s);w.push(wn);sum+=wn}
+        var P0=1/sum,ps=w.map(function(x){return x*P0});
+        var L=0,Lq=0;ps.forEach(function(p,n2){L+=n2*p;if(n2>s)Lq+=(n2-s)*p});
+        var lamEff=lam*(1-ps[K]);
+        out.ok=true;out.P0=P0;out.L=L;out.Lq=Lq;out.W=L/lamEff;out.Wq=Lq/lamEff;out.lamEff=lamEff;
+        var pBusy=0;for(n=s;n<=K;n++)pBusy+=ps[n];
+        out.Pw=pBusy;out.Pblock=ps[K];out.dist=ps;
+        out.notes="Finite capacity K = "+K+" in the system at most. Arrivals that find K already present are turned away (probability "+fmt(ps[K],4)+"), so the effective arrival rate is λ(1 − P_K) = "+fmt(lamEff,3)+", and Little's law uses that effective rate. This system is always stable — the queue cannot grow past K.";
+        return out;
+      }
+      if(rho>=1)return{ok:false,unstable:true,rho:rho,msg:"Unstable: λ = "+trimNum(lam)+" ≥ s·μ = "+trimNum(s*mu)+". Arrivals outpace total service capacity, so the queue grows without bound and no steady state exists. Add servers or raise μ."};
+      var sum2=0,i2;
+      for(i2=0;i2<s;i2++)sum2+=Math.pow(a,i2)/fact(i2);
+      var lastTerm=Math.pow(a,s)/(fact(s)*(1-rho));
+      var P02=1/(sum2+lastTerm);
+      var Pw=lastTerm*P02;
+      var Lq2=Pw*rho/(1-rho);
+      var Wq2=Lq2/lam,W2=Wq2+1/mu,L2=lam*W2;
+      out.ok=true;out.P0=P02;out.Pw=Pw;out.L=L2;out.Lq=Lq2;out.W=W2;out.Wq=Wq2;
+      /* distribution up to cumulative 0.999 or n=40 */
+      var ps2=[],cum=0,nn=0;
+      while(nn<=60&&(cum<0.999||nn<=s)){
+        var pn=nn<s?P02*Math.pow(a,nn)/fact(nn):P02*Math.pow(a,s)/fact(s)*Math.pow(rho,nn-s);
+        ps2.push(pn);cum+=pn;nn++;
+        if(nn>25&&cum>=0.9995)break;
+      }
+      out.dist=ps2;
+      out.notes=(s===1)?"M/M/1 check: with λ = 8 and μ = 10, ρ = 0.8, L = 4, Lq = 3.2, W = 0.5, Wq = 0.4 — the textbook values.":"Erlang C: the probability an arrival must wait (all "+s+" servers busy) is "+fmt(Pw,4)+". Adding a server cuts waiting sharply at first, then with diminishing returns — try s and s + 1 and compare Wq.";
+      return out;
+    }
+    function renderQueue(app,state){
+      var S=Object.assign({model:"mm1",lam:8,mu:10,s:2,K:12,meanSvc:0.1,sdSvc:0.1},state||{});
+      var h=toolHead("Decision Analysis","Queuing Lab",
+        "Four waiting-line models, one set of questions: how busy is the system (ρ), how many are in it on average (L, Lq), how long do they stay (W, Wq), and what is the chance an arrival finds it empty — or has to wait? Start with the textbook case λ = 8, μ = 10 in M/M/1 and check the numbers by hand; then add servers and watch the wait collapse.",
+        "Choose the right queueing model for a service system, compute its steady-state measures, and recognize when a system is unstable.",
+        "Little's law (L = λW); basic probability distributions; rates vs. times (μ is per hour if λ is per hour).","About 15 minutes.");
+      h+=teachBox("Step 1 · Predict","Before you compute",
+        "A single server handles μ = 10 customers per hour and λ = 8 arrive per hour, so the server is busy 80% of the time. The average number of customers in the system (waiting plus being served) will be:",
+        ["0.8 — the utilization is the average number","About 1.6","Exactly 4 — queues build up fast as utilization approaches 1","It cannot be found without simulation"],2,
+        "For M/M/1, L = ρ/(1 − ρ) = 0.8/0.2 = 4. The lesson is the nonlinearity: at ρ = 0.5, L is just 1; at ρ = 0.9 it is 9; at ρ = 0.99 it is 99. Running a service system “efficiently” near 100% utilization is exactly what makes waits explode.");
+      h+='<div class="layout" style="margin-top:20px"><div class="stack">';
+      h+='<section class="panel"><h2>Model &amp; inputs</h2>'+
+        '<label class="fl" for="q-model">Model</label><select id="q-model"><option value="mm1">M/M/1 — one server, unlimited queue</option><option value="mms">M/M/s — s servers, unlimited queue</option><option value="mmsk">M/M/s — s servers, finite capacity</option><option value="mg1">M/G/1 — one server, general service times</option></select>'+
+        '<label class="fl" for="q-lam">Arrival rate λ <span class="hint">customers per time unit</span></label><input type="number" id="q-lam" step="any" min="0">'+
+        '<div id="q-mu-row"><label class="fl" for="q-mu">Service rate μ <span class="hint">per server, per time unit</span></label><input type="number" id="q-mu" step="any" min="0"></div>'+
+        '<div id="q-s-row"><label class="fl" for="q-s">Number of servers s</label><input type="number" id="q-s" step="1" min="1"></div>'+
+        '<div id="q-k-row"><label class="fl" for="q-k">System capacity K <span class="hint">max customers in system (≥ s)</span></label><input type="number" id="q-k" step="1" min="1"></div>'+
+        '<div id="q-mg-row"><label class="fl" for="q-mean">Average service time E[S]</label><input type="number" id="q-mean" step="any" min="0"><label class="fl" for="q-sd">Service-time standard deviation σ</label><input type="number" id="q-sd" step="any" min="0"></div>'+
+        '<div class="btnrow"><button type="button" class="btn secondary small" id="q-textbook">Textbook case (λ=8, μ=10)</button><button type="button" class="btn secondary small" id="q-dl">Download results (.txt)</button></div></section>';
+      h+='<section class="panel"><h2>Results</h2><div id="q-out" aria-live="polite"></div></section>';
+      h+='</div><div class="stack">';
+      h+='<section class="panel"><h2>Steady-state distribution</h2><p class="hint">Probability of exactly n customers in the system. Long right tails are why averages alone understate the wait some customers get.</p><canvas class="chart" id="q-cv" data-ratio="0.55" role="img" aria-label="Bar chart of the steady-state probability distribution over the number of customers in the system"></canvas><div id="q-chart-note" class="readout"></div></section>';
+      h+='<section class="panel"><h2>What changes with more servers?</h2><p class="hint">Same λ and μ, queue length and wait as s grows (M/M/s, unlimited queue). The first extra server does most of the work.</p><div id="q-sweep"></div></section>';
+      h+=teachBox("Step 3 · Check","Check yourself",
+        "Your M/M/1 results show W = 0.5 hours and Wq = 0.4 hours, with μ = 10 per hour. A classmate says Wq must be wrong because W − Wq should equal the service rate. The correct reply:",
+        ["They are right — Wq should be 9.5","W − Wq = 0.1 hours is the average service time 1/μ, not the rate μ — the numbers are consistent","W and Wq are the same thing measured twice","Wq can never be smaller than W"],1,
+        "Time in system = time waiting + time in service, so W − Wq = 1/μ = 0.1 hours (6 minutes). Confusing a rate (10 per hour) with its reciprocal time (0.1 hours) is the most common units error in queueing — and Little's law, L = λW = 8 × 0.5 = 4, cross-checks the rest.");
+      h+='</div></div>';
+      app.innerHTML=h;
+      $("#q-model").value=S.model;$("#q-lam").value=S.lam;$("#q-mu").value=S.mu;$("#q-s").value=S.s;$("#q-k").value=S.K;$("#q-mean").value=S.meanSvc;$("#q-sd").value=S.sdSvc;
+      var last=null;
+      function readCtl(){
+        S={model:$("#q-model").value,lam:parseFloat($("#q-lam").value)||0,mu:parseFloat($("#q-mu").value)||0,s:parseInt($("#q-s").value)||1,K:parseInt($("#q-k").value)||1,meanSvc:parseFloat($("#q-mean").value)||0,sdSvc:parseFloat($("#q-sd").value)||0};
+        var mg=S.model==="mg1";
+        $("#q-mu-row").style.display=mg?"none":"";
+        $("#q-s-row").style.display=(S.model==="mms"||S.model==="mmsk")?"":"none";
+        $("#q-k-row").style.display=S.model==="mmsk"?"":"none";
+        $("#q-mg-row").style.display=mg?"":"none";
+        setHash("queue",S);
+      }
+      function stat(k,v){return '<div><div class="v">'+v+'</div><div class="k">'+k+'</div></div>'}
+      function sync(){
+        readCtl();var R=queueCompute(S);last=R;
+        var out=$("#q-out");
+        if(!R.ok){
+          out.innerHTML='<div class="banner '+(R.unstable?"bad":"warn")+'"><strong>'+(R.unstable?"Stability warning. ":"Check the inputs. ")+'</strong>'+esc(R.msg||"")+(R.rho!==undefined?'<br>Utilization ρ = <strong>'+fmt(R.rho,3)+'</strong>':"")+'</div>';
+          drawDist(null);drawSweep();
+          return;
+        }
+        var modelName={"mm1":"M/M/1","mms":"M/M/s","mmsk":"M/M/s (finite)","mg1":"M/G/1"}[S.model];
+        out.innerHTML='<p class="readout" style="margin-top:0">'+modelName+' · λ = '+trimNum(S.lam)+(S.model==="mg1"?" · E[S] = "+trimNum(S.meanSvc)+" (μ = "+fmt(R.mu,3)+"), σ = "+trimNum(S.sdSvc):" · μ = "+trimNum(R.mu)+" · s = "+R.s)+(R.K?" · K = "+R.K:"")+'</p>'+
+          '<div class="statgrid">'+
+          stat("Utilization ρ",fmt(R.rho,4))+
+          stat("L — in system",fmt(R.L,4))+
+          stat("Lq — in queue",fmt(R.Lq,4))+
+          stat("W — time in system",fmt(R.W,4))+
+          stat("Wq — time in queue",fmt(R.Wq,4))+
+          stat("P₀ — system empty",fmt(R.P0,4))+
+          stat(S.model==="mmsk"?"P(all servers busy)":"P(arrival waits)",fmt(R.Pw,4))+
+          (R.Pblock!==undefined?stat("P(turned away)",fmt(R.Pblock,4)):"")+
+          '</div>'+
+          '<p class="readout" style="margin-top:10px">'+esc(R.notes||"")+'</p>'+
+          '<p class="readout">Little\'s law cross-check: λ'+(R.lamEff?" (effective) = "+fmt(R.lamEff,3):" = "+trimNum(S.lam))+' × W = '+fmt((R.lamEff||S.lam)*R.W,3)+' ≈ L = '+fmt(R.L,3)+'.</p>';
+        drawDist(R);drawSweep();
+      }
+      function drawDist(R){
+        var cv=$("#q-cv"),note=$("#q-chart-note");
+        if(!R||!R.dist){if(note)note.innerHTML=S.model==="mg1"?"<p>M/G/1 gives the mean measures on the left; its full distribution depends on the whole service-time distribution, not just its mean and standard deviation, so no distribution chart is drawn for this model.</p>":"";
+          var f0=fitCanvas(cv);f0.ctx.clearRect(0,0,f0.W,f0.H);return}
+        note.innerHTML="";
+        var f=fitCanvas(cv),ctx=f.ctx,W=f.W,H=f.H;
+        var grid=cssVar("--chart-grid"),axis=cssVar("--chart-axis"),acc=cssVar("--accent");
+        var ps=R.dist,maxP=Math.max.apply(null,ps);
+        var padL=44,padR=12,padT=12,padB=30,pw=W-padL-padR,ph=H-padT-padB;
+        ctx.clearRect(0,0,W,H);ctx.font="11px ui-monospace,monospace";ctx.fillStyle=axis;ctx.strokeStyle=grid;
+        for(var g=0;g<=4;g++){var gy=maxP*g/4,y=padT+ph-ph*g/4;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.textAlign="right";ctx.fillText(fmt(gy,2),padL-6,y+4)}
+        var bw=pw/ps.length;
+        ps.forEach(function(p,i){if(p<0.0004&&i>10)return;var bh=ph*p/maxP;ctx.fillStyle=acc;ctx.fillRect(padL+i*bw+1,padT+ph-bh,Math.max(2,bw-2),bh);
+          if(ps.length<=26||i%2===0){ctx.fillStyle=axis;ctx.textAlign="center";ctx.fillText(i,padL+i*bw+bw/2,H-14)}});
+        ctx.textAlign="center";ctx.fillText("n — customers in system →",padL+pw/2,H-2);
+        cv.setAttribute("aria-label","Steady-state distribution. Most likely counts: "+ps.map(function(p,i){return [p,i]}).sort(function(a,b){return b[0]-a[0]}).slice(0,3).map(function(x){return "n = "+x[1]+" at "+fmt(x[0],3)}).join(", ")+".");
+      }
+      function drawSweep(){
+        if(S.model==="mg1"){$("#q-sweep").innerHTML='<p class="readout">Server-count comparison applies to the M/M/s family — switch the model to M/M/s to see it.</p>';return}
+        var rows="";
+        for(var s=1;s<=6;s++){
+          var R=queueCompute({model:"mms",lam:S.lam,mu:S.mu,s:s,K:S.K,meanSvc:S.meanSvc,sdSvc:S.sdSvc});
+          if(!R.ok){rows+='<tr><td class="num">'+s+'</td><td colspan="4">unstable (ρ = '+fmt(R.rho||0,2)+' ≥ 1)</td></tr>'}
+          else rows+='<tr'+(s===R.s&&false?"":"")+'><td class="num">'+s+'</td><td class="num">'+fmt(R.rho,3)+'</td><td class="num">'+fmt(R.Lq,3)+'</td><td class="num">'+fmt(R.Wq,4)+'</td><td class="num">'+fmt(R.Pw,3)+'</td></tr>';
+        }
+        $("#q-sweep").innerHTML='<table class="data"><thead><tr><th class="num">Servers s</th><th class="num">ρ</th><th class="num">Lq</th><th class="num">Wq</th><th class="num">P(wait)</th></tr></thead><tbody>'+rows+'</tbody></table>';
+      }
+      ["q-model","q-lam","q-mu","q-s","q-k","q-mean","q-sd"].forEach(function(id){$("#"+id).addEventListener("input",sync);$("#"+id).addEventListener("change",sync)});
+      $("#q-textbook").addEventListener("click",function(){S={model:"mm1",lam:8,mu:10,s:2,K:12,meanSvc:0.1,sdSvc:0.1};$("#q-model").value="mm1";$("#q-lam").value=8;$("#q-mu").value=10;sync()});
+      $("#q-dl").addEventListener("click",function(){if(!last||!last.ok){dl("queuing-results.txt","Queuing Lab\nNo steady-state results (system unstable or inputs invalid).\n");return}
+        dl("queuing-results.txt","Queuing Lab — results\nModel: "+S.model+"\nlambda = "+S.lam+", mu = "+last.mu+", servers = "+last.s+(last.K?", K = "+last.K:"")+"\nUtilization rho = "+fmt(last.rho,4)+"\nL = "+fmt(last.L,4)+", Lq = "+fmt(last.Lq,4)+"\nW = "+fmt(last.W,4)+", Wq = "+fmt(last.Wq,4)+"\nP0 (empty) = "+fmt(last.P0,4)+", P(wait) = "+fmt(last.Pw,4)+"\n")});
+      sync();
+      window.addEventListener("resize",function(){if(document.getElementById("q-cv")&&last)drawDist(last)});
+    }
+
     /* ================= ROUTER ================= */
     function parseHash(){
       var h=location.hash.replace(/^#\/?/,"");var parts=h.split("?");var route=parts[0]||"";
@@ -1114,8 +1698,11 @@
       window.scrollTo(0,0);
       if(r.route==="lp")renderLP(app,r.state);
       else if(r.route==="sensitivity")renderSens(app,r.state);
+      else if(r.route==="lp3d")renderLP3D(app,r.state);
       else if(r.route==="clt")renderCLT(app,r.state);
       else if(r.route==="decision")renderDecision(app,r.state);
+      else if(r.route==="tree")renderTree(app,r.state);
+      else if(r.route==="queue")renderQueue(app,r.state);
       else renderHub(app);
     }
     window.addEventListener("hashchange",route);
